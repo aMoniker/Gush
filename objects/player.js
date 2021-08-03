@@ -56,6 +56,7 @@ export const addPlayerControls = () => {
     player.canBurp = false;
     player.hit = true;
     k.burp();
+    k.camShake(1);
     k.wait(0.5, () => player.canBurp = true);
   });
 
