@@ -8,7 +8,7 @@ k.layers([
   "game",
   "effect",
   "ui",
-]);
+], "game");
 
 k.go("loading");
 
