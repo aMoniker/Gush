@@ -1,5 +1,7 @@
 import { k } from "/kaboom.js"
 
+// https://developer.mozilla.org/en-US/docs/Web/API/Gamepad_API/Using_the_Gamepad_API
+
 export const player = k.add([
   k.sprite("wizard_m", { animSpeed: 0.3 }),
   k.pos(100, 100),
