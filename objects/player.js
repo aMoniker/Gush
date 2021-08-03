@@ -2,10 +2,15 @@ import { k } from "/kaboom.js"
 
 // https://developer.mozilla.org/en-US/docs/Web/API/Gamepad_API/Using_the_Gamepad_API
 
-export const addPlayer = () => {
+/**
+ * Add a new player to the game. There should only be one at a time.
+ * types: elf_f, elf_m, knight, lizard_f, lizard_m, wizard_f, wizard_m
+ */
+
+export const addPlayer = (type) => {
 
   const player = k.add([
-    k.sprite("wizard_m", { animSpeed: 0.3, noArea: true }),
+    k.sprite(type, { animSpeed: 0.3, noArea: true }),
     k.area(k.vec2(6, 16), k.vec2(20, 32)),
     k.pos(100, 100),
     k.layer("game"),

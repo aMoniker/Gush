@@ -5,5 +5,5 @@ import { loadLevel } from "/levels/test.js"
 
 k.scene("main", (args = {}) => {
   // loadLevel();
-  addPlayer();
+  addPlayer("elf_f");
 });
