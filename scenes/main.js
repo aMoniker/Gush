@@ -1,6 +1,9 @@
 import { k } from "/kaboom.js"
-import { initPlayer } from "/objects/player.js"
+import { addPlayer } from "/objects/player.js"
+
+import { loadLevel } from "/levels/test.js"
 
 k.scene("main", (args = {}) => {
-  initPlayer();
+  // loadLevel();
+  addPlayer();
 });
