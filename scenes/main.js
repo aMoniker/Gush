@@ -4,5 +4,3 @@ import { initPlayer } from "/objects/player.js"
 k.scene("main", (args = {}) => {
   initPlayer();
 });
-
-console.log('added main scene');

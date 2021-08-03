@@ -14,26 +14,21 @@ export const player = k.add([
   }
 ]);
 
-// console.log('player', player._inspect());
-
 const handleAnimation = () => {
   const anim = player.curAnim();
   if (player.hit) {
     if (anim !== "hit") {
       const hitTime = 0.5;
-      console.log('play hit');
       player.play("hit");
       player.animSpeed = hitTime;
       k.wait(hitTime, () => player.hit = false);
     }
   } else if (player.moving) {
     if (anim !== "run") {
-      console.log('play run');
       player.play("run");
       player.animSpeed = 0.1;
     }
   } else if (anim !== "idle") {
-    console.log('play idle');
     player.play("idle");
     player.animSpeed = 0.3;
   }
@@ -44,13 +39,6 @@ const handleMoving = () => {
     player.flipX(player.dir.x < 0);
     player.move(player.dir.scale(player.speed));
   }
-  //  else {
-  //   if (player.curAnim() !== "idle") {
-  //     player.play("idle");
-  //     player.animSpeed = 0.3;
-  //   }
-  // }
-  // player.moving = false;
 };
 
 export const addPlayerActions = () => {
@@ -67,12 +55,6 @@ export const addPlayerControls = () => {
     player.hit = true;
     k.burp();
     k.wait(0.5, () => player.canBurp = true);
-  });
-
-  k.keyPress("x", () => {
-    // console.log("hit");
-    // player.play("hit");
-    player.hit = true;
   });
 
   k.keyDown("w", () => {
@@ -116,5 +98,4 @@ export const initPlayer = () => {
   addPlayerControls();
   addPlayerActions();
   k.readd(player);
-  player.play("idle");
 }
