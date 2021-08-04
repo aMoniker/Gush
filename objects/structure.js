@@ -1,6 +1,19 @@
 import { k } from "/kaboom.js"
 import { rng } from "/utils.js"
 
+/**
+ * Static structures:
+ * . random floor tile
+ * [ top-left corner wall
+ * - top wall
+ * ] top-right corner wall
+ * | left/right wall
+ * { bottom-left corner wall
+ * _ bottom wall
+ * } bottom-right corner wall
+ * ; wall banner (maybe same color for whole level
+ */
+
 export const floorTileRandom = () => {
   let frame = 0;
   if (rng.gen() > 0.9) { // damaged floor
