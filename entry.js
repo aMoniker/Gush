@@ -3,13 +3,6 @@ import { loadAssets } from "/assets/loader.js"
 import "/scenes/loading.js"
 import "/scenes/main.js"
 
-k.layers([
-  "bg",
-  "game",
-  "effect",
-  "ui",
-], "game");
-
 k.go("loading");
 
 loadAssets().then(() => {
@@ -27,13 +20,13 @@ loadAssets().then(() => {
 // k.debug.timeScale = 0.5;
 
 // if 'true' show on screen logs
-// k.debug.showLog = true;
+k.debug.showLog = true;
 
 // log stack count max
-// k.debug.logMax = 6;
+k.debug.logMax = 6;
 
 // get current fps
-k.debug.fps();
+// k.debug.fps();
 
 // get object count in the current scene
 // k.debug.objCount();

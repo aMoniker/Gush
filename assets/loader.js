@@ -65,10 +65,11 @@ export const loadAssets = () => {
 
   promises.push(loadBasicSprite("flask", 8));
 
-  promises.push(loadBasicSprite("floor", 13, {
+  promises.push(loadBasicSprite("floor", 16, {
     ladder: [8, 8],
     trap_set: [9, 9],
-    trap_sprung: [9, 12],
+    trap_sprung: [10, 12],
+    trap_reset: [13, 15],
   }));
 
   promises.push(loadBasicSprite("goblin", 8, {

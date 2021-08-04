@@ -10,9 +10,10 @@ import { k } from "/kaboom.js"
 export const addPlayer = (type) => {
 
   const player = k.add([
+    k.origin("center"),
+    k.pos(0, 0),
     k.sprite(type, { animSpeed: 0.3, noArea: true }),
-    k.area(k.vec2(6, 16), k.vec2(20, 32)),
-    k.pos(100, 100),
+    k.area(k.vec2(-6, -2), k.vec2(6, 14)),
     k.layer("game"),
     "player",
     "killable",
@@ -25,6 +26,7 @@ export const addPlayer = (type) => {
     }
   ]);
 
+  // TODO - should these be called every frame, or only change on events?
   const handleAnimation = () => {
     const anim = player.curAnim();
     if (player.hit) {
@@ -52,10 +54,25 @@ export const addPlayer = (type) => {
     }
   };
 
+  const tilesPerScreen = 16;
+  const tileWidth = 16;
+  const effectiveWidth = tilesPerScreen * tileWidth;
+
+
+
+  const handleCamera = () => {
+    // k.width
+
+    const scale = k.width() / effectiveWidth;
+    k.camScale(scale);
+    k.camPos(player.pos);
+    // k.camScale(2);
+  };
+
   player.action(() => {
     handleMoving();
     handleAnimation();
-    k.camPos(player.pos);
+    handleCamera();
     player.pushOutAll();
   });
 

@@ -1,9 +1,16 @@
 import { k } from "/kaboom.js"
 import { addPlayer } from "/objects/player.js"
+import { addEvents } from "/events.js"
+import { addLayers } from "/layers.js"
+import { generateLevel } from "/levels/generate.js"
 
-import { loadLevel } from "/levels/test.js"
+import {showFps} from "/utils.js"
 
 k.scene("main", (args = {}) => {
-  loadLevel();
-  addPlayer("elf_f");
+  addLayers();
+  addEvents();
+  generateLevel();
+  addPlayer("wizard_m");
+
+  showFps();
 });

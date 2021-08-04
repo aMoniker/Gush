@@ -10,14 +10,24 @@ export const floorTileRandom = () => {
   }
   return [
     k.sprite("floor", { frame }),
+    k.layer("game"),
   ];
 };
 
 export const floorLadder = () => ([
   k.sprite("floor", { frame: 8 }),
+  k.layer("game"),
 ]);
+
+// const ladder = floorLadder();
+// console.log('ladder', ladder);
 
 export const floorTrap = () => ([
   k.sprite("floor", { frame: 10 }),
-  "floor_trap"
+  k.layer("game"),
+  "floor_trap",
+  {
+    sprung: false,
+    canSpring: true,
+  }
 ]);
