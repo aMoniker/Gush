@@ -5,6 +5,7 @@ export const addLayers = () => {
     "bg",
     "floor",
     "game",
+    "ceiling",
     "effect",
     "ui",
   ], "game");

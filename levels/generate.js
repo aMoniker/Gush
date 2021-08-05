@@ -1,5 +1,7 @@
-import { k } from "/kaboom.js"
-import { floorTileRandom, floorLadder, floorTrap } from "/objects/structure.js";
+import { k } from "/kaboom.js";
+import { config } from "/config.js";
+import * as structure from "/objects/structure.js";
+import * as misc from "/objects/misc.js";
 
 /**
  * To implement:
@@ -42,10 +44,31 @@ import { floorTileRandom, floorLadder, floorTrap } from "/objects/structure.js";
  */
 
 const unimplemented = {};
+const makeUnimplementedTile = () => ([
+  k.solid(),
+  k.layer("game"),
+  k.rect(16, 16),
+  k.color(k.rand(0.1, 1), k.rand(0.1, 1), k.rand(0.1, 1)),
+]);
+
+const tileGenerator = {
+  ".": misc.floorTile,
+  // TODO - decide if these are really needed or if corner pieces
+  //        can be inferred from context, and just use `-`
+  // "[": structure.w,
+  "^": misc.floorTrap,
+  "|": (context) => {
+    // TODO - add these in the right spot using context.[x/y]
+    if (!context.left || context.left === '|') {
+      k.add(structure.wallSideMidLeft());
+    } else if (!context.right || context.right === '|') {
+      k.add(structure.wallSideMidRight());
+    }
+    return structure.invisibleWall();
+  },
+};
 
 export const generateLevel = () => {
-
-  let tileCounter = 0;
 
   const map = [
     "[-----;-&--%--!-;-----------------------------------------------]",
@@ -70,43 +93,41 @@ export const generateLevel = () => {
 
   // addLevel gives no context for tiles, so we use this trick
   // and pass everything through any() in order to see neighbors.
-  const getNeighborTiles = (tileIndex) => {
-    const x = tileIndex % mapWidth;
-    const y = Math.floor(tileIndex / mapWidth);
-    return {
-      up: map ?.[y - 1] ?.[x],
-      down: map ?.[y + 1] ?.[x],
-      left: map ?.[y] ?.[x - 1],
-      right: map ?.[y] ?.[x + 1],
-    }
-  };
+  const getTileContext = (x, y) => ({
+    x,
+    y,
+    up: map[y - 1] ?.[x],
+    down: map[y + 1] ?.[x],
+    left: map[y] ?.[x - 1],
+    right: map[y] ?.[x + 1],
+    self: map[y]?.[x],
+  });
+
+  let tileCounter = 0;
 
   const level = k.addLevel(map, {
-    width: 16,
-    height: 16,
-    pos: k.vec2(0, 0),
+    width: config.tileWidth,
+    height: config.tileHeight,
+    pos: config.mapStart,
     // any is used for all tiles so we can keep count and find neighbors
     any(tile) {
-      const neighbors = getNeighborTiles(tileCounter);
+      const mapX = tileCounter % mapWidth;
+      const mapY = Math.floor(tileCounter / mapWidth);
+      // const worldX = (mapX * config.tileWidth) + pos.x;
+      // const worldY = (mapY * config.tileHeight) + pos.y;
+      const context = getTileContext(mapX, mapY);
       tileCounter++;
 
-      if (tile === ".") {
-        return floorTileRandom();
-      } else if (tile === "^") {
-        return floorTrap();
+      if (tileGenerator[tile]) {
+        return tileGenerator[tile](context);
       } else {
         if (!unimplemented[tile]) {
-          unimplemented[tile] = [
-            k.rect(16, 16),
-            k.color(k.rand(0.1, 1), k.rand(0.1, 1), k.rand(0.1, 1)),
-          ];
+          unimplemented[tile] = makeUnimplementedTile();
         }
         return unimplemented[tile];
       }
     },
   });
-
-  console.log('generated level');
 
   return level;
 }

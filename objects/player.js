@@ -11,7 +11,7 @@ export const addPlayer = (type) => {
 
   const player = k.add([
     k.origin("center"),
-    k.pos(0, 0),
+    k.pos(100, 100),
     k.sprite(type, { animSpeed: 0.3, noArea: true }),
     k.area(k.vec2(-6, -2), k.vec2(6, 14)),
     k.layer("game"),
@@ -58,15 +58,10 @@ export const addPlayer = (type) => {
   const tileWidth = 16;
   const effectiveWidth = tilesPerScreen * tileWidth;
 
-
-
   const handleCamera = () => {
-    // k.width
-
     const scale = k.width() / effectiveWidth;
     k.camScale(scale);
     k.camPos(player.pos);
-    // k.camScale(2);
   };
 
   player.action(() => {

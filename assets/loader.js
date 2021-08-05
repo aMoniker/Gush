@@ -150,7 +150,7 @@ export const loadAssets = () => {
     half: [2, 2],
   }));
 
-  promises.push(loadBasicSprite("walls", 51, {
+  promises.push(loadBasicSprite("walls", 50, {
     basin_blue: [15, 17],
     basin_red: [18, 20],
     fountain_blue: [21, 23],
