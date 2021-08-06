@@ -94,16 +94,15 @@ const seWallTile = (ctx) => {
   return structure.invisibleWall();
 };
 
-const symbolToTile = {
-  " ": misc.emptyTile,
-  ".": misc.floorTile,
-  "^": misc.floorTrap,
-  "─": horizontalWallTile,
-  "│": verticalWallTile,
-  "┌": nwWallTile,
-  "┐": neWallTile,
-  "┘": seWallTile,
-  "└": swWallTile,
+const bannerTile = (color) => (ctx) => {
+  const {x,y,u} = ctx;
+  const bannerFn = structure[`wallBanner${color}`];
+  const layer = (isEmptySymbol(u) || isWallSymbol(u)) ? "floor" : "ceiling";
+  if (bannerFn) {
+    addBasicWall(bannerFn, x, y);
+    addBasicWall(structure.wallTopMid, x, y - 1, layer);
+  }
+  return structure.invisibleWall();
 }
 
 let testTilesMade = false;
@@ -151,6 +150,27 @@ const makeTestTiles = () => {
 
   testTilesMade = true;
 };
+
+const symbolToTile = {
+  " ": misc.emptyTile,
+  ".": misc.floorTile,
+  "^": misc.floorTrap,
+  "─": horizontalWallTile,
+  "│": verticalWallTile,
+  "┌": nwWallTile,
+  "┐": neWallTile,
+  "┘": seWallTile,
+  "└": swWallTile,
+  "{": bannerTile("Blue"),
+  "}": bannerTile("Green"),
+  "(": bannerTile("Red"),
+  ")": bannerTile("Yellow"),
+}
+
+// * { wall banner (blue)
+//  * } wall banner (green)
+//  * ( wall banner (red)
+//  * ) wall banner (yellow)
 
 export const makeTile = (sym, context) => {
   // makeTestTiles();

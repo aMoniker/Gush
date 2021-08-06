@@ -3,8 +3,10 @@ import { config } from "/config.js";
 import * as structure from "/objects/structure.js";
 import * as misc from "/objects/misc.js";
 import { makeTile } from "/levels/tiles.js";
+import { generateMap } from "/levels/map.js";
 
 export const generateLevel = () => {
+  const map = generateMap();
   const mapWidth = map[0].length;
   const mapHeight = map.length;
 
