@@ -6,12 +6,16 @@ import { rng } from "/utils.js"
  * . random floor tile
  * + door
  * > hole/down
- * < ladder/up
  * ? chest
  * c crate
  */
 
 export const emptyTile = () => undefined;
+
+export const edgeTile = () => ([
+  k.sprite("edge"),
+  k.layer("floor"),
+]);
 
 export const floorTile = () => {
   let frame = 0;
@@ -26,15 +30,18 @@ export const floorTile = () => {
   ];
 };
 
-export const floorLadder = () => ([
+export const floorLadderDown = () => ([
   k.sprite("floor", { frame: 8 }),
   k.layer("game"),
+  "ladder_down",
+  "interactive",
 ]);
 
 export const floorTrap = () => ([
   k.sprite("floor", { frame: 10 }),
   k.layer("game"),
   "floor_trap",
+  "interactive",
   {
     sprung: false,
     canSpring: true,

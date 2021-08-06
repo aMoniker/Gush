@@ -10,7 +10,11 @@ k.scene("main", (args = {}) => {
   addLayers();
   addEvents();
   generateLevel();
-  addPlayer("wizard_m");
+  const player = addPlayer("wizard_m");
+
+  k.action("wall_boundary", (obj) => {
+    obj.solid = player.pos.dist(obj.pos) <= 20;
+  });
 
   showFps();
 });

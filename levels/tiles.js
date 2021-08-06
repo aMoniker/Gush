@@ -21,7 +21,7 @@ const getWorldPos = (mx, my) => {
 const isEmptySymbol = (sym) => sym === undefined || sym === " ";
 const isWallSymbol = (sym) => ["─", "│", "┌", "┐", "└", "┘"].includes(sym);
 
-const addBasicWall = (wallFunc, x, y, layer) => {
+const addBasicTile = (wallFunc, x, y, layer) => {
   return k.add([
     ...wallFunc(),
     getWorldPos(x, y),
@@ -32,17 +32,17 @@ const addBasicWall = (wallFunc, x, y, layer) => {
 const horizontalWallTile = (ctx) => {
   const {x,y,u} = ctx;
   const layer = (isEmptySymbol(u) || isWallSymbol(u)) ? "floor" : "ceiling";
-  addBasicWall(structure.wallMid, x, y, layer);
-  addBasicWall(structure.wallTopMid, x, y - 1, layer);
+  addBasicTile(structure.wallMid, x, y, layer);
+  addBasicTile(structure.wallTopMid, x, y - 1, layer);
   return structure.invisibleWall();
 };
 
 const verticalWallTile = (ctx) => {
   const {x,y} = ctx;
   if (isEmptySymbol(ctx.l) || isWallSymbol(ctx.l)) {
-    addBasicWall(structure.wallSideMidLeft, x, y);
+    addBasicTile(structure.wallSideMidLeft, x, y);
   } else if (isEmptySymbol(ctx.r) || isWallSymbol(ctx.r)) {
-    addBasicWall(structure.wallSideMidRight, x, y);
+    addBasicTile(structure.wallSideMidRight, x, y);
   }
   return structure.invisibleWall();
 };
@@ -50,11 +50,11 @@ const verticalWallTile = (ctx) => {
 const nwWallTile = (ctx) => {
   const {x,y,l} = ctx;
   if (isEmptySymbol(l)) {
-    addBasicWall(structure.wallSideMidLeft, x, y);
-    addBasicWall(structure.wallSideTopLeft, x, y - 1);
+    addBasicTile(structure.wallSideMidLeft, x, y);
+    addBasicTile(structure.wallSideTopLeft, x, y - 1);
   } else {
-    addBasicWall(structure.wallCornerLeft, x, y, "ceiling");
-    addBasicWall(structure.wallCornerTopLeft, x, y - 1, "ceiling");
+    addBasicTile(structure.wallCornerLeft, x, y, "ceiling");
+    addBasicTile(structure.wallCornerTopLeft, x, y - 1, "ceiling");
   }
 
   return structure.invisibleWall();
@@ -63,11 +63,11 @@ const nwWallTile = (ctx) => {
 const neWallTile = (ctx) => {
   const {x,y,r} = ctx;
   if (isEmptySymbol(r)) {
-    addBasicWall(structure.wallSideMidRight, x, y);
-    addBasicWall(structure.wallSideTopRight, x, y - 1);
+    addBasicTile(structure.wallSideMidRight, x, y);
+    addBasicTile(structure.wallSideTopRight, x, y - 1);
   } else {
-    addBasicWall(structure.wallCornerRight, x, y, "ceiling");
-    addBasicWall(structure.wallCornerTopRight, x, y - 1, "ceiling");
+    addBasicTile(structure.wallCornerRight, x, y, "ceiling");
+    addBasicTile(structure.wallCornerTopRight, x, y - 1, "ceiling");
   }
   return structure.invisibleWall();
 };
@@ -75,10 +75,10 @@ const neWallTile = (ctx) => {
 const swWallTile = (ctx) => {
   const {x,y,l} = ctx;
   if (isEmptySymbol(l)) {
-    addBasicWall(structure.wallSideFrontLeft, x, y);
+    addBasicTile(structure.wallSideFrontLeft, x, y);
   } else {
-    addBasicWall(structure.wallCornerFrontLeft, x, y);
-    addBasicWall(structure.wallCornerTopLeft, x, y - 1);
+    addBasicTile(structure.wallCornerFrontLeft, x, y);
+    addBasicTile(structure.wallCornerTopLeft, x, y - 1);
   }
   return structure.invisibleWall();
 };
@@ -86,10 +86,10 @@ const swWallTile = (ctx) => {
 const seWallTile = (ctx) => {
   const {x,y,r} = ctx;
   if (isEmptySymbol(r)) {
-    addBasicWall(structure.wallSideFrontRight, x, y);
+    addBasicTile(structure.wallSideFrontRight, x, y);
   } else {
-    addBasicWall(structure.wallCornerFrontRight, x, y);
-    addBasicWall(structure.wallCornerTopRight, x, y - 1);
+    addBasicTile(structure.wallCornerFrontRight, x, y);
+    addBasicTile(structure.wallCornerTopRight, x, y - 1);
   }
   return structure.invisibleWall();
 };
@@ -99,8 +99,8 @@ const bannerTile = (color) => (ctx) => {
   const bannerFn = structure[`wallBanner${color}`];
   const layer = (isEmptySymbol(u) || isWallSymbol(u)) ? "floor" : "ceiling";
   if (bannerFn) {
-    addBasicWall(bannerFn, x, y);
-    addBasicWall(structure.wallTopMid, x, y - 1, layer);
+    addBasicTile(bannerFn, x, y);
+    addBasicTile(structure.wallTopMid, x, y - 1, layer);
   }
   return structure.invisibleWall();
 };
@@ -111,16 +111,16 @@ const fountainTile = (color) => (ctx) => {
   const fountainBasinFn = structure[`wallFountainBasin${color}`];
   const layer = (isEmptySymbol(u) || isWallSymbol(u)) ? "floor" : "ceiling";
   if (fountainMidFn && fountainBasinFn) {
-    const fountainMid = addBasicWall(fountainMidFn, x, y);
+    const fountainMid = addBasicTile(fountainMidFn, x, y);
     fountainMid.play(`fountain_${color.toLowerCase()}`);
 
     // TODO - basin will have to be added in second pass, since
     // we can't guarantee load order of tiles in addLevel, which means
     // floor tiles can overlap basin instead of other way around.
-    const fountainBasin = addBasicWall(fountainBasinFn, x, y + 1);
+    const fountainBasin = addBasicTile(fountainBasinFn, x, y + 1);
     fountainBasin.play(`basin_${color.toLowerCase()}`);
 
-    addBasicWall(structure.wallFountainTop, x, y - 1, layer);
+    addBasicTile(structure.wallFountainTop, x, y - 1, layer);
   }
   return structure.invisibleWall();
 };
@@ -128,12 +128,18 @@ const fountainTile = (color) => (ctx) => {
 const wallGooTile = (ctx) => {
   const {x,y,u} = ctx;
   const layer = (isEmptySymbol(u) || isWallSymbol(u)) ? "floor" : "ceiling";
-  addBasicWall(structure.wallGooMid, x, y, layer);
-  addBasicWall(structure.wallTopMid, x, y - 1, layer);
+  addBasicTile(structure.wallGooMid, x, y, layer);
+  addBasicTile(structure.wallTopMid, x, y - 1, layer);
   // TODO - there's a goo "basin" tile to be added in second pass
-  // addBasicWall(structure.wallGooBasin, x, y, layer);
+  // addBasicTile(structure.wallGooBasin, x, y, layer);
   return structure.invisibleWall();
 };
+
+const crevasseTile = (ctx) => {
+  const {x,y,u} = ctx;
+  if (u !== "#") addBasicTile(misc.edgeTile, x, y);
+  return structure.invisibleWall();
+}
 
 let testTilesMade = false;
 const makeTestTiles = () => {
@@ -198,7 +204,32 @@ const symbolToTile = {
   "&": fountainTile("Red"),
   "%": fountainTile("Blue"),
   "!": wallGooTile,
-}
+  ">": misc.floorLadderDown,
+  "#": crevasseTile,
+
+  // these are all floor tiles in the first pass
+  // and will be added as objects in the second pass
+  "?": misc.floorTile,
+  "$": misc.floorTile,
+  "c": misc.floorTile,
+  "#": misc.floorTile,
+  "@": misc.floorTile,
+  "d": misc.floorTile,
+  "D": misc.floorTile,
+  "f": misc.floorTile,
+  "g": misc.floorTile,
+  "i": misc.floorTile,
+  "m": misc.floorTile,
+  "M": misc.floorTile,
+  "n": misc.floorTile,
+  "o": misc.floorTile,
+  "O": misc.floorTile,
+  "s": misc.floorTile,
+  "S": misc.floorTile,
+  "w": misc.floorTile,
+  "Z": misc.floorTile,
+  "z": misc.floorTile,
+};
 
 export const makeTile = (sym, context) => {
   // makeTestTiles();
