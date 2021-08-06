@@ -8,12 +8,14 @@ import { rng } from "/utils.js"
  * > hole/down
  * < ladder/up
  * ? chest
- * # crate
+ * c crate
  */
+
+export const emptyTile = () => undefined;
 
 export const floorTile = () => {
   let frame = 0;
-  if (rng.gen() > 0.9) { // damaged floor
+  if (rng.gen() > 0.97) { // damaged floor
     frame = k.choose([3, 5, 6, 7]);
   } else { // normal floor
     frame = k.choose([0, 1, 2, 4]);

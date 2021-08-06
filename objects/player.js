@@ -19,7 +19,7 @@ export const addPlayer = (type) => {
     "killable",
     {
       dir: k.vec2(0, 0),
-      speed: 100,
+      speed: 77,
       moving: false,
       hit: false,
       canBurp: true,
