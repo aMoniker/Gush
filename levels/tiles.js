@@ -22,7 +22,7 @@ const isEmptySymbol = (sym) => sym === undefined || sym === " ";
 const isWallSymbol = (sym) => ["─", "│", "┌", "┐", "└", "┘"].includes(sym);
 
 const addBasicWall = (wallFunc, x, y, layer) => {
-  k.add([
+  return k.add([
     ...wallFunc(),
     getWorldPos(x, y),
     k.layer(layer ?? "floor"),
@@ -103,7 +103,37 @@ const bannerTile = (color) => (ctx) => {
     addBasicWall(structure.wallTopMid, x, y - 1, layer);
   }
   return structure.invisibleWall();
-}
+};
+
+const fountainTile = (color) => (ctx) => {
+  const {x,y,u} = ctx;
+  const fountainMidFn = structure[`wallFountainMid${color}`];
+  const fountainBasinFn = structure[`wallFountainBasin${color}`];
+  const layer = (isEmptySymbol(u) || isWallSymbol(u)) ? "floor" : "ceiling";
+  if (fountainMidFn && fountainBasinFn) {
+    const fountainMid = addBasicWall(fountainMidFn, x, y);
+    fountainMid.play(`fountain_${color.toLowerCase()}`);
+
+    // TODO - basin will have to be added in second pass, since
+    // we can't guarantee load order of tiles in addLevel, which means
+    // floor tiles can overlap basin instead of other way around.
+    const fountainBasin = addBasicWall(fountainBasinFn, x, y + 1);
+    fountainBasin.play(`basin_${color.toLowerCase()}`);
+
+    addBasicWall(structure.wallFountainTop, x, y - 1, layer);
+  }
+  return structure.invisibleWall();
+};
+
+const wallGooTile = (ctx) => {
+  const {x,y,u} = ctx;
+  const layer = (isEmptySymbol(u) || isWallSymbol(u)) ? "floor" : "ceiling";
+  addBasicWall(structure.wallGooMid, x, y, layer);
+  addBasicWall(structure.wallTopMid, x, y - 1, layer);
+  // TODO - there's a goo "basin" tile to be added in second pass
+  // addBasicWall(structure.wallGooBasin, x, y, layer);
+  return structure.invisibleWall();
+};
 
 let testTilesMade = false;
 const makeTestTiles = () => {
@@ -165,12 +195,10 @@ const symbolToTile = {
   "}": bannerTile("Green"),
   "(": bannerTile("Red"),
   ")": bannerTile("Yellow"),
+  "&": fountainTile("Red"),
+  "%": fountainTile("Blue"),
+  "!": wallGooTile,
 }
-
-// * { wall banner (blue)
-//  * } wall banner (green)
-//  * ( wall banner (red)
-//  * ) wall banner (yellow)
 
 export const makeTile = (sym, context) => {
   // makeTestTiles();

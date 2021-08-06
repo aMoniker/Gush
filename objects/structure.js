@@ -1,8 +1,8 @@
 import { k } from "/kaboom.js"
 import { config } from "/config.js";
 
-const wallAttributes = (frame) => ([
-  k.sprite("walls", { frame, noArea: true }),
+const wallAttributes = (frame, attrs) => ([
+  k.sprite("walls", { frame, noArea: true, ...(attrs ?? {}) }),
   "wall_graphic"
 ]);
 
@@ -41,8 +41,8 @@ export const wallFountainBasinRed = () => wallAttributes(18); // 18-20
 export const wallFountainMidBlue = () => wallAttributes(21); // 21-23
 export const wallFountainMidRed = () => wallAttributes(24); // 24-26
 export const wallFountainTop = () => wallAttributes(27);
-export const wallGooBase = () => wallAttributes(28);
-export const wallGoo = () => wallAttributes(29);
+export const wallGooMid = () => wallAttributes(28);
+export const wallGooBasin = () => wallAttributes(29);
 
 export const wallHole1 = () => wallAttributes(30);
 export const wallHole2 = () => wallAttributes(31);

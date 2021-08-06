@@ -9,9 +9,9 @@
  * ┐ top-right wall (ne)
  * └ bottom-left wall (sw)
  * ┘ bottom-right wall (se)
- * & red fountain (basin should render below? also top tile?)
- * % blue fountain (see above)
- * ! goo fountain (see above)
+ * & red fountain
+ * % blue fountain
+ * ! goo wall
  * { wall banner (blue)
  * } wall banner (green)
  * ( wall banner (red)
