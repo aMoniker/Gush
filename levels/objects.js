@@ -1,5 +1,6 @@
 import { k } from "/kaboom.js";
-import { getTileContext, getWorldPos } from "/levels/utils.js";
+import { getTileContext, getWorldPos, addBasicTile, isEmptySymbol } from "/levels/utils.js";
+import * as structure from "/objects/structure.js";
 import * as powerups from "/objects/powerups.js";
 import * as misc from "/objects/misc.js";
 import * as monster from "/objects/monster.js";
@@ -15,7 +16,7 @@ const centerObjectInTile = (obj) => {
 const addObject = (objFn, ctx, extraAttrs) => {
   const obj = k.add([
     ...objFn(),
-    getWorldPos(ctx.x,ctx.y),
+    getWorldPos(ctx.x, ctx.y),
     ...(extraAttrs ?? [])
   ]);
   centerObjectInTile(obj);
@@ -43,6 +44,13 @@ const addPlayer = (ctx) => {
   centerObjectInTile(player);
 }
 
+const addFountainBasin = (color) => (ctx) => {
+  if (isEmptySymbol(ctx.d)) return;
+  const basinFn = structure[`wallFountainBasin${color}`];
+  const basin = addBasicTile(basinFn, ctx.x, ctx.y + 1);
+  basin.play(`basin_${color.toLowerCase()}`);
+}
+
 const symbolToObject = {
   "@": addPlayer,
   "$": addCoin,
@@ -63,6 +71,8 @@ const symbolToObject = {
   "w": curry(addMonster, monster.wogol),
   "Z": curry(addMonster, monster.zombieBig),
   "z": curry(addMonster, monster.randomZombie),
+  "&": addFountainBasin("Red"),
+  "%": addFountainBasin("Blue"),
 }
 
 export const createObjectsOnMap = (map) => {

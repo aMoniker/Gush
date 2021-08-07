@@ -2,7 +2,7 @@ import { k } from "/kaboom.js";
 import * as structure from "/objects/structure.js";
 import * as misc from "/objects/misc.js";
 import { config } from "/config.js";
-import { getWorldPos } from "/levels/utils.js";
+import { getWorldPos, addBasicTile, isEmptySymbol, isWallSymbol } from "/levels/utils.js";
 
 const unimplemented = {};
 const makeUnimplementedTile = () => ([
@@ -12,20 +12,8 @@ const makeUnimplementedTile = () => ([
   k.color(k.rand(0.1, 1), k.rand(0.1, 1), k.rand(0.1, 1)),
 ]);
 
-const isEmptySymbol = (sym) => sym === undefined || sym === " ";
-const isWallSymbol = (sym) => ["─", "│", "┌", "┐", "└", "┘"].includes(sym);
-
-const addBasicTile = (wallFunc, x, y, layer) => {
-  const t = k.add([
-    ...wallFunc(),
-    getWorldPos(x, y),
-    k.layer(layer ?? "floor"),
-  ]);
-  return t;
-}
-
 const horizontalWallTile = (ctx) => {
-  const {x,y,u} = ctx;
+  const { x, y, u } = ctx;
   const layer = (isEmptySymbol(u) || isWallSymbol(u)) ? "floor" : "ceiling";
   addBasicTile(structure.wallMid, x, y, layer);
   addBasicTile(structure.wallTopMid, x, y - 1, layer);
@@ -33,7 +21,7 @@ const horizontalWallTile = (ctx) => {
 };
 
 const verticalWallTile = (ctx) => {
-  const {x,y} = ctx;
+  const { x, y } = ctx;
   if (isEmptySymbol(ctx.l) || isWallSymbol(ctx.l)) {
     addBasicTile(structure.wallSideMidLeft, x, y);
   } else if (isEmptySymbol(ctx.r) || isWallSymbol(ctx.r)) {
@@ -43,7 +31,7 @@ const verticalWallTile = (ctx) => {
 };
 
 const nwWallTile = (ctx) => {
-  const {x,y,l} = ctx;
+  const { x, y, l } = ctx;
   if (isEmptySymbol(l)) {
     addBasicTile(structure.wallSideMidLeft, x, y);
     addBasicTile(structure.wallSideTopLeft, x, y - 1);
@@ -56,7 +44,7 @@ const nwWallTile = (ctx) => {
 }
 
 const neWallTile = (ctx) => {
-  const {x,y,r} = ctx;
+  const { x, y, r } = ctx;
   if (isEmptySymbol(r)) {
     addBasicTile(structure.wallSideMidRight, x, y);
     addBasicTile(structure.wallSideTopRight, x, y - 1);
@@ -68,7 +56,7 @@ const neWallTile = (ctx) => {
 };
 
 const swWallTile = (ctx) => {
-  const {x,y,l} = ctx;
+  const { x, y, l } = ctx;
   if (isEmptySymbol(l)) {
     addBasicTile(structure.wallSideFrontLeft, x, y);
   } else {
@@ -79,7 +67,7 @@ const swWallTile = (ctx) => {
 };
 
 const seWallTile = (ctx) => {
-  const {x,y,r} = ctx;
+  const { x, y, r } = ctx;
   if (isEmptySymbol(r)) {
     addBasicTile(structure.wallSideFrontRight, x, y);
   } else {
@@ -90,38 +78,30 @@ const seWallTile = (ctx) => {
 };
 
 const bannerTile = (color) => (ctx) => {
-  const {x,y,u} = ctx;
+  const { x, y, u } = ctx;
   const bannerFn = structure[`wallBanner${color}`];
   const layer = (isEmptySymbol(u) || isWallSymbol(u)) ? "floor" : "ceiling";
   if (bannerFn) {
-    addBasicTile(bannerFn, x, y);
+    addBasicTile(bannerFn, x, y, layer);
     addBasicTile(structure.wallTopMid, x, y - 1, layer);
   }
   return structure.invisibleWall();
 };
 
 const fountainTile = (color) => (ctx) => {
-  const {x,y,u} = ctx;
+  const { x, y, u } = ctx;
   const fountainMidFn = structure[`wallFountainMid${color}`];
-  const fountainBasinFn = structure[`wallFountainBasin${color}`];
   const layer = (isEmptySymbol(u) || isWallSymbol(u)) ? "floor" : "ceiling";
-  if (fountainMidFn && fountainBasinFn) {
+  if (fountainMidFn) {
     const fountainMid = addBasicTile(fountainMidFn, x, y);
     fountainMid.play(`fountain_${color.toLowerCase()}`);
-
-    // TODO - basin will have to be added in second pass, since
-    // we can't guarantee load order of tiles in addLevel, which means
-    // floor tiles can overlap basin instead of other way around.
-    const fountainBasin = addBasicTile(fountainBasinFn, x, y + 1);
-    fountainBasin.play(`basin_${color.toLowerCase()}`);
-
     addBasicTile(structure.wallFountainTop, x, y - 1, layer);
   }
   return structure.invisibleWall();
 };
 
 const wallGooTile = (ctx) => {
-  const {x,y,u} = ctx;
+  const { x, y, u } = ctx;
   const layer = (isEmptySymbol(u) || isWallSymbol(u)) ? "floor" : "ceiling";
   addBasicTile(structure.wallGooMid, x, y, layer);
   addBasicTile(structure.wallTopMid, x, y - 1, layer);
@@ -131,7 +111,7 @@ const wallGooTile = (ctx) => {
 };
 
 const crevasseTile = (ctx) => {
-  const {x,y,u} = ctx;
+  const { x, y, u } = ctx;
   if (u !== "#") addBasicTile(misc.edgeTile, x, y);
   return structure.invisibleWall();
 }
@@ -173,8 +153,8 @@ const makeTestTiles = () => {
   const y = -2;
 
   for (const tt of testTiles) {
-    k.add([ ...tt(), getWorldPos(x, y)]);
-    k.add([ k.text(count, 12), getWorldPos(x, y - 1) ]);
+    k.add([...tt(), getWorldPos(x, y)]);
+    k.add([k.text(count, 12), getWorldPos(x, y - 1)]);
     x += 2;
     count++;
   }

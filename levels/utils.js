@@ -16,3 +16,20 @@ export const getWorldPos = (mx, my) => {
   const y = (my * config.tileHeight) + config.mapOrigin.y;
   return k.pos(x, y);
 }
+
+export const addBasicTile = (wallFunc, x, y, layer) => {
+  const t = k.add([
+    ...wallFunc(),
+    getWorldPos(x, y),
+    k.layer(layer ?? "floor"),
+  ]);
+  return t;
+}
+
+export const isEmptySymbol = (sym) => {
+  return sym === undefined || sym === " ";
+}
+
+export const isWallSymbol = (sym) => {
+  return ["─", "│", "┌", "┐", "└", "┘"].includes(sym);
+}

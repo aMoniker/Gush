@@ -9,6 +9,14 @@ let cachedPlayer = null;
 /**
  * Add a new player to the game. There can only be one at a time.
  * types: elf_f, elf_m, knight, lizard_f, lizard_m, wizard_f, wizard_m
+ * names:
+ *  - Stabby Elf
+ *  - Shooty Elf
+ *  - Swordy Boi
+ *  - Hammer Lizard
+ *  - Smashy Dino
+ *  - Burny Mage
+ *  - LASER WIZARD
  */
 export const createPlayer = (type, attrs) => {
   if (cachedPlayer) return cachedPlayer;
@@ -16,7 +24,7 @@ export const createPlayer = (type, attrs) => {
   const player = k.add([
     k.origin("center"),
     k.sprite(type, { animSpeed: 0.3, noArea: true }),
-    k.area(k.vec2(-6, -2), k.vec2(6, 14)),
+    k.area(k.vec2(-5, -2), k.vec2(5, 12)),
     k.layer("game"),
     "player",
     "killable",
@@ -76,7 +84,7 @@ export const createPlayer = (type, attrs) => {
     player.canBurp = false;
     player.hit = true;
     k.burp();
-    k.camShake(1);
+    k.camShake(7);
     k.wait(1, () => player.canBurp = true);
   });
 
