@@ -1,10 +1,15 @@
 import { k } from "/kaboom.js";
 
+// simple key/value ephemeral storage
+const storage = {};
+
 export const config = {
   tileWidth: 16,
   tileHeight: 16,
   tilesPerScreen: 11,
   mapOrigin: k.vec2(0, 0),
+  get: (key) => storage[key],
+  set: (key, val) => storage[key] = val,
 };
 
 const aspectRatio = k.width() / k.height();
