@@ -15,6 +15,7 @@ export const emptyTile = () => undefined;
 export const edgeTile = () => ([
   k.sprite("edge"),
   k.layer("floor"),
+  "non-player",
 ]);
 
 export const floorTile = () => {
@@ -27,23 +28,40 @@ export const floorTile = () => {
   return [
     k.sprite("floor", { frame }),
     k.layer("floor"),
+    "non-player",
   ];
 };
 
 export const floorLadderDown = () => ([
   k.sprite("floor", { frame: 8 }),
   k.layer("game"),
-  "ladder_down",
+  "non-player",
   "interactive",
+  "ladder_down",
 ]);
 
 export const floorTrap = () => ([
   k.sprite("floor", { frame: 10 }),
   k.layer("game"),
-  "floor_trap",
+  "non-player",
   "interactive",
+  "floor_trap",
   {
     sprung: false,
     canSpring: true,
   }
+]);
+
+export const chest = () => ([
+  k.sprite("chest", { frame: 0 }),
+  "non-player",
+  "interactive",
+  "chest",
+]);
+
+export const crate = () => ([
+  k.sprite("crate"),
+  "non-player",
+  "interactive",
+  "crate",
 ]);

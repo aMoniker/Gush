@@ -4,7 +4,7 @@ export const addEvents = () => {
   k.overlaps("player", "floor_trap", (p, ft) => {
     if (ft.sprung) {
       // hp damage here
-      console.log('player walked into trap');
+      // console.log('player walked into trap');
     } else if (ft.canSpring) {
       ft.sprung = true;
       ft.canSpring = false;
@@ -13,7 +13,7 @@ export const addEvents = () => {
         ft.play("trap_sprung", false);
         if (ft.isOverlapped(p)) {
           // hp damage here
-          console.log('player stood on trap');
+          // console.log('player stood on trap');
         }
         k.wait(3, () => {
           ft.animSpeed = 0.3;

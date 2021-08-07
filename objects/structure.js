@@ -3,6 +3,7 @@ import { config } from "/config.js";
 
 const wallAttributes = (frame, attrs) => ([
   k.sprite("walls", { frame, noArea: true, ...(attrs ?? {}) }),
+  "non-player",
   "wall_graphic"
 ]);
 
@@ -14,6 +15,7 @@ export const invisibleWall = () => ([
   k.rect(config.tileWidth + 1, config.tileHeight + 1),
   k.solid(),
   k.color(0, 0, 0, 0),
+  "non-player",
   "wall_boundary",
 ]);
 

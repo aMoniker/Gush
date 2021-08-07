@@ -21,11 +21,11 @@ export const loadAssets = () => {
   const promises = [];
 
   promises.push(loadBasicSprite("chest", 9, {
-    empty_closed: [0, 0],
+    // empty_closed: [0, 0],
     empty_open: [0, 2],
-    full_closed: [3, 3],
+    // full_closed: [3, 3],
     full_open: [3, 5],
-    mimic_closed: [6, 6],
+    // mimic_closed: [6, 6],
     mimic_open: [6, 8],
   }));
 
@@ -127,9 +127,9 @@ export const loadAssets = () => {
     run: [4, 7],
   }));
 
-  promises.push(loadBasicSprite("orc_warrior", 8, {
+  promises.push(loadBasicSprite("orc_warrior", 7, {
     idle: [0, 3],
-    run: [4, 7],
+    run: [4, 6],
   }));
 
   promises.push(loadBasicSprite("skeleton", 8, {

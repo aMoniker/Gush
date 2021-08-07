@@ -2,6 +2,7 @@ import { k } from "/kaboom.js";
 import * as structure from "/objects/structure.js";
 import * as misc from "/objects/misc.js";
 import { config } from "/config.js";
+import { getWorldPos } from "/levels/utils.js";
 
 const unimplemented = {};
 const makeUnimplementedTile = () => ([
@@ -11,22 +12,16 @@ const makeUnimplementedTile = () => ([
   k.color(k.rand(0.1, 1), k.rand(0.1, 1), k.rand(0.1, 1)),
 ]);
 
-// convert x/y map tile coordinates to world coordinates
-const getWorldPos = (mx, my) => {
-  const x = (mx * config.tileWidth) + config.mapOrigin.x;
-  const y = (my * config.tileHeight) + config.mapOrigin.y;
-  return k.pos(x, y);
-}
-
 const isEmptySymbol = (sym) => sym === undefined || sym === " ";
 const isWallSymbol = (sym) => ["─", "│", "┌", "┐", "└", "┘"].includes(sym);
 
 const addBasicTile = (wallFunc, x, y, layer) => {
-  return k.add([
+  const t = k.add([
     ...wallFunc(),
     getWorldPos(x, y),
     k.layer(layer ?? "floor"),
   ]);
+  return t;
 }
 
 const horizontalWallTile = (ctx) => {

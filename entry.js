@@ -6,7 +6,6 @@ import "/scenes/main.js"
 k.go("loading");
 
 loadAssets().then(() => {
-  console.log('assets loaded');
   k.go("main");
 })
 
@@ -20,10 +19,10 @@ loadAssets().then(() => {
 // k.debug.timeScale = 0.5;
 
 // if 'true' show on screen logs
-k.debug.showLog = true;
+// k.debug.showLog = true;
 
 // log stack count max
-k.debug.logMax = 6;
+// k.debug.logMax = 6;
 
 // get current fps
 // k.debug.fps();

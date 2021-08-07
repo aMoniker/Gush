@@ -1,17 +1,20 @@
-import { k } from "/kaboom.js"
+import { k } from "/kaboom.js";
+import { config } from "/config.js";
 
 // https://developer.mozilla.org/en-US/docs/Web/API/Gamepad_API/Using_the_Gamepad_API
 
+// cached player to prevent any duplicates
+let cachedPlayer = null;
+
 /**
- * Add a new player to the game. There should only be one at a time.
+ * Add a new player to the game. There can only be one at a time.
  * types: elf_f, elf_m, knight, lizard_f, lizard_m, wizard_f, wizard_m
  */
-
-export const addPlayer = (type) => {
+export const createPlayer = (type, attrs) => {
+  if (cachedPlayer) return cachedPlayer;
 
   const player = k.add([
     k.origin("center"),
-    k.pos(100, 100),
     k.sprite(type, { animSpeed: 0.3, noArea: true }),
     k.area(k.vec2(-6, -2), k.vec2(6, 14)),
     k.layer("game"),
@@ -23,7 +26,8 @@ export const addPlayer = (type) => {
       moving: false,
       hit: false,
       canBurp: true,
-    }
+    },
+    ...(attrs ?? []),
   ]);
 
   // TODO - should these be called every frame, or only change on events?
@@ -54,12 +58,8 @@ export const addPlayer = (type) => {
     }
   };
 
-  const tilesPerScreen = 16;
-  const tileWidth = 16;
-  const effectiveWidth = tilesPerScreen * tileWidth;
-
   const handleCamera = () => {
-    const scale = k.width() / effectiveWidth;
+    const scale = k.width() / config.viewableWidth;
     k.camScale(scale);
     k.camPos(player.pos);
   };
@@ -113,8 +113,19 @@ export const addPlayer = (type) => {
   });
   k.keyRelease("d", () => {
     player.dir.x = 0;
-    player.moving = false;
+    player.moving = false; 
   });
 
-  return player;
+  // hide off-screen non-player objects to improve performance
+  k.action("non-player", (obj) => {
+    obj.hidden = player.pos.dist(obj.pos) > config.viewableDist;
+  });
+
+  cachedPlayer = player;
+  return cachedPlayer;
 };
+
+export const destroyPlayer = () => {
+  k.destroy(cachedPlayer);
+  cachedPlayer = null;
+}

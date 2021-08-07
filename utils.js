@@ -17,3 +17,7 @@ export const showFps = () => {
     fpsText.text = k.debug.fps();
   });
 }
+
+export const curry = (fn, ...curriedArgs) => {
+  return (...moreArgs) => fn(...curriedArgs, ...moreArgs);
+};
