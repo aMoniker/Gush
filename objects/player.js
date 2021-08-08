@@ -1,10 +1,15 @@
 import { k } from "/kaboom.js";
 import { config } from "/config.js";
+import { uiUpdateHealth } from "/ui.js";
+
+import hp from "/components/hp.js";
 
 // https://developer.mozilla.org/en-US/docs/Web/API/Gamepad_API/Using_the_Gamepad_API
 
 // cached player to prevent any duplicates
 let cachedPlayer = null;
+
+const hitReactionTime = 0.33;
 
 /**
  * Add a new player to the game. There can only be one at a time.
@@ -29,12 +34,15 @@ export const createPlayer = (type, attrs) => {
     "player",
     "killable",
     {
-      dir: k.vec2(0, 0),
-      speed: 77,
-      moving: false,
-      hit: false,
-      canBurp: true,
+      dir: k.vec2(0, 0),   // which direction the player is moving
+      speed: 77,           // how fast the player moves
+      moving: false,       // when true, move player in dir by speed
+      forcedMoving: false, // when true, ignore input and move player in dir
+      hit: false,          // animation for hit & temporary loss of control
+      invulnerable: false, // player is temporarily invulnerable after being hit
+      canBurp: true,       // controls how often the player can burp
     },
+    hp({ current: 6, max: 6 }),
     ...(attrs ?? []),
   ]);
 
@@ -60,7 +68,7 @@ export const createPlayer = (type, attrs) => {
   };
 
   const handleMoving = () => {
-    if (player.moving) {
+    if (player.moving || player.forcedMoving) {
       player.flipX(player.dir.x < 0);
       player.move(player.dir.scale(player.speed));
     }
@@ -88,46 +96,73 @@ export const createPlayer = (type, attrs) => {
     k.wait(1, () => player.canBurp = true);
   });
 
-  k.keyDown("w", () => {
-    player.dir.y = -1;
-    player.moving = true;
-  });
-  k.keyRelease("w", () => {
-    player.dir.y = 0;
-    player.moving = false;
-  });
+  const controlMoving = (dir, moving) => {
+    if (player.forcedMoving) return;
+    player.dir.x = dir.x ?? player.dir.x;
+    player.dir.y = dir.y ?? player.dir.y;
+    player.moving = moving;
+  };
 
-  k.keyDown("a", () => {
-    player.dir.x = -1;
-    player.moving = true;
-  });
-  k.keyRelease("a", () => {
-    player.dir.x = 0;
-    player.moving = false;
-  });
-
-  k.keyDown("s", () => {
-    player.dir.y = 1;
-    player.moving = true;
-  });
-  k.keyRelease("s", () => {
-    player.dir.y = 0;
-    player.moving = false;
-  });
-
-  k.keyDown("d", () => {
-    player.dir.x = 1;
-    player.moving = true;
-  });
-  k.keyRelease("d", () => {
-    player.dir.x = 0;
-    player.moving = false; 
-  });
+  // movement keys
+  k.keyDown("w", () => controlMoving({ y: -1 }, true));
+  k.keyRelease("w", () => controlMoving({ y: 0 }, false));
+  k.keyDown("a", () => controlMoving({ x: -1 }, true));
+  k.keyRelease("a", () => controlMoving({ x: 0 }, false));
+  k.keyDown("s", () => controlMoving({ y: 1 }, true));
+  k.keyRelease("s", () => controlMoving({ y: 0 }, false));
+  k.keyDown("d", () => controlMoving({ x: 1 }, true));
+  k.keyRelease("d", () => controlMoving({ x: 0 }, false));
 
   // hide off-screen non-player objects to improve performance
   k.action("non-player", (obj) => {
     obj.hidden = player.pos.dist(obj.pos) > config.viewableDist;
   });
+
+  player.on("hurt", (amt, hurtBy) => {
+    if (player.invulnerable) return;
+
+    // push the player in the opposite direction if they ran into something solid
+    if (player.moving && hurtBy.solid) {
+      player.moving = false;
+      player.forcedMoving = true;
+      player.dir = player.dir.scale(-1);
+    }
+
+    // temporary invulnerability on hit
+    player.hit = true;
+    player.invulnerable = true;
+
+    // flash the player red
+    player.use(k.color(1, 0, 0, 1));
+    let flashing = true;
+    const flashTimer = hitReactionTime / 5;
+    const cancelFlashing = k.loop(flashTimer, () => {
+      flashing = !flashing;
+      player.color.a = (flashing ? 1 : 0);
+    });
+
+    // clear all the hit effects
+    k.wait(hitReactionTime, () => {
+      player.hit = false;
+      player.invulnerable = false;
+      player.forcedMoving = false;
+      player.dir.x = 0;
+      player.dir.y = 0;
+      cancelFlashing();
+      player.color = undefined;
+    });
+
+    uiUpdateHealth(player.hp(), player.maxHp());
+  });
+
+  // womp womp
+  player.on("death", () => {
+    // TODO - player death animation
+    k.go("gameover");
+  });
+
+  // initialize health
+  uiUpdateHealth(player.hp(), player.maxHp());
 
   cachedPlayer = player;
   return cachedPlayer;

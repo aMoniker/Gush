@@ -1,7 +1,6 @@
 import { k } from "/kaboom.js"
 import { loadAssets } from "/assets/loader.js"
-import "/scenes/loading.js"
-import "/scenes/main.js"
+import "/scenes/index.js"; // initializes all scenes
 
 k.go("loading");
 

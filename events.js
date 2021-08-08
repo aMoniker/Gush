@@ -1,27 +1,40 @@
-import { k } from "/kaboom.js"
+import { k } from "/kaboom.js";
+
+const handleFloorTrap = (player, trap) => {
+  const trapDmg = 1;
+  const springDelay = 1;
+  const retractDelay = 3;
+  const rearmDelay = 2;
+
+  if (trap.sprung) { // player walked into already sprung trap
+    player.hurt(trapDmg, trap);
+    return;
+  }
+
+  if (!trap.canSpring) return; // trap hasn't finished re-spring timeout yet
+  
+  // spring the trap, then retract, then rearm
+  trap.sprung = true;
+  trap.canSpring = false;
+  k.wait(springDelay, () => {
+    trap.play("trap_sprung", false);
+    if (trap.isOverlapped(player)) player.hurt(trapDmg, trap);
+    k.wait(retractDelay, () => {
+      trap.play("trap_reset", false);
+      trap.sprung = false;
+      k.wait(rearmDelay, () => {
+        trap.canSpring = true;
+        if (trap.isOverlapped(player)) setTimeout(() => handleFloorTrap(player, trap));
+      });
+    });
+  });
+};
+
+const handleMonsterCollision = (player, monster) => {
+  player.hurt(1, monster); // TODO - make this depend on monster?
+};
 
 export const addEvents = () => {
-  k.overlaps("player", "floor_trap", (p, ft) => {
-    if (ft.sprung) {
-      // hp damage here
-      // console.log('player walked into trap');
-    } else if (ft.canSpring) {
-      ft.sprung = true;
-      ft.canSpring = false;
-      k.wait(1, () => {
-        ft.animSpeed = 0.1;
-        ft.play("trap_sprung", false);
-        if (ft.isOverlapped(p)) {
-          // hp damage here
-          // console.log('player stood on trap');
-        }
-        k.wait(3, () => {
-          ft.animSpeed = 0.3;
-          ft.play("trap_reset", false);
-          ft.sprung = false;
-          k.wait(2, () => ft.canSpring = true);
-        });
-      });
-    }
-  });
+  k.overlaps("player", "floor_trap", handleFloorTrap);
+  k.collides("player", "monster", handleMonsterCollision);
 };
