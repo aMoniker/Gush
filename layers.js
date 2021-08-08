@@ -6,7 +6,7 @@ export const addLayers = () => {
     "floor",
     "game",
     "ceiling",
-    "effect",
+    "fx",
     "ui",
   ], "game");
   k.camIgnore(["bg", "ui"]);

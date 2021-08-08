@@ -10,9 +10,11 @@ const loadBasicSprite = (name, slices, animations) => {
       to: frames[1],
     }
   }
+
+  slices = slices ?? 1;
   return k.loadSprite(name, `/assets/sprites/${name}.png`, {
-    sliceX: slices ?? 1,
-    sliceY: 1,
+    sliceX: slices.x ?? slices,
+    sliceY: slices.y ?? 1,
     anims,
   })
 };
@@ -21,11 +23,8 @@ export const loadAssets = () => {
   const promises = [];
 
   promises.push(loadBasicSprite("chest", 9, {
-    // empty_closed: [0, 0],
     empty_open: [0, 2],
-    // full_closed: [3, 3],
     full_open: [3, 5],
-    // mimic_closed: [6, 6],
     mimic_open: [6, 8],
   }));
 
@@ -195,6 +194,48 @@ export const loadAssets = () => {
     idle: [0, 3],
     run: [4, 7],
   }));
+
+  promises.push(loadBasicSprite("vfx-blood-1", 9, {
+    main: [0, 8],
+  }));
+  promises.push(loadBasicSprite("vfx-blood-2", 10, {
+    main: [0, 9],
+  }));
+  promises.push(loadBasicSprite("vfx-blood-3", 14, {
+    main: [0, 13],
+  }));
+  promises.push(loadBasicSprite("vfx-blood-4", 7, {
+    main: [0, 6],
+  }));
+  promises.push(loadBasicSprite("vfx-blood-5", 10, {
+    main: [0, 9],
+  }));
+  promises.push(loadBasicSprite("vfx-blood-6", 9, {
+    main: [0, 8],
+  }));
+  promises.push(loadBasicSprite("vfx-blood-7", 10, {
+    main: [0, 9],
+  }));
+  promises.push(loadBasicSprite("vfx-blood-8", 12, {
+    main: [0, 11],
+  }));
+
+  promises.push(loadBasicSprite("vfx-slash", 5, {
+    main: [0, 4],
+  }));
+
+  // maybe re-do these as filmstrips
+  // after this runs, this error happens:
+  // TypeError: Cannot read property 'scale' of undefined
+  // promises.push(loadBasicSprite("explosion-round-vortex", {x:10,y:9}, {
+  //   main: [0, 91]
+  // }));
+  // promises.push(loadBasicSprite("explosion-vertical", {x:10,y:7}, {
+  //   main: [0, 83]
+  // }));
+  // promises.push(loadBasicSprite("explosion-vertical-small", {x:10,y:8}, {
+  //   main: [0, 74]
+  // }));
 
   return Promise.all(promises);
 }

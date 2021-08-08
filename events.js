@@ -2,9 +2,9 @@ import { k } from "/kaboom.js";
 
 const handleFloorTrap = (player, trap) => {
   const trapDmg = 1;
-  const springDelay = 1;
-  const retractDelay = 3;
-  const rearmDelay = 2;
+  const springDelay = 0.5;
+  const retractDelay = 2;
+  const rearmDelay = 1;
 
   if (trap.sprung) { // player walked into already sprung trap
     player.hurt(trapDmg, trap);

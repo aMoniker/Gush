@@ -22,8 +22,30 @@ Character classes:
 - Knight (high hp), has sword, can upgrade good hp/(armor?)
 - Dinosaur (mid hp) male has double pounding maces, female has boomerang hammers
 
-## Tools & Assets used
+## Tools
 - [Replit.com](https://replit.com/)
 - [Kaboom.js v 0.6.0](https://kaboomjs.com/)
-- [Dungeon Tileset 2](https://0x72.itch.io/dungeontileset-ii)
 - [Stitches (spritesheet generator)](https://draeton.github.io/stitches/)
+- [Aseprite](https://www.aseprite.org/)
+
+## Graphics
+- [Dungeon Tileset 2](https://0x72.itch.io/dungeontileset-ii)
+- [Blood FX](https://jasontomlee.itch.io/blood-fx)
+- [Assets Free Laser Bullets Pack 2020](https://wenrexa.itch.io/laser2020)
+- [Pixel Art Effect - FX084 (+15 Effects)](https://kvsr.itch.io/fx084)
+
+## Sound
+- [Shapeforms Audio Free Sounds](https://shapeforms.itch.io/shapeforms-audio-free-sfx)
+- [Hypercasual Music Pack 1](https://www.void1gaming.com/hypercasual-music-pack-1)
+- [Hypercasual Music Pack 4](https://www.void1gaming.com/hypercasual-music-pack-4)
+- [Action RPG Music Free](https://vgcomposer.itch.io/action-rpg-music-free)
+
+## Maybe will use (not implemented yet)
+- [Magical Animation Effects](https://pimen.itch.io/magical-animation-effects)
+- [Free Pixel Effects Pack #12 - Mini Magick Shoots 3](https://xyezawr.itch.io/gif-free-pixel-effects-pack-12-mini-magick-shoots-3)
+- [Pixel Effects Pack](https://codemanu.itch.io/pixelart-effect-pack)
+- [GIF Free Pixel Effects Pack #6 - forks of flame](https://xyezawr.itch.io/gif-free-pixel-effects-pack-6-forks-of-flame)
+
+## Lots more cool assets (not implemented in this game)
+- [https://xyezawr.itch.io/](https://xyezawr.itch.io/)
+- [https://kvsr.itch.io/](https://kvsr.itch.io/)

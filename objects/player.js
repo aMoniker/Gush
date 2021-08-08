@@ -69,7 +69,7 @@ export const createPlayer = (type, attrs) => {
 
   const handleMoving = () => {
     if (player.moving || player.forcedMoving) {
-      player.flipX(player.dir.x < 0);
+      if (!player.forcedMoving) player.flipX(player.dir.x < 0);
       player.move(player.dir.scale(player.speed));
     }
   };
@@ -100,6 +100,8 @@ export const createPlayer = (type, attrs) => {
     if (player.forcedMoving) return;
     player.dir.x = dir.x ?? player.dir.x;
     player.dir.y = dir.y ?? player.dir.y;
+    // TODO - store weapon direction based on movement
+    //        don't reset it when movement stops
     player.moving = moving;
   };
 
@@ -135,7 +137,7 @@ export const createPlayer = (type, attrs) => {
     // flash the player red
     player.use(k.color(1, 0, 0, 1));
     let flashing = true;
-    const flashTimer = hitReactionTime / 5;
+    const flashTimer = hitReactionTime / 9;
     const cancelFlashing = k.loop(flashTimer, () => {
       flashing = !flashing;
       player.color.a = (flashing ? 1 : 0);
