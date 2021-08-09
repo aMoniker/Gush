@@ -40,7 +40,7 @@ const addCrate = (ctx) => addObject(misc.crate, ctx, [k.solid()]);
 const addMimic = (ctx) => addObject(monster.mimic, ctx);
 
 const addPlayer = (ctx) => {
-  const player = createPlayer("elf_m", [getWorldPos(ctx.x, ctx.y)]);
+  const player = createPlayer(config.playerType, [getWorldPos(ctx.x, ctx.y)]);
   centerObjectInTile(player);
 }
 
