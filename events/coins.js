@@ -1,6 +1,6 @@
 import { k } from "/kaboom.js";
 import { config } from "/config.js";
-import { changeOverTime, easing } from "/utils.js";
+import { tween, easing } from "/utils.js";
 
 // coins are saved between games and used to unlock new characters
 const handleCoinPickup = (player, coin) => {
@@ -21,11 +21,11 @@ const handleCoinPickup = (player, coin) => {
   })
 
   // move the coin up and fade it out
-  changeOverTime(coin, 1, {
+  tween(coin, 1, {
     "pos.y": coin.pos.y - config.tileHeight,
   }, easing.easeOutQuart);
   coin.use(k.color(1,1,1,1));
-  changeOverTime(coin, 1.3, { "color.a": 0});
+  tween(coin, 1.3, { "color.a": 0});
 
   const destroyTime = Math.max(moveUpTime, fadeOutTime);
   k.wait(destroyTime, () => coin.destroy());

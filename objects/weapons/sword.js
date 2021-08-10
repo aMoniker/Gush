@@ -1,4 +1,5 @@
 import { k } from "/kaboom.js";
+import { tween, easing } from "/utils.js";
 
 // TODO - make the sword (and all weapons) attack at any player.dir
 
@@ -52,22 +53,11 @@ export const createSword = (player) => {
           vfxSlash.hidden = true;
         });
 
-        // TODO - use easing function
-        // https://easings.net/#
-        const startAngle = weapon.angle;
+        const sliceTime = 0.33;
         const dir = player.xFlipped ? 1 : -1;
-        const rotateTo = weapon.angle + (dir * Math.PI * 2);
-        const sliceTime = 0.3;
-        let spent = 0;
-        const cancelSlice = k.action(() => {
-          spent += k.dt();
-          if (spent < sliceTime) {
-            weapon.angle = (spent / sliceTime) * rotateTo;
-          } else {
-            weapon.angle = startAngle;
-            cancelSlice();
-          }
-        });
+        tween(weapon, sliceTime, {
+          "angle": weapon.angle + (dir * Math.PI * 2),
+        }, easing.easeInOutQuint);
 
         const attackFinishTimer = Math.max(vfxTime, sliceTime);
         const hitboxOverlapTimer = attackFinishTimer / 2;

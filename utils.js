@@ -24,10 +24,20 @@ export const curry = (fn, ...curriedArgs) => {
 
 export const easing = {
   linear: (x) => x,
-  easeOutQuart: (x) => 1 - Math.pow(1 - x, 4),
+  easeOutQuart: (x) => 1 - (1-x)**4,
+  easeInOutQuint: (x) => x < 0.5 ? 16 * x**5 : 1 - (-2 * x + 2)**5 / 2,
 };
 
-export const changeOverTime = (obj, time, changes, ease) => {
+/**
+ * Change the given numeric properties of `obj` over `time`.
+ *  obj: the game object to be changed
+ *  time: the time in seconds over which the change will occur.
+ *  changes: an object of { [path]: endVal }, where path is a
+ *           dot-delimited string to the value, consumable by lodash,
+ *           and endVal is the value that should result after `time`
+ *  ease: optional easing function; defaults to linear. See easing above.
+ */
+export const tween = (obj, time, changes, ease) => {
   let spent = 0;
   const orig = {};
   if (!ease) ease = easing.linear;
