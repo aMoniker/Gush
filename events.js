@@ -31,8 +31,8 @@ const handleFloorTrap = (player, trap) => {
 };
 
 const handleMonsterCollision = (player, monster) => {
-  console.log('player collided monster');
-  player.hurt(1, monster); // TODO - make this depend on monster?
+  if (monster.dead) return;
+  player.hurt(1, monster); // TODO - make dmg amnt depend on monster?
 };
 
 export const addEvents = () => {

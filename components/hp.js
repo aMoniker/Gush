@@ -6,16 +6,20 @@ export default (options) => {
   return {
     id: "hp",
     require: ["killable"],
+    dead: false,
     hurt(x, hurtBy) {
       const amt = x ?? 1;
       currentHp -= amt;
       this.trigger("hurt", amt, hurtBy);
-      if (currentHp <= 0) this.trigger("death");
+      if (currentHp <= 0) {
+        this.dead = true;
+        this.trigger("death", hurtBy);
+      }
     },
     heal(x, healedBy) {
       const amt = x ?? 1;
       currentHp = Math.min(currentHp + amt, maxHp);
-      this.trigger("heal", amt);
+      this.trigger("heal", amt, healedBy);
     },
     hp() { return currentHp; },
     maxHp() { return maxHp; },

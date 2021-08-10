@@ -1,4 +1,5 @@
 import { k } from "/kaboom.js";
+import hp from "/components/hp.js";
 
 /**
  * Monsters:
@@ -21,6 +22,7 @@ const basicMob = (spriteName, area, extraAttrs) => ([
   k.sprite(spriteName, { noArea: true }),
   k.solid(),
   k.area(k.vec2(area[0], area[1]), k.vec2(area[2], area[3])),
+  hp({ current: 2, max: 2 }),
   "non-player",
   "monster",
   "killable",
@@ -54,6 +56,7 @@ export const randomZombie = () => {
   return k.choose([zombieIce, zombieTiny, zombiePlain])();
 }
 
+// TODO - prevent mimic damage to player until opened
 export const mimic = () => ([
   k.sprite("chest", { noArea: true, frame: 6 }),
   k.solid(),
