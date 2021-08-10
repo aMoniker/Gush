@@ -60,7 +60,7 @@ const addFountainBasin = (color) => (ctx) => {
 }
 
 const symbolToObject = {
-  "@": addPlayer,
+  // "@": addPlayer, // special-handling, see createObjectsOnMap
   "$": addCoin,
   "?": addChest,
   "c": addCrate,
@@ -84,13 +84,21 @@ const symbolToObject = {
 }
 
 export const createObjectsOnMap = (map) => {
+  const playerCoords = k.vec2(0, 0);
   for (let y = 0; y < map.length; y++) {
     for (let x = 0; x < map[y].length; x++) {
       const sym = map[y][x];
-      if (symbolToObject[sym]) {
+      if (sym === "@") {
+        playerCoords.x = x;
+        playerCoords.y = y;
+      } else if (symbolToObject[sym]) {
         const context = getTileContext(map, x, y);
         symbolToObject[sym](context);
       }
     }
   }
+
+  // we wait until all objects are added before adding the player
+  // to ensure that the player sprite is painted above everything else.
+  addPlayer(getTileContext(map, playerCoords.x, playerCoords.y));
 }
