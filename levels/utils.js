@@ -17,13 +17,12 @@ export const getWorldPos = (mx, my) => {
   return k.pos(x, y);
 }
 
-export const addBasicTile = (wallFunc, x, y, layer) => {
-  const t = k.add([
-    ...wallFunc(),
+export const addBasicTile = (tileFunc, x, y, layer) => {
+  return k.add([
+    ...tileFunc(),
     getWorldPos(x, y),
     k.layer(layer ?? "floor"),
   ]);
-  return t;
 }
 
 export const isEmptySymbol = (sym) => {

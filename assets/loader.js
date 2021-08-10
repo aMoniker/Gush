@@ -1,4 +1,5 @@
-import { k } from "/kaboom.js"
+import { k } from "/kaboom.js";
+import { curry } from "/utils.js";
 
 // convenience wrapper to load a sprite in the standard filmstrip format
 // animations are an object mapping of { name: [from, to] }
@@ -19,6 +20,18 @@ const loadBasicSprite = (name, slices, animations) => {
   })
 };
 
+const loadAudio = (dir, name) => {
+  return k.loadSound(name, `/assets/${dir}/${name}.mp3`);
+}
+
+// convenience wrapper for sound loading
+// const loadBasicSound = (name) => {
+//   return k.loadSound(name, `/assets/sounds/${name}.mp3`);
+// };
+
+const loadBasicSound = curry(loadAudio, "sounds");
+const loadBasicMusic = curry(loadAudio, "music");
+
 // TODO - grep game code for these when finished, remove unused.
 export const loadAssets = () => {
   const promises = [];
@@ -31,7 +44,7 @@ export const loadAssets = () => {
   promises.push(loadBasicSprite("hole"));
   promises.push(loadBasicSprite("floor", 16, {
     ladder: [8, 8],
-    trap_set: [9, 9],
+    // trap_set: [9, 9],
     trap_sprung: [10, 12],
     trap_reset: [13, 15],
   }));
@@ -219,6 +232,18 @@ export const loadAssets = () => {
   // promises.push(loadBasicSprite("explosion-vertical-small", {x:10,y:8}, {
   //   main: [0, 74]
   // }));
+
+
+  // sound effects
+  // promises.push(k.loadSound("whoosh-swing", "/assets/sounds/whoosh-swing.mp3"));
+  promises.push(loadBasicSound("whoosh-swing"));
+  promises.push(loadBasicSound("punch-clean-heavy"));
+  promises.push(loadBasicSound("trap-spring"));
+
+
+  // music
+  promises.push(loadBasicMusic("stark-nuances"));
+
 
   return Promise.all(promises);
 }

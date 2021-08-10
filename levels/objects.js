@@ -8,18 +8,13 @@ import { createPlayer } from "/objects/player.js";
 import { config } from "/config.js";
 import { curry } from "/utils.js";
 
-const centerObjectInTile = (obj) => {
-  obj.pos.x += (config.tileWidth / 2) - (obj.width / 2);
-  obj.pos.y += (config.tileHeight / 2) - (obj.height / 2);
-}
-
 const addObject = (objFn, ctx, extraAttrs) => {
   const obj = k.add([
+    k.origin("center"),
     ...objFn(),
     getWorldPos(ctx.x, ctx.y),
     ...(extraAttrs ?? [])
   ]);
-  centerObjectInTile(obj);
   return obj;
 };
 
@@ -55,7 +50,6 @@ const addMimic = (ctx) => addObject(monster.mimic, ctx);
 
 const addPlayer = (ctx) => {
   const player = createPlayer(config.playerType, [getWorldPos(ctx.x, ctx.y)]);
-  centerObjectInTile(player);
 }
 
 const addFountainBasin = (color) => (ctx) => {

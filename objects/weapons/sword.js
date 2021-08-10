@@ -22,13 +22,12 @@ export const createSword = (player) => {
         if (weapon.attacking) return;
         weapon.attacking = true;
 
-        hitBox.hidden = false;
-
         // We do two separate checks to see if the player hit a monster.
         // The first checks if the hitbox is already overlapping a monster,
-        // because the overlap event won't trigger when setting hidden = false.
+        // because the overlap event won't trigger if it's already overlapping.
         // The second check is a temporary overlaps event handler, in case the
         // player walks into a monster while their weapon is still mid-swing.
+        hitBox.hidden = false;
         for (const m of k.get("monster")) {
           if (!m.hidden && hitBox.isOverlapped(m)) m.hurt(weapon.damage, player);
         }
@@ -37,6 +36,13 @@ export const createSword = (player) => {
             if (!m.hidden) m.hurt(weapon.damage, player);
           }
         );
+
+        k.play("whoosh-swing", {
+          loop: false,
+          volume: 0.5,
+          speed: 0.5,
+          detune: -100,
+        });
 
         const vfxTime = vfxSlash.animSpeed * vfxSlash.numFrames();
         vfxSlash.hidden = false

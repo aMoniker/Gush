@@ -156,6 +156,13 @@ export const createPlayer = (type, attrs) => {
     player.use(k.color(1, 0, 0, 1));
     weapon.use(k.color(1, 0, 0, 1));
 
+    // oof
+    k.play("punch-clean-heavy", {
+      loop: false,
+      volume: 0.666,
+      detune: -100,
+    });
+
     // clear all the hit effects
     k.wait(hitReactionTime, () => {
       player.hit = false;

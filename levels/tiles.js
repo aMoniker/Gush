@@ -10,6 +10,7 @@ const makeUnimplementedTile = () => ([
   k.layer("game"),
   k.rect(16, 16),
   k.color(k.rand(0.1, 1), k.rand(0.1, 1), k.rand(0.1, 1)),
+  k.origin("center"),
 ]);
 
 const horizontalWallTile = (ctx) => {
@@ -179,7 +180,7 @@ const symbolToTile = {
   "&": fountainTile("Red"),
   "%": fountainTile("Blue"),
   "!": wallGooTile,
-  ">": misc.floorLadderDown,
+  ">": misc.floorLadderDown, // TODO - this might have to be an object
   "#": crevasseTile,
 
   // these are all floor tiles in the first pass
