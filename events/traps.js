@@ -44,12 +44,6 @@ const handleFloorTrap = (player, trap) => {
   });
 };
 
-const handleMonsterCollision = (player, monster) => {
-  if (monster.dead) return;
-  player.hurt(1, monster); // TODO - make dmg amnt depend on monster?
-};
-
-export const addEvents = () => {
+export default () => {
   k.overlaps("player", "floor_trap", handleFloorTrap);
-  k.collides("player", "monster", handleMonsterCollision);
-};
+}

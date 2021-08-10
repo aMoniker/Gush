@@ -239,6 +239,7 @@ export const loadAssets = () => {
   promises.push(loadBasicSound("whoosh-swing"));
   promises.push(loadBasicSound("punch-clean-heavy"));
   promises.push(loadBasicSound("trap-spring"));
+  promises.push(loadBasicSound("coin-flung"));
 
 
   // music

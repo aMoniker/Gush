@@ -1,5 +1,4 @@
 import { k } from "/kaboom.js";
-// import { rng } from "/utils.js";
 
 /**
  * Powerups - objects the player can pick up for a bonus effect
@@ -11,6 +10,10 @@ export const coin = () => ([
   k.sprite("coin"),
   "non-player",
   "interactive",
+  "coin",
+  {
+    pickedUp: false,
+  }
 ]);
 
 const flaskFrames = {
@@ -30,6 +33,7 @@ export const flask = (size, color) => ([
   k.sprite("flask", { frame: flaskFrames[`${color}_${size}`] }),
   "non-player",
   "interactive",
+  "flask",
   `flask_${color}_${size}`,
 ]);
 
