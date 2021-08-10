@@ -3,7 +3,7 @@ import { k } from "/kaboom.js";
 export const config = {
   tileWidth: 16,
   tileHeight: 16,
-  tilesPerScreen: 11,
+  tilesPerScreen: 13,
   mapOrigin: k.vec2(0, 0),
   playerType: "knight", // select from menu screen
 };
