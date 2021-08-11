@@ -21,20 +21,6 @@ const addObject = (objFn, ctx, extraAttrs) => {
 const addMonster = (objFn, ctx, extraAttrs) => {
   const m = addObject(objFn, ctx, extraAttrs);
   m.play("idle");
-  m.on("death", () => {
-    m.solid = undefined;
-    m.use(k.color(1, 0, 0, 1));
-    const deathEffectTimer = 1;
-    let time = 0;
-    const cancelDeathEffect = m.action(() => {
-      time += k.dt();
-      m.color.a = Math.max(0, 1 - (time / deathEffectTimer));
-      if (time >= deathEffectTimer) {
-        cancelDeathEffect();
-        m.destroy();
-      }
-    });
-  });
 }
 
 const addCoin = (ctx) => {

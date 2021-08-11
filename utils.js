@@ -46,13 +46,19 @@ export const tween = (obj, time, changes, ease) => {
     const diff = endVal - val;
     orig[path] = { val, diff };
   }
-  const cancelAction = obj.action(() => {
-    spent = Math.min(spent + k.dt(), time);
-    const percent = spent / time;
-    for (const path of Object.keys(changes)) {
-      const updated = orig[path].val + (ease(percent) * orig[path].diff);
-      _.set(obj, path, updated);
-    }
-    if (spent >= time) return cancelAction();
+  return new Promise((resolve, reject) => {
+    const cancelAction = obj.action(() => {
+      spent = Math.min(spent + k.dt(), time);
+      const percent = spent / time;
+      for (const path of Object.keys(changes)) {
+        const updated = orig[path].val + (ease(percent) * orig[path].diff);
+        _.set(obj, path, updated);
+      }
+      if (spent >= time) {
+        cancelAction();
+        resolve();
+        return;
+      }
+    });
   });
 };

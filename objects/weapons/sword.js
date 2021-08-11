@@ -28,13 +28,21 @@ export const createSword = (player) => {
         // because the overlap event won't trigger if it's already overlapping.
         // The second check is a temporary overlaps event handler, in case the
         // player walks into a monster while their weapon is still mid-swing.
+        // For some reason, both can trigger, so we make sure only one does.
+        const hits = new Set();
         hitBox.hidden = false;
         for (const m of k.get("monster")) {
-          if (!m.hidden && hitBox.isOverlapped(m)) m.hurt(weapon.damage, player);
+          if (!m.hidden && hitBox.isOverlapped(m) && !hits.has(m._id)) {
+            hits.add(m._id);
+            m.hurt(weapon.damage, player);
+          }
         }
         const cancelHitboxOverlapEvent = k.overlaps(
           "player_weapon_hitbox", "monster", (hb, m) => {
-            if (!m.hidden) m.hurt(weapon.damage, player);
+            if (!m.hidden && !hits.has(m._id)) {
+              hits.add(m._id);
+              m.hurt(weapon.damage, player);
+            }
           }
         );
 
