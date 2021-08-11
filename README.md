@@ -1,26 +1,38 @@
 # Gush
 
-A roguelike game for kaboom.js
+A dungeon brawler game built with [Kaboom.js](https://kaboomjs.com/) on [Replit.com](https://replit.com/) for a [1729.com](https://1729.com/) contest.
 
-Potential game mechanics:
-- golden flask gives charges of Power Belch, burp kills enemies around player, small one charge, large 3 charges
-- Certain weapons can be picked up for a limited time, more powerful, replaces normal weapon
-- Green flask makes player hulk out, transform to huge sprite, trample enemies, super punch? (maybe gain green hearts?)
-- Red flask restores hp of course
-- HP is always in increments of 1, each 1 represents half a heart
-- Blue flask... maybe invincibility? faster attacks?
-- Chests can contain flasks, or may spawn enemies
-- Crates can be whacked and sent flying into enemies
-- Coins can be collected and spent in shops, enemies drop and scatter coins
-- Necromancers raise 1 hit skeletons
-- Skeletons drop skulls, which can be whacked into mobs like crates
-- Orc shaman can heal his orc friends
+### Basic game mechanics
+- [x] Red flask restores hp of course~~
+- [x] HP is always in increments of 1, each 1 represents half a heart~~
+- ~~Blue flask... maybe invincibility? faster attacks?~~
+- [ ] Blue flask gives a shield on top of HP
+- ~~Green flask makes player hulk out, transform to huge sprite, trample enemies, super punch? (maybe gain green hearts?)~~
+- [ ] Green flask gives charges of Power Belch, burp kills enemies around player, small one charge, large 3 charges
+- [ ] Yellow flask gives temporary attack dmg boost (maybe show this on weapon graphic)
+- [ ] Chests can contain flasks, coins, or may be mimics
+- ~~Crates can be whacked and sent flying into enemies~~
+- ~~Coins can be collected and spent in shops, enemies drop and scatter coins~~
+- [ ] Coins can be collected through multiple game runs to unlock more characters
+- [ ] Necromancers raise armies of 1 hit skeletons
+- ~~Skeletons drop skulls, which can be whacked into mobs like crates~~
+- [ ] Enemies drop a skull as a visual effect (non-interactive).
+- [ ] Crates can be pushed around to solve puzzles
+- [ ] Current level can be reset if a player really messes things up.
+
+### Potential game mechanics
+- [ ] Certain weapons can be picked up for a limited time, more powerful, replaces normal weapon
+- [ ] Orc shaman can heal his orc friends
+
 
 Character classes:
-- Wizard (low hp), male has fire staff that must recharge, powerful, female has laser staff, fires fast but low dmg
-- Elf (low hp), female has bow & arrows, male has has spear thrust
-- Knight (high hp), has sword, can upgrade good hp/(armor?)
-- Dinosaur (mid hp) male has double pounding maces, female has boomerang hammers
+- [x] Swordy Boi - starting char, all other are unlocks. decent sword, decent hp
+- [ ] Pokey Elf - killer spear, mediocre hp
+- [ ] Shootie Pie - decent bow, decent hp
+- [ ] Crushy Lizard - slow, powerful attack, good hp
+- [ ] Smashy Dino - fast attack in all directions, good hp
+- [ ] Burny Mage - ranged fire attack, heavy dmg, low hp
+- [ ] LASER WIZARD - laser attack fires through enemies, lower dmg than fire, low hp
 
 ## Tools
 - [Replit.com](https://replit.com/)
