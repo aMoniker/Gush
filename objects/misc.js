@@ -65,7 +65,7 @@ export const chest = () => ([
 
 export const crate = () => ([
   k.sprite("crate", { noArea: true }),
-  k.area(k.vec2(2, 1), k.vec2(14, 18)),
+  k.area(k.vec2(-6, -9), k.vec2(6, 8)),
   "non-player",
   "interactive",
   "crate",

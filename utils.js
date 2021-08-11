@@ -24,6 +24,7 @@ export const curry = (fn, ...curriedArgs) => {
 
 export const easing = {
   linear: (x) => x,
+  easeInQuart: (x) => x**4,
   easeOutQuart: (x) => 1 - (1-x)**4,
   easeInOutQuint: (x) => x < 0.5 ? 16 * x**5 : 1 - (-2 * x + 2)**5 / 2,
 };

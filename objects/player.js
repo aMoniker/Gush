@@ -2,6 +2,7 @@ import { k } from "/kaboom.js";
 import { config } from "/config.js";
 import { uiUpdateHealth } from "/ui.js";
 import { createSword } from "/objects/weapons/sword.js";
+import { tween, easing } from "/utils.js";
 
 import hp from "/components/hp.js";
 
@@ -138,6 +139,33 @@ export const createPlayer = (type, attrs) => {
     obj.hidden = player.pos.dist(obj.pos) > config.viewableDist;
   });
 
+  let playerHealing = false;
+  player.on("heal", (amt, healedBy) => {
+    // show a green healing effect if there's not already one in progress
+    if (!playerHealing) {
+      playerHealing = true;
+      if (!player.color) player.use(k.color(1, 1, 1, 1));
+      tween(player, 0.5, {
+        "color.r": 0,
+        "color.b": 0,
+      }, easing.easeOutQuart).then(() => tween(player, 0.5, {
+        "color.r": 1,
+        "color.b": 1,
+      }, easing.easeInQuart)).then(() => {
+        player.color = undefined;
+        playerHealing = false;
+      });
+    }
+
+    k.play("glyph-activation", {
+      loop: false,
+      volume: 0.33,
+      speed: 1.33,
+    });
+
+    uiUpdateHealth(player.hp(), player.maxHp());
+  });
+
   player.on("hurt", (amt, hurtBy) => {
     if (player.invulnerable) return;
 
@@ -153,8 +181,8 @@ export const createPlayer = (type, attrs) => {
     player.invulnerable = true;
 
     // paint the player & weapon red
-    player.use(k.color(1, 0, 0, 1));
-    weapon.use(k.color(1, 0, 0, 1));
+    if (!player.color) player.use(k.color(1, 0, 0, 1));
+    if (!weapon.color) weapon.use(k.color(1, 0, 0, 1));
 
     // oof
     k.play("punch-clean-heavy", {

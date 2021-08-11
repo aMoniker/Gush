@@ -34,11 +34,16 @@ export const flask = (size, color) => ([
   "non-player",
   "interactive",
   "flask",
-  `flask_${color}_${size}`,
+  `flask_color_${color}`,
+  `flask_size_${size}`,
+  {
+    pickedUp: false,
+  }
 ]);
 
 // TODO - make some flasks more rare than others?
 export const randomFlask = () => {
+  return flask("small", "red");
   const size = k.choose(["big", "small"]);
   const color = k.choose(["blue", "green", "red", "yellow"]);
   return flask(size, color);

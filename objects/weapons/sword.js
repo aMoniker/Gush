@@ -7,7 +7,7 @@ export const createSword = (player) => {
   const vfxSlash = k.add([
     k.sprite("vfx-slash", { noArea: true, nimSpeed: 0.001 }),
     k.layer("fx"),
-    k.color(1, 1, 1, 0.77),
+    k.color(0.5, 0.5, 1, 0.47),
   ]);
   vfxSlash.hidden = true;
 

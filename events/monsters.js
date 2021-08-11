@@ -7,6 +7,7 @@ const handleMonsterCollision = (player, monster) => {
   player.hurt(1, monster); // TODO - make dmg amnt depend on monster?
 };
 
+// TODO - some of these still need some adjustments
 const bloodSpriteConfigs = {
   "vfx-blood-1": (monster, flip) => ([k.pos(monster.pos)]),
   "vfx-blood-2": (monster, flip) => ([k.pos(monster.pos.add(flip * 33, 10))]),
@@ -35,6 +36,7 @@ const handleMonsterDeath = (monster, killedBy) => {
     bloodSprite,
     k.layer("fx"),
     k.origin("bot"),
+    k.color(1, 1, 1, 0.88),
     ...bloodSpriteConfigs[bloodSpriteName](monster, flipDir),
   ]);
   blood.play("main", false);
