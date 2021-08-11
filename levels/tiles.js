@@ -106,8 +106,6 @@ const wallGooTile = (ctx) => {
   const layer = (isEmptySymbol(u) || isWallSymbol(u)) ? "floor" : "ceiling";
   addBasicTile(structure.wallGooMid, x, y, layer);
   addBasicTile(structure.wallTopMid, x, y - 1, layer);
-  // TODO - there's a goo "basin" tile to be added in second pass
-  // addBasicTile(structure.wallGooBasin, x, y, layer);
   return structure.invisibleWall();
 };
 

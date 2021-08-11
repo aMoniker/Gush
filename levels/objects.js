@@ -45,6 +45,11 @@ const addFountainBasin = (color) => (ctx) => {
   basin.play(`basin_${color.toLowerCase()}`);
 }
 
+const addWallGooBasin = (ctx) => {
+  if (isEmptySymbol(ctx.d)) return;
+  addBasicTile(structure.wallGooBasin, ctx.x, ctx.y + 1);
+}
+
 const symbolToObject = {
   // "@": addPlayer, // special-handling, see createObjectsOnMap
   "$": addCoin,
@@ -67,6 +72,7 @@ const symbolToObject = {
   "z": curry(addMonster, monster.randomZombie),
   "&": addFountainBasin("Red"),
   "%": addFountainBasin("Blue"),
+  "!": addWallGooBasin,
 }
 
 export const createObjectsOnMap = (map) => {
