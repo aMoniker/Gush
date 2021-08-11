@@ -43,7 +43,7 @@ export const flask = (size, color) => ([
 
 // TODO - make some flasks more rare than others?
 export const randomFlask = () => {
-  return flask("small", "red");
+  return flask("big", "red");
   const size = k.choose(["big", "small"]);
   const color = k.choose(["blue", "green", "red", "yellow"]);
   return flask(size, color);

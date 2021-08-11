@@ -45,12 +45,13 @@ const handleFlaskPickup = (player, flask) => {
     processYellowFlaskEffects(player, flask);
   }
 
-  // turn the flask upside-down and fade it out
-  if (!flask.angle) flask.use(k.rotate(0));
+  // scale the flask, move it up, and fade it out
   if (!flask.color) flask.use(k.color(1,1,1,1));
+  if (!flask.scale) flask.use(k.scale(1));
   tween(flask, 0.77, {
     "pos.y": flask.pos.y - config.tileHeight / 2,
-    "angle": Math.PI,
+    "scale.x": 1.5,
+    "scale.y": 1.5,
   }, easing.easeOutQuart).then(() => {
     return tween(flask, 0.3, {
       "color.a": 0,
