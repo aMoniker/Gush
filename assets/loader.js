@@ -24,11 +24,6 @@ const loadAudio = (dir, name) => {
   return k.loadSound(name, `/assets/${dir}/${name}.mp3`);
 }
 
-// convenience wrapper for sound loading
-// const loadBasicSound = (name) => {
-//   return k.loadSound(name, `/assets/sounds/${name}.mp3`);
-// };
-
 const loadBasicSound = curry(loadAudio, "sounds");
 const loadBasicMusic = curry(loadAudio, "music");
 
@@ -240,6 +235,7 @@ export const loadAssets = () => {
   promises.push(loadBasicSound("punch-clean-heavy"));
   promises.push(loadBasicSound("trap-spring"));
   promises.push(loadBasicSound("coin-flung"));
+  promises.push(loadBasicSound("giblet-splatter"));
 
 
   // music

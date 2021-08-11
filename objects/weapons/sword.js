@@ -32,14 +32,14 @@ export const createSword = (player) => {
         const hits = new Set();
         hitBox.hidden = false;
         for (const m of k.get("monster")) {
-          if (!m.hidden && hitBox.isOverlapped(m) && !hits.has(m._id)) {
+          if (!m.hidden && !m.dead && hitBox.isOverlapped(m) && !hits.has(m._id)) {
             hits.add(m._id);
             m.hurt(weapon.damage, player);
           }
         }
         const cancelHitboxOverlapEvent = k.overlaps(
           "player_weapon_hitbox", "monster", (hb, m) => {
-            if (!m.hidden && !hits.has(m._id)) {
+            if (!m.hidden && !m.dead && !hits.has(m._id)) {
               hits.add(m._id);
               m.hurt(weapon.damage, player);
             }
