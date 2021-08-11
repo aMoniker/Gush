@@ -239,6 +239,9 @@ export const loadAssets = () => {
   promises.push(loadBasicSound("glyph-activation"));
   promises.push(loadBasicSound("glyph-forcefield"));
   promises.push(loadBasicSound("arcane-beacon"));
+  promises.push(loadBasicSound("punch-squelch-heavy"));
+  promises.push(loadBasicSound("punch-intense-heavy"));
+  promises.push(loadBasicSound("implode"));
 
 
   // music

@@ -89,7 +89,7 @@ const handleMonsterDeath = (monster, killedBy) => {
 // TODO - build our own spatial index.
 // otherwise checking monster/wall collisions will make the game unplayable.
 const handleWallCollision = (wall, monster) => {
-  console.log('monster wall collide');
+
 };
 
 export default () => {

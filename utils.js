@@ -58,7 +58,6 @@ export const tween = (obj, time, changes, ease) => {
       if (spent >= time) {
         cancelAction();
         resolve();
-        return;
       }
     });
   });

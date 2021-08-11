@@ -45,17 +45,23 @@ export const createPlayer = (type, attrs) => {
       invulnerable: false, // player is temporarily invulnerable after being hit
       canBurp: true,       // controls how often the player can burp
     },
-    hp({ current: 6, max: 6 }),
+    hp({ current: 1, max: 6 }),
     ...(attrs ?? []),
   ]);
 
   const weapon = createSword(player);
   k.keyPress(weaponKey, () => {
+    if (player.dead) return;
     weapon.attack();
   });
 
   // TODO - should these be called every frame, or only change on events?
   const handleAnimation = () => {
+    if (player.dead) {
+      player.play("hit");
+      return;
+    }
+
     const anim = player.curAnim();
     if (player.hit) {
       if (anim !== "hit") {
@@ -76,6 +82,7 @@ export const createPlayer = (type, attrs) => {
   };
 
   const handleMoving = () => {
+    if (player.dead) return;
     if (!player.moving && !player.forcedMoving) return;
     if (!player.forcedMoving && !weapon.attacking) {
       player.xFlipped = player.dir.x < 0;
@@ -99,7 +106,7 @@ export const createPlayer = (type, attrs) => {
   });
 
   k.keyPress(burpKey, () => {
-    if (!player.canBurp) return;
+    if (player.dead || !player.canBurp) return;
     player.canBurp = false;
     player.hit = true;
     k.burp();
@@ -177,7 +184,7 @@ export const createPlayer = (type, attrs) => {
     if (!weapon.color) weapon.use(k.color(1, 0, 0, 1));
 
     // oof
-    k.play("punch-clean-heavy", {
+    k.play("punch-squelch-heavy", {
       loop: false,
       volume: 0.666,
       detune: -100,
@@ -198,9 +205,31 @@ export const createPlayer = (type, attrs) => {
   });
 
   // womp womp
-  player.on("death", () => {
-    // TODO - player death animation
-    k.go("gameover");
+  player.on("death", (killedBy) => {
+    const playerSlapDir = player.pos.sub(killedBy.pos).unit();
+    const weaponSlapDir = weapon.pos.sub(killedBy.pos).unit();
+
+    k.play("punch-intense-heavy", { volume: 0.86 });
+    k.wait(0.8, () => k.play("implode"));
+
+    if (!player.angle) player.use(k.rotate(0));
+    Promise.all([
+      tween(player, 1, {
+        "pos.x": player.pos.x + playerSlapDir.x * config.tileWidth,
+        "pos.y": player.pos.y + playerSlapDir.y * config.tileHeight,
+        "angle": Math.PI / 2,
+      }, easing.easeOutQuart),
+      tween(weapon, 1, {
+        "pos.x": weapon.pos.x + weaponSlapDir.x * (config.tileWidth * 4.44),
+        "pos.y": weapon.pos.y + weaponSlapDir.y * (config.tileHeight * 4.44),
+        "angle": weapon.angle + Math.PI * 3,
+      }, easing.easeOutQuart),
+    ]).then(() => {
+      k.debug.log("you died");
+      // k.go("gameover");
+    });
+
+    uiUpdateHealth(player.hp(), player.maxHp());
   });
 
   // initialize health
