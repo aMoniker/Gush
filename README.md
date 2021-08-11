@@ -3,8 +3,8 @@
 A dungeon brawler game built with [Kaboom.js](https://kaboomjs.com/) on [Replit.com](https://replit.com/) for a [1729.com](https://1729.com/) contest.
 
 ### Basic game mechanics
-- [x] Red flask restores hp of course~~
-- [x] HP is always in increments of 1, each 1 represents half a heart~~
+- [x] Red flask restores hp of course
+- [x] HP is always in increments of 1, each 1 represents half a heart
 - ~~Blue flask... maybe invincibility? faster attacks?~~
 - [ ] Blue flask gives a shield on top of HP
 - ~~Green flask makes player hulk out, transform to huge sprite, trample enemies, super punch? (maybe gain green hearts?)~~
