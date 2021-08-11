@@ -7,6 +7,29 @@ const handleMonsterCollision = (player, monster) => {
   player.hurt(1, monster); // TODO - make dmg amnt depend on monster?
 };
 
+const handleMonsterHurt = (monster, amt, hurtBy) => {
+  // flash the monster red
+  if (!monster.color) monster.use(k.color(1, 0, 0, 1));
+  k.wait(0.1, () => monster.color = undefined);
+
+  // slap the monster away
+  monster.hit = true;
+  const slapTime = 0.2
+  const slapDir = monster.pos.sub(hurtBy.pos).unit();
+  tween(monster, slapTime, {
+    "pos.x": monster.pos.x + slapDir.x * config.tileWidth,
+    "pos.y": monster.pos.y + slapDir.y * config.tileHeight,
+  }).then(() => {
+    monster.hit = false;
+  });
+
+  k.play("punch-clean-heavy", {
+    loop: false,
+    volume: 0.666,
+    detune: -100,
+  });
+};
+
 // TODO - some of these still need some adjustments
 const bloodSpriteConfigs = {
   "vfx-blood-1": (monster, flip) => ([k.pos(monster.pos)]),
@@ -63,7 +86,15 @@ const handleMonsterDeath = (monster, killedBy) => {
   });
 };
 
+// TODO - build our own spatial index.
+// otherwise checking monster/wall collisions will make the game unplayable.
+const handleWallCollision = (wall, monster) => {
+  console.log('monster wall collide');
+};
+
 export default () => {
   k.collides("player", "monster", handleMonsterCollision);
+  k.on("hurt", "monster", handleMonsterHurt);
   k.on("death", "monster", handleMonsterDeath);
+  // k.overlaps("wall_boundary", "monster", handleWallCollision);
 };

@@ -24,14 +24,6 @@ const moveRightKey = "d";
 /**
  * Add a new player to the game. There can only be one at a time.
  * types: elf_f, elf_m, knight, lizard_f, lizard_m, wizard_f, wizard_m
- * names:
- *  - Stabby Elf
- *  - Shooty Elf
- *  - Swordy Boi
- *  - Hammer Lizard
- *  - Smashy Dino
- *  - Burny Mage
- *  - LASER WIZARD
  */
 export const createPlayer = (type, attrs) => {
   if (cachedPlayer) return cachedPlayer;

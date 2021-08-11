@@ -22,10 +22,13 @@ const basicMob = (spriteName, area, extraAttrs) => ([
   k.sprite(spriteName, { noArea: true }),
   k.solid(),
   k.area(k.vec2(area[0], area[1]), k.vec2(area[2], area[3])),
-  hp({ current: 2, max: 2 }),
+  hp({ current: 10, max: 10 }),
   "non-player",
   "monster",
   "killable",
+  {
+    hit: false,
+  },
   ...(extraAttrs ?? []),
 ]);
 

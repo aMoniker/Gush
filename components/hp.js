@@ -10,10 +10,11 @@ export default (options) => {
     hurt(x, hurtBy) {
       const amt = x ?? 1;
       currentHp -= amt;
-      this.trigger("hurt", amt, hurtBy);
       if (currentHp <= 0) {
         this.dead = true;
         this.trigger("death", hurtBy);
+      } else {
+        this.trigger("hurt", amt, hurtBy);
       }
     },
     heal(x, healedBy) {
