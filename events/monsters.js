@@ -1,6 +1,7 @@
 import { k } from "/kaboom.js";
 import { tween, easing, rng } from "/utils.js";
 import { config } from "/config.js";
+import { getMapCoordsFromWorld, wallIndex, wallsByCoords } from "/levels/utils.js";
 
 const handleMonsterCollision = (player, monster) => {
   if (monster.dead) return;
@@ -14,11 +15,14 @@ const handleMonsterHurt = (monster, amt, hurtBy) => {
 
   // slap the monster away
   monster.hit = true;
-  const slapTime = 0.2
   const slapDir = monster.pos.sub(hurtBy.pos).unit();
+  const slapTime = 0.3;
+  const slapDist = config.tileWidth * 0.5;
   tween(monster, slapTime, {
-    "pos.x": monster.pos.x + slapDir.x * config.tileWidth,
-    "pos.y": monster.pos.y + slapDir.y * config.tileHeight,
+    "pos.x": monster.pos.x + slapDir.x * slapDist,
+    "pos.y": monster.pos.y + slapDir.y * slapDist,
+  }, easing.linear, () => {
+    monster.pushOutAll();
   }).then(() => {
     monster.hit = false;
   });
@@ -86,15 +90,28 @@ const handleMonsterDeath = (monster, killedBy) => {
   });
 };
 
-// TODO - build our own spatial index.
-// otherwise checking monster/wall collisions will make the game unplayable.
-const handleWallCollision = (wall, monster) => {
 
+// we check against our own boundary index and push monsters out if they're nearby.
+// simply using a collides handler for all monsters makes the game unplayably slow.
+const handleWallBoundaries = (monster) => {
+    const coords = getMapCoordsFromWorld(monster.pos.x, monster.pos.y);
+    const checks = [];
+    for (let x = -1; x <= 1; x++) {
+      for (let y = -1; y <= 1; y++) {
+        checks.push({ x: coords.x + x, y: coords.y + y });
+      }
+    }
+    for (const check of checks) {
+      if (wallIndex.get(check.x, check.y)) {
+        monster.pushOutAll();
+        break;
+      }
+    }
 };
 
 export default () => {
   k.collides("player", "monster", handleMonsterCollision);
   k.on("hurt", "monster", handleMonsterHurt);
   k.on("death", "monster", handleMonsterDeath);
-  // k.overlaps("wall_boundary", "monster", handleWallCollision);
+  k.action("monster", handleWallBoundaries);
 };

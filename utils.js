@@ -37,8 +37,9 @@ export const easing = {
  *           dot-delimited string to the value, consumable by lodash,
  *           and endVal is the value that should result after `time`
  *  ease: optional easing function; defaults to linear. See easing above.
+ *  cb: optional callback to run every frame during the tween
  */
-export const tween = (obj, time, changes, ease) => {
+export const tween = (obj, time, changes, ease, cb) => {
   let spent = 0;
   const orig = {};
   if (!ease) ease = easing.linear;
@@ -55,6 +56,7 @@ export const tween = (obj, time, changes, ease) => {
         const updated = orig[path].val + (ease(percent) * orig[path].diff);
         _.set(obj, path, updated);
       }
+      if (cb) cb();
       if (spent >= time) {
         cancelAction();
         resolve();

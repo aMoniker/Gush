@@ -11,10 +11,18 @@ export const getTileContext = (map, x, y) => ({
   self: map[y]?.[x],
 });
 
+// map coords to world coords
 export const getWorldPos = (mx, my) => {
   const x = (mx * config.tileWidth) + config.mapOrigin.x;
   const y = (my * config.tileHeight) + config.mapOrigin.y;
   return k.pos(x, y);
+}
+
+// world coords to map coords
+export const getMapCoordsFromWorld = (wx, wy) => {
+  const x = Math.floor((wx - config.mapOrigin.x) / config.tileWidth);
+  const y = Math.floor((wy - config.mapOrigin.y) / config.tileHeight);
+  return {x,y};
 }
 
 export const addBasicTile = (tileFunc, x, y, layer) => {
@@ -32,3 +40,10 @@ export const isEmptySymbol = (sym) => {
 export const isWallSymbol = (sym) => {
   return ["─", "│", "┌", "┐", "└", "┘"].includes(sym);
 }
+
+export const wallsByCoords = {};
+export const wallIndex = {
+  get: (x, y) => wallsByCoords[`${x}:${y}`],
+  set: (x, y, v) => wallsByCoords[`${x}:${y}`] = v,
+  reset: () => wallsByCoords = {},
+};

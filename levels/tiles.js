@@ -2,7 +2,7 @@ import { k } from "/kaboom.js";
 import * as structure from "/objects/structure.js";
 import * as misc from "/objects/misc.js";
 import { config } from "/config.js";
-import { getWorldPos, addBasicTile, isEmptySymbol, isWallSymbol } from "/levels/utils.js";
+import { getWorldPos, addBasicTile, isEmptySymbol, isWallSymbol, wallIndex } from "/levels/utils.js";
 
 const unimplemented = {};
 const makeUnimplementedTile = () => ([
@@ -13,12 +13,17 @@ const makeUnimplementedTile = () => ([
   k.origin("center"),
 ]);
 
+const invisibleWall = (ctx) => {
+  wallIndex.set(ctx.x, ctx.y, true);
+  return structure.invisibleWall(ctx);
+}
+
 const horizontalWallTile = (ctx) => {
   const { x, y, u } = ctx;
   const layer = (isEmptySymbol(u) || isWallSymbol(u)) ? "floor" : "ceiling";
   addBasicTile(structure.wallMid, x, y, layer);
   addBasicTile(structure.wallTopMid, x, y - 1, layer);
-  return structure.invisibleWall();
+  return invisibleWall(ctx);
 };
 
 const verticalWallTile = (ctx) => {
@@ -28,7 +33,7 @@ const verticalWallTile = (ctx) => {
   } else if (isEmptySymbol(ctx.r) || isWallSymbol(ctx.r)) {
     addBasicTile(structure.wallSideMidRight, x, y);
   }
-  return structure.invisibleWall();
+  return invisibleWall(ctx);
 };
 
 const nwWallTile = (ctx) => {
@@ -41,7 +46,7 @@ const nwWallTile = (ctx) => {
     addBasicTile(structure.wallCornerTopLeft, x, y - 1, "ceiling");
   }
 
-  return structure.invisibleWall();
+  return invisibleWall(ctx);
 }
 
 const neWallTile = (ctx) => {
@@ -53,7 +58,7 @@ const neWallTile = (ctx) => {
     addBasicTile(structure.wallCornerRight, x, y, "ceiling");
     addBasicTile(structure.wallCornerTopRight, x, y - 1, "ceiling");
   }
-  return structure.invisibleWall();
+  return invisibleWall(ctx);
 };
 
 const swWallTile = (ctx) => {
@@ -64,7 +69,7 @@ const swWallTile = (ctx) => {
     addBasicTile(structure.wallCornerFrontLeft, x, y);
     addBasicTile(structure.wallCornerTopLeft, x, y - 1);
   }
-  return structure.invisibleWall();
+  return invisibleWall(ctx);
 };
 
 const seWallTile = (ctx) => {
@@ -75,7 +80,7 @@ const seWallTile = (ctx) => {
     addBasicTile(structure.wallCornerFrontRight, x, y);
     addBasicTile(structure.wallCornerTopRight, x, y - 1);
   }
-  return structure.invisibleWall();
+  return invisibleWall(ctx);
 };
 
 const bannerTile = (color) => (ctx) => {
@@ -86,7 +91,7 @@ const bannerTile = (color) => (ctx) => {
     addBasicTile(bannerFn, x, y, layer);
     addBasicTile(structure.wallTopMid, x, y - 1, layer);
   }
-  return structure.invisibleWall();
+  return invisibleWall(ctx);
 };
 
 const fountainTile = (color) => (ctx) => {
@@ -98,7 +103,7 @@ const fountainTile = (color) => (ctx) => {
     fountainMid.play(`fountain_${color.toLowerCase()}`);
     addBasicTile(structure.wallFountainTop, x, y - 1, layer);
   }
-  return structure.invisibleWall();
+  return invisibleWall(ctx);
 };
 
 const wallGooTile = (ctx) => {
@@ -106,13 +111,13 @@ const wallGooTile = (ctx) => {
   const layer = (isEmptySymbol(u) || isWallSymbol(u)) ? "floor" : "ceiling";
   addBasicTile(structure.wallGooMid, x, y, layer);
   addBasicTile(structure.wallTopMid, x, y - 1, layer);
-  return structure.invisibleWall();
+  return invisibleWall(ctx);
 };
 
 const crevasseTile = (ctx) => {
   const { x, y, u } = ctx;
   if (u !== "#") addBasicTile(misc.edgeTile, x, y);
-  return structure.invisibleWall();
+  return invisibleWall(ctx);
 }
 
 let testTilesMade = false;

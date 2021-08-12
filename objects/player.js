@@ -45,7 +45,7 @@ export const createPlayer = (type, attrs) => {
       invulnerable: false, // player is temporarily invulnerable after being hit
       canBurp: true,       // controls how often the player can burp
     },
-    hp({ current: 1, max: 6 }),
+    hp({ current: 6, max: 6 }),
     ...(attrs ?? []),
   ]);
 
