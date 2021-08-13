@@ -214,6 +214,10 @@ export const loadAssets = () => {
   promises.push(loadBasicSprite("vfx-slash", 5, {
     main: [0, 4],
   }));
+  
+  promises.push(loadBasicSprite("vfx-healing", { x: 10, y: 10 }, {
+    main: [0, 90],
+  }))
 
   // maybe re-do these as filmstrips
   // after this runs, this error happens:

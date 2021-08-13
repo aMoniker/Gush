@@ -45,6 +45,7 @@ Character classes:
 - [Blood FX](https://jasontomlee.itch.io/blood-fx)
 - [Assets Free Laser Bullets Pack 2020](https://wenrexa.itch.io/laser2020)
 - [Pixel Art Effect - FX084 (+15 Effects)](https://kvsr.itch.io/fx084)
+- [Pixel Effects Pack](https://codemanu.itch.io/pixelart-effect-pack)
 
 ## Sound
 - [Shapeforms Audio Free Sounds](https://shapeforms.itch.io/shapeforms-audio-free-sfx)
@@ -55,7 +56,6 @@ Character classes:
 ## Maybe will use (not implemented yet)
 - [Magical Animation Effects](https://pimen.itch.io/magical-animation-effects)
 - [Free Pixel Effects Pack #12 - Mini Magick Shoots 3](https://xyezawr.itch.io/gif-free-pixel-effects-pack-12-mini-magick-shoots-3)
-- [Pixel Effects Pack](https://codemanu.itch.io/pixelart-effect-pack)
 - [GIF Free Pixel Effects Pack #6 - forks of flame](https://xyezawr.itch.io/gif-free-pixel-effects-pack-6-forks-of-flame)
 
 ## Lots more cool assets (not implemented in this game)

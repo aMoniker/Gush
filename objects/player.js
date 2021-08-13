@@ -138,30 +138,7 @@ export const createPlayer = (type, attrs) => {
     obj.hidden = player.pos.dist(obj.pos) > config.viewableDist;
   });
 
-  let playerHealing = false;
   player.on("heal", (amt, healedBy) => {
-    // show a green healing effect if there's not already one in progress
-    if (!playerHealing) {
-      playerHealing = true;
-      if (!player.color) player.use(k.color(1, 1, 1, 1));
-      tween(player, 0.5, {
-        "color.r": 0,
-        "color.b": 0,
-      }, easing.easeOutQuart).then(() => tween(player, 0.5, {
-        "color.r": 1,
-        "color.b": 1,
-      }, easing.easeInQuart)).then(() => {
-        player.color = undefined;
-        playerHealing = false;
-      });
-    }
-
-    k.play("glyph-activation", {
-      loop: false,
-      volume: 0.33,
-      speed: 1.33,
-    });
-
     uiUpdateHealth(player.hp(), player.maxHp());
   });
 
