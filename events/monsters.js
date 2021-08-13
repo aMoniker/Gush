@@ -5,7 +5,7 @@ import { getMapCoordsFromWorld, wallIndex, wallsByCoords } from "/levels/utils.j
 
 const handleMonsterCollision = (player, monster) => {
   if (monster.dead) return;
-  player.hurt(1, monster); // TODO - make dmg amnt depend on monster?
+  player.hurt(monster.dmg, monster);
 };
 
 const handleMonsterHurt = (monster, amt, hurtBy) => {
