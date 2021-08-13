@@ -1,12 +1,22 @@
 import { k } from "/kaboom.js";
 import { tween, easing } from "/utils.js";
 
-// TODO - make the sword (and all weapons) attack at any player.dir
-
 export const createSword = (player) => {
+  const hitBox = k.add([
+    k.rect(24, 48),
+    k.origin("center"),
+    k.rotate(0),
+    k.color(0 ,0, 0, 0),
+    k.layer("game"),
+    "player_weapon_hitbox",
+  ]);
+  hitBox.hidden = true;
+
   const vfxSlash = k.add([
     k.sprite("vfx-slash", { noArea: true, nimSpeed: 0.001 }),
     k.layer("fx"),
+    k.origin("center"),
+    k.rotate(0),
     k.color(0.5, 0.5, 1, 0.47),
   ]);
   vfxSlash.hidden = true;
@@ -19,9 +29,11 @@ export const createSword = (player) => {
     {
       damage: 2,
       attacking: false,
+      attackingDir: null,
       attack: () => {
         if (weapon.attacking) return;
         weapon.attacking = true;
+        weapon.attackingDir = player.dir.clone();
 
         // We do two separate checks to see if the player hit a monster.
         // The first checks if the hitbox is already overlapping a monster,
@@ -82,30 +94,31 @@ export const createSword = (player) => {
       // To be called in the same place where player positioning is updated.
       // It cannot be called in its own action() function, since it will be janky.
       updatePosition: () => {
-        const dir = player.xFlipped ? -1 : 1
-        weapon.pos = player.pos.add(-dir * 1, 7);
-        vfxSlash.pos = player.pos.add(0, dir * 30);
-        vfxSlash.flipX(player.xFlipped);
-        hitBox.pos = player.pos.add(dir * 16, 4);
+        const flip = player.xFlipped ? -1 : 1
+        weapon.pos = player.pos.add(-flip * 1, 7);
+
+        // use the stored dir when attacking, so the hitbox/vfx stick to the player,
+        // but don't reposition or spin during the attack
+        const dir = weapon.attacking ? weapon.attackingDir : player.dir;
+
+        // If the player isn't moving, they can attack either left or right
+        const atRest = dir.x === 0 && dir.y === 0;
+        const dirX = atRest ? flip : dir.x;
+        const dirY = atRest ? 0 : dir.y;
+        const scale = 20;
+
+        hitBox.pos = player.pos.add(k.vec2(dirX * scale, dirY * scale));
+        hitBox.angle = Math.atan2(dirX, dirY) + Math.PI / 2;
+        vfxSlash.pos = hitBox.pos;
+
         if (!weapon.attacking) {
-          weapon.angle = dir * Math.PI / 3;
-          vfxSlash.angle = dir * Math.PI / 2;
+          weapon.angle = flip * Math.PI / 3;
+          vfxSlash.angle = hitBox.angle + -Math.PI / 2;
+          vfxSlash.flipX(player.xFlipped);
         }
       },
     }
   ]);
-
-  const hitBox = k.add([
-    k.rect(24, 48),
-    k.origin("center"),
-    k.color(0, 0, 0, 0),
-    k.layer("game"),
-    "player_weapon_hitbox",
-    {
-      weapon,
-    }
-  ]);
-  hitBox.hidden = true;
 
   // set the initial weapon position, uses setTimeout to avoid mis-positioning
   setTimeout(() => weapon.updatePosition());
