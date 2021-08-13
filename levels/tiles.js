@@ -18,22 +18,43 @@ const invisibleWall = (ctx) => {
   return structure.invisibleWall(ctx);
 }
 
-const horizontalWallTile = (ctx) => {
+const invisibleFloorTile = (ctx) => {
+  return [];
+}
+
+const addHorizontalWallGraphics = (ctx, layerOverride) => {
   const { x, y, u } = ctx;
-  const layer = (isEmptySymbol(u) || isWallSymbol(u)) ? "floor" : "ceiling";
+  let layer = (isEmptySymbol(u) || isWallSymbol(u)) ? "floor" : "ceiling";
+  if (layerOverride) layer = layerOverride;
   addBasicTile(structure.wallMid, x, y, layer);
-  addBasicTile(structure.wallTopMid, x, y - 1, layer);
+  addBasicTile(structure.wallTopMid, x, y - 1, "ceiling");
+};
+
+const horizontalWallTile = (ctx) => {
+  addHorizontalWallGraphics(ctx);
   return invisibleWall(ctx);
 };
 
-const verticalWallTile = (ctx) => {
+const secretHorizontalWallTile = (ctx) => {
+  addHorizontalWallGraphics(ctx, "ceiling");
+};
+
+const addVerticalWallGraphics = (ctx) => {
   const { x, y } = ctx;
   if (isEmptySymbol(ctx.l) || isWallSymbol(ctx.l)) {
     addBasicTile(structure.wallSideMidLeft, x, y);
   } else if (isEmptySymbol(ctx.r) || isWallSymbol(ctx.r)) {
     addBasicTile(structure.wallSideMidRight, x, y);
   }
+}
+
+const verticalWallTile = (ctx) => {
+  addVerticalWallGraphics(ctx);
   return invisibleWall(ctx);
+};
+
+const secretVerticalWallTile = (ctx) => {
+  addVerticalWallGraphics(ctx);
 };
 
 const nwWallTile = (ctx) => {
@@ -185,6 +206,10 @@ const symbolToTile = {
   "!": wallGooTile,
   ">": misc.floorLadderDown, // TODO - this might have to be an object
   "#": crevasseTile,
+  "/": secretVerticalWallTile,
+  "_": secretHorizontalWallTile,
+  "`": invisibleWall,
+  "*": invisibleFloorTile,
 
   // these are all floor tiles in the first pass
   // and will be added as objects in the second pass

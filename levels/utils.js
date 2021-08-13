@@ -38,7 +38,7 @@ export const isEmptySymbol = (sym) => {
 }
 
 export const isWallSymbol = (sym) => {
-  return ["─", "│", "┌", "┐", "└", "┘"].includes(sym);
+  return ["─", "│", "┌", "┐", "└", "┘", "/", "_", "`"].includes(sym);
 }
 
 export const wallsByCoords = {};

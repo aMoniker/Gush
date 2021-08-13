@@ -23,6 +23,7 @@ A dungeon brawler game built with [Kaboom.js](https://kaboomjs.com/) on [Replit.
 ### Potential game mechanics
 - [ ] Certain weapons can be picked up for a limited time, more powerful, replaces normal weapon
 - [ ] Orc shaman can heal his orc friends
+- [ ] You only get to keep coins if you beat the level
 
 
 Character classes:
