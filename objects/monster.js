@@ -19,11 +19,10 @@ import monsterAISimple from "/components/monster-ai-simple.js";
  * z random zombie
  */
 
-const basicMob = (spriteName, area, extraAttrs) => ([
+const buildMonster = (spriteName, area, extraAttrs) => ([
   k.sprite(spriteName, { noArea: true }),
   k.solid(),
   k.area(k.vec2(area[0], area[1]), k.vec2(area[2], area[3])),
-  hp({ current: 20, max: 20 }),
   "non-player",
   "monster",
   "killable",
@@ -33,46 +32,73 @@ const basicMob = (spriteName, area, extraAttrs) => ([
   ...(extraAttrs ?? []),
 ]);
 
-export const demonSmall = () => basicMob("demon_small", [-4, -2, 4, 12], [
+export const demonSmall = () => buildMonster("demon_small", [-4, -2, 4, 12], [
+  hp({ current: 3, max: 3 }),
   monsterAISimple(),
 ]);
 
-export const demonBig = () => basicMob("demon_big", [-9, -8, 9, 16]);
+export const demonBig = () => buildMonster("demon_big", [-9, -8, 9, 16], [
+  hp({ current: 10, max: 10 }),
+]);
 
-export const goblin = () => basicMob("goblin", [-4, 0, 4, 7], [
+export const goblin = () => buildMonster("goblin", [-4, 0, 4, 7], [
+  hp({ current: 2, max: 2 }),
   monsterAISimple(),
 ]);
 
-export const imp = () => basicMob("imp", [-4, -2, 4, 7], [
+export const imp = () => buildMonster("imp", [-4, -2, 4, 7], [
+  hp({ current: 2, max: 2 }),
   monsterAISimple(),
 ]);
-export const ogre = () => basicMob("ogre", [-8, -5, 8, 16]);
+export const ogre = () => buildMonster("ogre", [-8, -5, 8, 16], [
+  hp({ current: 10, max: 10 }),
+]);
 
-export const muddy = () => basicMob("muddy", [-5, -6, 5, 8]);
-export const swampy = () => basicMob("swampy", [-5, -6, 5, 8]);
+export const muddy = () => buildMonster("muddy", [-5, -6, 5, 8], [
+  hp({ current: 4, max: 4 }),
+]);
+export const swampy = () => buildMonster("swampy", [-5, -6, 5, 8], [
+  hp({ current: 5, max: 5 }),
+]);
 
-export const wogol = () => basicMob("wogol", [-4, -2, 4, 9], [
+export const wogol = () => buildMonster("wogol", [-4, -2, 4, 9], [
+  hp({ current: 3, max: 3 }),
   monsterAISimple(),
 ]);
 
-export const necromancer = () => basicMob("necromancer", [-5, -5, 5, 9]);
-export const skeleton = () => basicMob("skeleton", [-4, -4, 4, 8], [
+export const necromancer = () => buildMonster("necromancer", [-5, -5, 5, 9], [
+  hp({ current: 4, max: 4 }),
+]);
+export const skeleton = () => buildMonster("skeleton", [-4, -4, 4, 8], [
+  hp({ current: 1, max: 1 }),
   monsterAISimple(),
 ]);
 
-export const orcMasked = () => basicMob("orc_masked", [-4.5, -4, 4.5, 8]);
-export const orcShaman = () => basicMob("orc_shaman", [-4.5, -4, 4.5, 8]);
-export const orcWarrior = () => basicMob("orc_warrior", [-4.5, -4, 4.5, 8]);
+export const orcMasked = () => buildMonster("orc_masked", [-4.5, -4, 4.5, 8], [
+  hp({ current: 5, max: 5 }),
+]);
+export const orcShaman = () => buildMonster("orc_shaman", [-4.5, -4, 4.5, 8], [
+  hp({ current: 3, max: 3 }),
+]);
+export const orcWarrior = () => buildMonster("orc_warrior", [-4.5, -4, 4.5, 8], [
+  hp({ current: 4, max: 4 }),
+]);
 export const randomOrc = () => {
   return k.choose([orcMasked, orcShaman, orcWarrior])()
 };
 
-export const zombieBig = () => basicMob("zombie_big", [-8, -7, 8, 16]);
-export const zombieIce = () => basicMob("zombie_ice", [-4, -5, 4, 7]);
-export const zombieTiny = () => basicMob("zombie_tiny", [-3, 0, 3, 7], [
+export const zombieBig = () => buildMonster("zombie_big", [-8, -7, 8, 16], [
+  hp({ current: 7, max: 7 }),
+]);
+export const zombieIce = () => buildMonster("zombie_ice", [-4, -5, 4, 7], [
+  hp({ current: 5, max: 5 }),
+]);
+export const zombieTiny = () => buildMonster("zombie_tiny", [-3, 0, 3, 7], [
+  hp({ current: 1, max: 1 }),
   monsterAISimple(),
 ]);
-export const zombiePlain = () => basicMob("zombie", [-4, -5, 4, 7], [
+export const zombiePlain = () => buildMonster("zombie", [-4, -5, 4, 7], [
+  hp({ current: 3, max: 3 }),
   monsterAISimple(),
 ]);
 export const randomZombie = () => {
@@ -84,7 +110,7 @@ export const mimic = () => ([
   k.sprite("chest", { noArea: true, frame: 6 }),
   k.solid(),
   k.area(k.vec2(-8, -5), k.vec2(8, 8)),
-  hp({ current: 2, max: 2 }),
+  hp({ current: 3, max: 3 }),
   "non-player",
   "monster",
   "killable",
