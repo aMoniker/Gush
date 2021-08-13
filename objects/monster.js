@@ -1,5 +1,6 @@
 import { k } from "/kaboom.js";
 import hp from "/components/hp.js";
+import monsterAISimple from "/components/monster-ai-simple.js";
 
 /**
  * Monsters:
@@ -32,17 +33,32 @@ const basicMob = (spriteName, area, extraAttrs) => ([
   ...(extraAttrs ?? []),
 ]);
 
-export const demonSmall = () => basicMob("demon_small", [-4, -2, 4, 12]);
+export const demonSmall = () => basicMob("demon_small", [-4, -2, 4, 12], [
+  monsterAISimple(),
+]);
+
 export const demonBig = () => basicMob("demon_big", [-9, -8, 9, 16]);
-export const goblin = () => basicMob("goblin", [-4, 0, 4, 7]);
-export const imp = () => basicMob("imp", [-4, -2, 4, 7]);
+
+export const goblin = () => basicMob("goblin", [-4, 0, 4, 7], [
+  monsterAISimple(),
+]);
+
+export const imp = () => basicMob("imp", [-4, -2, 4, 7], [
+  monsterAISimple(),
+]);
 export const ogre = () => basicMob("ogre", [-8, -5, 8, 16]);
+
 export const muddy = () => basicMob("muddy", [-5, -6, 5, 8]);
 export const swampy = () => basicMob("swampy", [-5, -6, 5, 8]);
-export const wogol = () => basicMob("wogol", [-4, -2, 4, 9]);
+
+export const wogol = () => basicMob("wogol", [-4, -2, 4, 9], [
+  monsterAISimple(),
+]);
 
 export const necromancer = () => basicMob("necromancer", [-5, -5, 5, 9]);
-export const skeleton = () => basicMob("skeleton", [-4, -4, 4, 8]);
+export const skeleton = () => basicMob("skeleton", [-4, -4, 4, 8], [
+  monsterAISimple(),
+]);
 
 export const orcMasked = () => basicMob("orc_masked", [-4.5, -4, 4.5, 8]);
 export const orcShaman = () => basicMob("orc_shaman", [-4.5, -4, 4.5, 8]);
@@ -53,8 +69,12 @@ export const randomOrc = () => {
 
 export const zombieBig = () => basicMob("zombie_big", [-8, -7, 8, 16]);
 export const zombieIce = () => basicMob("zombie_ice", [-4, -5, 4, 7]);
-export const zombieTiny = () => basicMob("zombie_tiny", [-3, 0, 3, 7]);
-export const zombiePlain = () => basicMob("zombie", [-4, -5, 4, 7]);
+export const zombieTiny = () => basicMob("zombie_tiny", [-3, 0, 3, 7], [
+  monsterAISimple(),
+]);
+export const zombiePlain = () => basicMob("zombie", [-4, -5, 4, 7], [
+  monsterAISimple(),
+]);
 export const randomZombie = () => {
   return k.choose([zombieIce, zombieTiny, zombiePlain])();
 }

@@ -89,7 +89,6 @@ export const createPlayer = (type, attrs) => {
       player.flipX(player.xFlipped);
     }
     player.pos = player.pos.add(player.dir.scale(player.speed * k.dt()));
-    weapon.updatePosition();
   };
 
   const handleCamera = () => {
@@ -102,6 +101,7 @@ export const createPlayer = (type, attrs) => {
     handleMoving();
     handleAnimation();
     handleCamera();
+    weapon.updatePosition();
     player.pushOutAll(); // TODO - find a way to make this more efficient
   });
 
@@ -169,10 +169,10 @@ export const createPlayer = (type, attrs) => {
     if (player.invulnerable) return;
 
     // push the player in the opposite direction if they ran into something solid
-    if (player.moving && hurtBy.solid) {
+    if (hurtBy.solid) {
       player.moving = false;
       player.forcedMoving = true;
-      player.dir = player.dir.scale(-1);
+      player.dir = player.pos.sub(hurtBy.pos).unit();
     }
 
     // temporary invulnerability on hit
