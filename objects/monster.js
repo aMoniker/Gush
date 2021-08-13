@@ -34,7 +34,7 @@ const buildMonster = (spriteName, area, extraAttrs) => ([
 
 export const demonSmall = () => buildMonster("demon_small", [-4, -2, 4, 12], [
   hp({ current: 3, max: 3 }),
-  monsterAISimple(),
+  monsterAISimple({ speed: 66.6 }),
 ]);
 
 export const demonBig = () => buildMonster("demon_big", [-9, -8, 9, 16], [
@@ -43,12 +43,12 @@ export const demonBig = () => buildMonster("demon_big", [-9, -8, 9, 16], [
 
 export const goblin = () => buildMonster("goblin", [-4, 0, 4, 7], [
   hp({ current: 2, max: 2 }),
-  monsterAISimple(),
+  monsterAISimple({ speed: 50 }),
 ]);
 
 export const imp = () => buildMonster("imp", [-4, -2, 4, 7], [
   hp({ current: 2, max: 2 }),
-  monsterAISimple(),
+  monsterAISimple({ speed: 54 }),
 ]);
 export const ogre = () => buildMonster("ogre", [-8, -5, 8, 16], [
   hp({ current: 10, max: 10 }),
@@ -63,7 +63,7 @@ export const swampy = () => buildMonster("swampy", [-5, -6, 5, 8], [
 
 export const wogol = () => buildMonster("wogol", [-4, -2, 4, 9], [
   hp({ current: 3, max: 3 }),
-  monsterAISimple(),
+  monsterAISimple({ speed: 38 }),
 ]);
 
 export const necromancer = () => buildMonster("necromancer", [-5, -5, 5, 9], [
@@ -71,7 +71,7 @@ export const necromancer = () => buildMonster("necromancer", [-5, -5, 5, 9], [
 ]);
 export const skeleton = () => buildMonster("skeleton", [-4, -4, 4, 8], [
   hp({ current: 1, max: 1 }),
-  monsterAISimple(),
+  monsterAISimple({ speed: 33 }),
 ]);
 
 export const orcMasked = () => buildMonster("orc_masked", [-4.5, -4, 4.5, 8], [
@@ -95,11 +95,11 @@ export const zombieIce = () => buildMonster("zombie_ice", [-4, -5, 4, 7], [
 ]);
 export const zombieTiny = () => buildMonster("zombie_tiny", [-3, 0, 3, 7], [
   hp({ current: 1, max: 1 }),
-  monsterAISimple(),
+  monsterAISimple({ speed: 13 }),
 ]);
 export const zombiePlain = () => buildMonster("zombie", [-4, -5, 4, 7], [
   hp({ current: 3, max: 3 }),
-  monsterAISimple(),
+  monsterAISimple({ speed: 18 }),
 ]);
 export const randomZombie = () => {
   return k.choose([zombieIce, zombieTiny, zombiePlain])();
