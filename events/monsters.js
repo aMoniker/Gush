@@ -1,7 +1,8 @@
 import { k } from "/kaboom.js";
 import { tween, easing, rng } from "/utils.js";
 import { config } from "/config.js";
-import { getMapCoordsFromWorld, wallIndex, wallsByCoords } from "/levels/utils.js";
+import { getMapCoordsFromWorld } from "/levels/utils.js";
+import { boundaryMap } from "/levels/spatial.js";
 
 const handleMonsterCollision = (player, monster) => {
   if (monster.dead) return;
@@ -55,7 +56,7 @@ const handleMonsterDeath = (monster, killedBy) => {
 
 // we check against our own boundary index and push monsters out if they're nearby.
 // simply using a collides handler for all monsters makes the game unplayably slow.
-const handleWallBoundaries = (monster) => {
+const handleBoundaries = (monster) => {
     const coords = getMapCoordsFromWorld(monster.pos.x, monster.pos.y);
     const checks = [];
     for (let x = -1; x <= 1; x++) {
@@ -64,7 +65,7 @@ const handleWallBoundaries = (monster) => {
       }
     }
     for (const check of checks) {
-      if (wallIndex.get(check.x, check.y)) {
+      if (boundaryMap.has(check.x, check.y)) {
         monster.pushOutAll();
         break;
       }
@@ -75,5 +76,5 @@ export default () => {
   k.collides("player", "monster", handleMonsterCollision);
   k.on("hurt", "monster", handleMonsterHurt);
   k.on("death", "monster", handleMonsterDeath);
-  k.action("monster", handleWallBoundaries);
+  k.action("monster", handleBoundaries);
 };

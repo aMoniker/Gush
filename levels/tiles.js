@@ -2,7 +2,8 @@ import { k } from "/kaboom.js";
 import * as structure from "/objects/structure.js";
 import * as misc from "/objects/misc.js";
 import { config } from "/config.js";
-import { getWorldPos, addBasicTile, isEmptySymbol, isWallSymbol, wallIndex } from "/levels/utils.js";
+import { getWorldPos, addBasicTile, isEmptySymbol, isWallSymbol } from "/levels/utils.js";
+import { boundaryMap, staticMap } from "/levels/spatial.js";
 
 const unimplemented = {};
 const makeUnimplementedTile = () => ([
@@ -11,16 +12,13 @@ const makeUnimplementedTile = () => ([
   k.rect(16, 16),
   k.color(k.rand(0.1, 1), k.rand(0.1, 1), k.rand(0.1, 1)),
   k.origin("center"),
+  "static",
 ]);
 
 const invisibleWall = (ctx) => {
-  wallIndex.set(ctx.x, ctx.y, true);
+  boundaryMap.set(ctx.x, ctx.y, true);
   return structure.invisibleWall(ctx);
-}
-
-const invisibleFloorTile = (ctx) => {
-  return [];
-}
+};
 
 const addHorizontalWallGraphics = (ctx, layerOverride) => {
   const { x, y, u } = ctx;

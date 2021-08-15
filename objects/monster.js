@@ -24,7 +24,6 @@ const buildMonster = (spriteName, area, extraAttrs) => ([
   k.sprite(spriteName, { noArea: true }),
   k.solid(),
   k.area(k.vec2(area[0], area[1]), k.vec2(area[2], area[3])),
-  "non-player",
   "monster",
   "killable",
   {
@@ -143,7 +142,6 @@ export const mimic = () => ([
   k.solid(),
   k.area(k.vec2(-8, -5), k.vec2(8, 8)),
   hp({ current: 3, max: 3 }),
-  "non-player",
   "monster",
   "killable",
 ]);

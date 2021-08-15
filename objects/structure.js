@@ -4,8 +4,7 @@ import { config } from "/config.js";
 const wallAttributes = (frame, attrs) => ([
   k.sprite("walls", { frame, noArea: true, ...(attrs ?? {}) }),
   k.origin("center"),
-  "non-player",
-  "wall_graphic"
+  "static"
 ]);
 
 // generate an invisible wall for collision detection
@@ -17,8 +16,8 @@ export const invisibleWall = () => ([
   k.solid(),
   k.color(0, 0, 0, 0),
   k.origin("center"),
-  "non-player",
-  "wall_boundary",
+  // "static", // TODO - test if this should be static or not
+  "boundary",
 ]);
 
 /**

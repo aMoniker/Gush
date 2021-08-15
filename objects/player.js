@@ -134,9 +134,9 @@ export const createPlayer = (type, attrs) => {
   k.keyRelease(moveRightKey, () => controlMoving({ x: 0 }, false));
 
   // hide off-screen non-player objects to improve performance
-  k.action("non-player", (obj) => {
-    obj.hidden = player.pos.dist(obj.pos) > config.viewableDist;
-  });
+  // k.action("non-player", (obj) => {
+  //   obj.hidden = player.pos.dist(obj.pos) > config.viewableDist;
+  // });
 
   player.on("heal", (amt, healedBy) => {
     uiUpdateHealth(player.hp(), player.maxHp());

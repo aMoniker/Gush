@@ -9,8 +9,7 @@ import { k } from "/kaboom.js";
 export const coin = () => ([
   k.sprite("coin"),
   k.scale(1.33),
-  "non-player",
-  "interactive",
+  "static",
   "coin",
   {
     pickedUp: false,
@@ -32,8 +31,7 @@ const flaskFrames = {
 // color = blue|green|red|yellow
 export const flask = (size, color) => ([
   k.sprite("flask", { frame: flaskFrames[`${color}_${size}`] }),
-  "non-player",
-  "interactive",
+  "static",
   "flask",
   `flask_color_${color}`,
   `flask_size_${size}`,

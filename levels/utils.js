@@ -30,6 +30,7 @@ export const addBasicTile = (tileFunc, x, y, layer) => {
     ...tileFunc(),
     getWorldPos(x, y),
     k.layer(layer ?? "floor"),
+    "static",
   ]);
 }
 
@@ -40,10 +41,3 @@ export const isEmptySymbol = (sym) => {
 export const isWallSymbol = (sym) => {
   return ["─", "│", "┌", "┐", "└", "┘", "/", "_", "`"].includes(sym);
 }
-
-export const wallsByCoords = {};
-export const wallIndex = {
-  get: (x, y) => wallsByCoords[`${x}:${y}`],
-  set: (x, y, v) => wallsByCoords[`${x}:${y}`] = v,
-  reset: () => wallsByCoords = {},
-};

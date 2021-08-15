@@ -2,12 +2,16 @@ import { k } from "/kaboom.js";
 import { config } from "/config.js";
 import * as structure from "/objects/structure.js";
 import * as misc from "/objects/misc.js";
-import { getTileContext } from "/levels/utils.js";
+import { getTileContext, getMapCoordsFromWorld } from "/levels/utils.js";
 import { makeTile } from "/levels/tiles.js";
 import { generateMap } from "/levels/maps/index.js";
 import { createObjectsOnMap } from "/levels/objects.js";
+import { boundaryMap, staticMap } from "/levels/spatial.js";
 
 export const generateLevel = () => {
+  staticMap.reset();
+  boundaryMap.reset();
+
   const map = generateMap();
   const mapWidth = map[0].length;
   const mapHeight = map.length;
@@ -33,3 +37,13 @@ export const generateLevel = () => {
 
   return level;
 }
+
+k.on("add", "static", (obj) => {
+  const coords = getMapCoordsFromWorld(obj.pos.x, obj.pos.y);
+  staticMap.add(coords.x, coords.y, obj);
+});
+
+k.on("add", "boundary", (obj) => {
+  const coords = getMapCoordsFromWorld(obj.pos.x, obj.pos.y);
+  boundarMap.set(coords.x, coords.y, true);
+});
