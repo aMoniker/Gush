@@ -190,6 +190,7 @@ const makeTestTiles = () => {
 const symbolToTile = {
   " ": misc.emptyTile,
   ".": misc.floorTile,
+  "·": misc.floorTile,
   "^": misc.floorTrap,
   "─": horizontalWallTile,
   "│": verticalWallTile,
@@ -208,8 +209,7 @@ const symbolToTile = {
   "#": crevasseTile,
   "/": secretVerticalWallTile,
   "_": secretHorizontalWallTile,
-  "`": invisibleWall,
-  "*": invisibleFloorTile,
+  "=": invisibleWall,
 
   // these are all floor tiles in the first pass
   // and will be added as objects in the second pass
@@ -233,6 +233,19 @@ const symbolToTile = {
   "w": misc.floorTile,
   "Z": misc.floorTile,
   "z": misc.floorTile,
+
+  // these will be used as trigger points for custom events
+  // and should be rendered as floor tiles during the first pass
+  "1": misc.floorTile,
+  "2": misc.floorTile,
+  "3": misc.floorTile,
+  "4": misc.floorTile,
+  "5": misc.floorTile,
+  "6": misc.floorTile,
+  "7": misc.floorTile,
+  "8": misc.floorTile,
+  "9": misc.floorTile,
+  "0": misc.floorTile,
 };
 
 export const makeTile = (sym, context) => {

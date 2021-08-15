@@ -8,6 +8,7 @@ import { k } from "/kaboom.js";
 
 export const coin = () => ([
   k.sprite("coin"),
+  k.scale(1.33),
   "non-player",
   "interactive",
   "coin",

@@ -4,7 +4,7 @@ import * as structure from "/objects/structure.js";
 import * as misc from "/objects/misc.js";
 import { getTileContext } from "/levels/utils.js";
 import { makeTile } from "/levels/tiles.js";
-import { generateMap } from "/levels/map.js";
+import { generateMap } from "/levels/maps/index.js";
 import { createObjectsOnMap } from "/levels/objects.js";
 
 export const generateLevel = () => {
