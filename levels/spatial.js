@@ -96,8 +96,8 @@ export const getRenderedMapBbox = (wx, wy) => {
 
 // translate world coords to map coords
 export const translateWorldToMapCoords = (wx, wy) => {
-  const x = Math.floor((wx - config.mapOrigin.x) / config.tileWidth);
-  const y = Math.floor((wy - config.mapOrigin.y) / config.tileHeight);
+  const x = Math.round((wx - config.mapOrigin.x) / config.tileWidth);
+  const y = Math.round((wy - config.mapOrigin.y) / config.tileHeight);
   return {x,y};
 }
 
@@ -112,3 +112,38 @@ export const translateWorldToMapBbox = (worldBbox) => {
 export const coordsInBbox = (x, y, bbox) => {
   return x >= bbox[0] && x <= bbox[2] && y >= bbox[1] && y <= bbox[3];
 }
+
+/**
+ * Get all map grid cells between the two given map coords.
+ * Copied from http://playtechs.blogspot.com/2007/03/raytracing-on-grid.html
+ * 
+ * `visit` is a boolean function passed the coordinates of each cell as it's visited.
+ * if `visit` returns true, the algorithm exits early and the function returns true,
+ * otherwise it returns false.
+ */
+export const checkSupercover = (x0, y0, x1, y1, visit) => {
+  let dx = Math.abs(x1 - x0);
+  let dy = Math.abs(y1 - y0);
+  let x = x0;
+  let y = y0;
+  let n = dx + dy + 1;
+  let xInc = x1 > x0 ? 1 : -1;
+  let yInc = y1 > y0 ? 1 : -1;
+  let error = dx - dy;
+  dx *= 2;
+  dy *= 2;
+
+  // const cells = [];
+  for (; n > 0; --n) {
+    if (visit(x, y)) return true;
+    if (error > 0) {
+      x += xInc;
+      error -= dy;
+    } else {
+      y += yInc;
+      error += dx
+    }
+  }
+
+  return false;
+};

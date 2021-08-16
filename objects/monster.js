@@ -1,6 +1,7 @@
 import { k } from "/kaboom.js";
 import hp from "/components/hp.js";
 import gusher from "/components/gusher.js";
+import lifecycle from "/components/lifecycle.js";
 import monsterAISimple from "/components/monster-ai-simple.js";
 
 /**
@@ -30,6 +31,7 @@ const buildMonster = (spriteName, area, extraAttrs) => ([
     hit: false,
     dmg: 1,
     isDestroying: false,
+    playerLOS: false,
   },
   ...(extraAttrs ?? []),
 ]);

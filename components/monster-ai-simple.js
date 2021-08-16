@@ -7,7 +7,7 @@ export default (options) => {
     dir: k.vec2(0, 0),
     speed: options.speed ?? 47,
     update() { // called every frame
-      if (this.hidden) return;
+      if (this.hidden || !this.playerLOS) return;
       const player = k.get("player")[0];
       if (!player) return;
       if (player.hit || player.dead) return;

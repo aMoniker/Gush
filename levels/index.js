@@ -7,6 +7,7 @@ import { generateMap } from "/levels/maps/index.js";
 import {
   GameObjectsMap,
   boundaryMap,
+  checkSupercover,
   coordsInBbox,
   getRenderedMapBbox,
   getWorldPos,
@@ -151,8 +152,10 @@ const createPlayerOnMap = (map) => {
 }
 
 let cancelDrawLoop = null;
+let cancelMonsterLOSLoop = null;
 export const generateLevel = () => {
   if (cancelDrawLoop) cancelDrawLoop();
+  if (cancelMonsterLOSLoop) cancelMonsterLOSLoop();
 
   const map = generateMap();
   regenerateObjectConfigs(map);
@@ -165,5 +168,17 @@ export const generateLevel = () => {
   // draw only the visibile objects around the player for performance
   cancelDrawLoop = k.action(() => {
     drawVisibleObjects(player.pos.x, player.pos.y);
+  });
+
+  // update every monster as to whether it can see the player
+  cancelMonsterLOSLoop = k.loop(0.1, () => {
+    k.every("monster", (m) => {
+      const { x: mx, y: my } = translateWorldToMapCoords(m.pos.x, m.pos.y);
+      const { x: px, y: py } = translateWorldToMapCoords(player.pos.x, player.pos.y);
+      const blockedLOS = checkSupercover(mx, my, px, py, (x, y) => {
+        return boundaryMap.has(x, y) && boundaryMap.get(x, y);
+      });
+      m.playerLOS = !blockedLOS;
+    });
   });
 }
