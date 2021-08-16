@@ -1,9 +1,9 @@
 import { k } from "/kaboom.js"
 import { config } from "/config.js";
+import lifecycle from "/components/lifecycle.js";
 
 const wallAttributes = (frame, attrs) => ([
   k.sprite("walls", { frame, noArea: true, ...(attrs ?? {}) }),
-  k.origin("center"),
   "static"
 ]);
 
@@ -15,8 +15,8 @@ export const invisibleWall = () => ([
   k.rect(config.tileWidth + 1, config.tileHeight + 1),
   k.solid(),
   k.color(0, 0, 0, 0),
-  k.origin("center"),
-  // "static", // TODO - test if this should be static or not
+  "solid",
+  "static",
   "boundary",
 ]);
 
@@ -39,10 +39,22 @@ export const wallBannerGreen = () => wallAttributes(1);
 export const wallBannerRed = () => wallAttributes(2);
 export const wallBannerYellow = () => wallAttributes(3);
 
-export const wallFountainBasinBlue = () => wallAttributes(15); // 15-17
-export const wallFountainBasinRed = () => wallAttributes(18); // 18-20
-export const wallFountainMidBlue = () => wallAttributes(21); // 21-23
-export const wallFountainMidRed = () => wallAttributes(24); // 24-26
+export const wallFountainBasinBlue = () => ([
+  ...wallAttributes(15),
+  lifecycle({ onAdd: (f) => f.play("basin_blue") }),
+]); // 15-17
+export const wallFountainBasinRed = () => ([
+  ...wallAttributes(18),
+  lifecycle({ onAdd: (f) => f.play("basin_red") }),
+]); // 18-20
+export const wallFountainMidBlue = () => ([
+  ...wallAttributes(21),
+  lifecycle({ onAdd: (f) => f.play("fountain_blue") }),
+]); // 21-23
+export const wallFountainMidRed = () => ([
+  ...wallAttributes(24),
+  lifecycle({ onAdd: (f) => f.play("fountain_red") }),
+]); // 24-26
 export const wallFountainTop = () => wallAttributes(27);
 export const wallGooMid = () => wallAttributes(28);
 export const wallGooBasin = () => wallAttributes(29);

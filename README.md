@@ -58,6 +58,7 @@ Character classes:
 - [Magical Animation Effects](https://pimen.itch.io/magical-animation-effects)
 - [Free Pixel Effects Pack #12 - Mini Magick Shoots 3](https://xyezawr.itch.io/gif-free-pixel-effects-pack-12-mini-magick-shoots-3)
 - [GIF Free Pixel Effects Pack #6 - forks of flame](https://xyezawr.itch.io/gif-free-pixel-effects-pack-6-forks-of-flame)
+- [Sound Effect Starter Pack](https://simon13666.itch.io/sound-starter-pack)
 
 ## Lots more cool assets (not implemented in this game)
 - [https://xyezawr.itch.io/](https://xyezawr.itch.io/)

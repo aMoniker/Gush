@@ -13,15 +13,17 @@
       width: 100%;
       height: 100%;
       overflow: hidden;
+      background-color: black;
     }
-    canvas {
+    canvas#game {
       display: block;
     }
   </style>
 </head>
 <body>
-<script src="https://kaboomjs.com/lib/0.6.0/kaboom.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/lodash@4.17.21/lodash.min.js"></script>
-<script type="module" src="/entry.js"></script>
+  <canvas id="game"></canvas>
+  <script src="https://kaboomjs.com/lib/0.6.0/kaboom.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.21/lodash.min.js"></script>
+  <script type="module" src="/entry.js"></script>
 </body>
 </html>

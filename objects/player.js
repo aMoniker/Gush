@@ -3,6 +3,7 @@ import { config } from "/config.js";
 import { uiUpdateHealth } from "/ui.js";
 import { createSword } from "/objects/weapons/sword.js";
 import { tween, easing } from "/utils.js";
+import { coordsInBbox, getRenderedMapBbox } from "/levels/spatial.js"
 
 import hp from "/components/hp.js";
 
@@ -38,7 +39,7 @@ export const createPlayer = (type, attrs) => {
     {
       dir: k.vec2(0, 0),   // which direction the player is moving
       speed: 77,           // how fast the player moves
-      xFlipped: false,     // used to determine which way the player & weapon are facing
+      xFlipped: false,     // determines which way the player/weapon are facing
       moving: false,       // when true, move player in dir by speed
       forcedMoving: false, // when true, ignore input and move player in dir
       hit: false,          // animation for hit & temporary loss of control
@@ -85,7 +86,9 @@ export const createPlayer = (type, attrs) => {
     if (player.dead) return;
     if (!player.moving && !player.forcedMoving) return;
     if (!player.forcedMoving && !weapon.attacking) {
-      player.xFlipped = player.dir.x < 0;
+      if (player.dir.x !== 0) {
+        player.xFlipped = player.dir.x < 0;
+      }
       player.flipX(player.xFlipped);
     }
     player.pos = player.pos.add(player.dir.scale(player.speed * k.dt()));
@@ -95,6 +98,10 @@ export const createPlayer = (type, attrs) => {
     const scale = k.width() / config.viewableWidth;
     k.camScale(scale);
     k.camPos(player.pos);
+
+    // readd the player each frame, so it's always on top
+    k.readd(player);
+    k.readd(weapon);
   };
 
   player.action(() => {
@@ -132,11 +139,6 @@ export const createPlayer = (type, attrs) => {
   k.keyRelease(moveLeftKey, () => controlMoving({ x: 0 }, false));
   k.keyDown(moveRightKey, () => controlMoving({ x: 1 }, true));
   k.keyRelease(moveRightKey, () => controlMoving({ x: 0 }, false));
-
-  // hide off-screen non-player objects to improve performance
-  // k.action("non-player", (obj) => {
-  //   obj.hidden = player.pos.dist(obj.pos) > config.viewableDist;
-  // });
 
   player.on("heal", (amt, healedBy) => {
     uiUpdateHealth(player.hp(), player.maxHp());
@@ -189,7 +191,7 @@ export const createPlayer = (type, attrs) => {
     k.play("punch-intense-heavy", { volume: 0.86 });
     k.wait(0.8, () => k.play("implode"));
 
-    if (!player.angle) player.use(k.rotate(0));
+    if (player.angle === null) player.use(k.rotate(0));
     Promise.all([
       tween(player, 1, {
         "pos.x": player.pos.x + playerSlapDir.x * config.tileWidth,

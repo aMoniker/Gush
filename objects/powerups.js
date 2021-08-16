@@ -1,4 +1,5 @@
 import { k } from "/kaboom.js";
+import lifecycle from "/components/lifecycle.js"
 
 /**
  * Powerups - objects the player can pick up for a bonus effect
@@ -11,8 +12,12 @@ export const coin = () => ([
   k.scale(1.33),
   "static",
   "coin",
+  lifecycle({
+    onAdd: (obj) => obj.play("spin"),
+  }),
   {
     pickedUp: false,
+    isDestroying: false,
   }
 ]);
 
@@ -42,7 +47,7 @@ export const flask = (size, color) => ([
 
 // TODO - make some flasks more rare than others?
 export const randomFlask = () => {
-  return flask("big", "red");
+  return flask("big", "red"); // TODO - testing flasks
   const size = k.choose(["big", "small"]);
   const color = k.choose(["blue", "green", "red", "yellow"]);
   return flask(size, color);

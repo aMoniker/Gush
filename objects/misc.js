@@ -16,6 +16,7 @@ export const edgeTile = () => ([
   k.sprite("edge"),
   k.layer("floor"),
   k.origin("center"),
+  "static",
 ]);
 
 export const floorTile = () => {
@@ -29,6 +30,7 @@ export const floorTile = () => {
     k.sprite("floor", { frame }),
     k.layer("floor"),
     k.origin("center"),
+    "static",
   ];
 };
 
@@ -54,12 +56,15 @@ export const floorTrap = () => ([
 
 export const chest = () => ([
   k.sprite("chest", { frame: 0 }),
+  k.solid(),
   "static",
   "chest",
+  "boundary", // chests can't be walked over
 ]);
 
 export const crate = () => ([
   k.sprite("crate", { noArea: true }),
   k.area(k.vec2(-6, -9), k.vec2(6, 8)),
+  k.solid(),
   "crate",
 ]);

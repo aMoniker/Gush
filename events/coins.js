@@ -6,6 +6,7 @@ import { tween, easing } from "/utils.js";
 const handleCoinPickup = (player, coin) => {
   if (coin.pickedUp) return;
   coin.pickedUp = true;
+  coin.isDestroying = true;
 
   const moveUpTime = 1;
   const fadeOutTime = 1.3;
@@ -27,6 +28,7 @@ const handleCoinPickup = (player, coin) => {
     tween(coin, 1.3, { "color.a": 0 }),
   ]).then(() => {
     coin.destroy();
+    coin.isDestroying = false;
   });
 };
 
