@@ -40,6 +40,7 @@ Character classes:
 - [Kaboom.js v 0.6.0](https://kaboomjs.com/)
 - [Stitches (spritesheet generator)](https://draeton.github.io/stitches/)
 - [Aseprite](https://www.aseprite.org/)
+- [EZGif Sprite Cutter](https://ezgif.com/sprite-cutter)
 
 ## Graphics
 - [Dungeon Tileset 2](https://0x72.itch.io/dungeontileset-ii)
@@ -47,6 +48,7 @@ Character classes:
 - [Assets Free Laser Bullets Pack 2020](https://wenrexa.itch.io/laser2020)
 - [Pixel Art Effect - FX084 (+15 Effects)](https://kvsr.itch.io/fx084)
 - [Pixel Effects Pack](https://codemanu.itch.io/pixelart-effect-pack)
+- [Kenney.nl Pixel UI Pack](https://kenney.nl/assets/pixel-ui-pack)
 
 ## Sound
 - [Shapeforms Audio Free Sounds](https://shapeforms.itch.io/shapeforms-audio-free-sfx)

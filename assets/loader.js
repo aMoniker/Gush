@@ -179,6 +179,10 @@ export const loadAssets = () => {
 
   // misc
   promises.push(loadBasicSprite("skull"));
+
+
+  // ui
+  promises.push(loadBasicSprite("bars", 15));
   promises.push(loadBasicSprite("ui_heart", 3, {
     empty: [0, 0],
     full: [1, 1],
@@ -246,6 +250,7 @@ export const loadAssets = () => {
   promises.push(loadBasicSound("punch-squelch-heavy"));
   promises.push(loadBasicSound("punch-intense-heavy"));
   promises.push(loadBasicSound("implode"));
+  promises.push(loadBasicSound("drinking-gulp"));
 
 
   // music

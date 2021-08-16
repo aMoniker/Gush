@@ -134,6 +134,10 @@ const trigger = (ctx) => ([
  *
  * $ coin
  * f random flask
+ * h/H health flask
+ * b/B burp flask
+ * e/E shield flask
+ * y/Y yellow flask TODO
  * 
  * d small demon
  * D big demon
@@ -246,24 +250,22 @@ const legend = {
     ret.push(invisibleWall(ctx));
     return ret;
   },
-  "/": (ctx) => ([
-    // objectConfig(verticalWallGraphic)(ctx),
-    objectConfig(verticalWallGraphic, [k.color(0.93, 0.93, 0.93, 1)])(ctx),
-  ]),
-  "_": (ctx) => ([
-    // ...horizontalWallGraphics(ctx, "ceiling"),
-    // objectConfig(() => ([
-    //   k.rect(100, 100, { noArea: true }),
-    //   k.color(0.5, 0, 0, 1),
-    // ]))(ctx),
-    ...horizontalWallGraphics(ctx, "ceiling", [k.color(0.93, 0.93, 0.93, 1)]),
-  ]),
+  "/": arrayWrap(objectConfig(verticalWallGraphic, [k.color(0.93, 0.93, 0.93, 1)])),
+  "_": (ctx) => horizontalWallGraphics(ctx, "ceiling", [k.color(0.93, 0.93, 0.93, 1)]),
   "=": arrayWrap(invisibleWall),
   // "+": door // TODO - implement door
 
   // powerups
   "$": withFloorConfig(objectConfig(powerups.coin)),
   "f": withFloorConfig(objectConfig(powerups.randomFlask)),
+  "h": withFloorConfig(objectConfig(() => powerups.flask("small", "red"))),
+  "H": withFloorConfig(objectConfig(() => powerups.flask("big", "red"))),
+  "b": withFloorConfig(objectConfig(() => powerups.flask("small", "green"))),
+  "B": withFloorConfig(objectConfig(() => powerups.flask("big", "green"))),
+  "e": withFloorConfig(objectConfig(() => powerups.flask("small", "blue"))),
+  "E": withFloorConfig(objectConfig(() => powerups.flask("big", "blue"))),
+  "y": withFloorConfig(objectConfig(() => powerups.flask("small", "yellow"))),
+  "Y": withFloorConfig(objectConfig(() => powerups.flask("big", "yellow"))),
 
   // misc objects
   "?": withFloorConfig(objectConfig(misc.chest)),

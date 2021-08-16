@@ -21,6 +21,10 @@ let yBot = 0;
 let heartScale = 2;
 let hearts = [];
 
+// burp meter
+let burpsScale = 2;
+let burps = [];
+
 export const uiUpdatePositions = () => {
   const w = k.width();
   const h = k.height();
@@ -46,8 +50,14 @@ export const uiUpdatePositions = () => {
 
   // adjust hearts
   for (let i = 0; i < hearts.length; i++) {
-    hearts[i].pos.x = 5 + (i * (17 * heartScale));
-    hearts[i].pos.y = yTop + 5;
+    hearts[i].pos.x = 6 + (i * (17 * heartScale));
+    hearts[i].pos.y = yTop + 6;
+  }
+
+  // adjust burp meter
+  for (let i = 0; i < burps.length; i++) {
+    burps[i].pos.x = 5 + (i * (17 * burpsScale));
+    burps[i].pos.y = yTop + 42;
   }
 };
 
@@ -96,6 +106,26 @@ export const uiUpdateHealth = (curHp, maxHp) => {
       heart.frame = 0;
     }
   }
+};
+
+export const uiUpdateBurps = (curBurps) => {
+  const maxBurps = 3;
+  if (!burps.lenghth || !burps[0].exists) {
+    for (const burp of burps) burp.destroy();
+    burps = [];
+    for (let i = 0; i < maxBurps; i++) {
+      burps.push(k.add([
+        k.sprite("bars", { frame: i }),
+        k.layer("ui"),
+        k.pos(0, 0),
+        k.scale(burpsScale),
+      ]));
+    }
+    uiUpdatePositions();
+  }
+  if (curBurps >= 1) burps[0].frame = 6;
+  if (curBurps >= 2) burps[1].frame = 7;
+  if (curBurps >= 3) burps[2].frame = 8;
 };
 
 // when kaboom starts, the aspect ratio is locked to the screen size at that moment.

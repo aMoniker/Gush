@@ -15,8 +15,9 @@ const processBlueFlaskEffects = (player, flask) => {
 };
 
 const processGreenFlaskEffects = (player, flask) => {
-  // add charges of BURP
-  // add this to the UI somewhere
+  const burpsAmt = flask.is("flask_size_big") ? 3 : 1;
+  // player.burps = Math.min(3, player.burps + burpsAmt);
+  player.addBurps(burpsAmt);
 };
 
 const processYellowFlaskEffects = (player, flask) => {
@@ -44,6 +45,8 @@ const handleFlaskPickup = (player, flask) => {
   } else if (flask.is("flask_color_yellow")) {
     processYellowFlaskEffects(player, flask);
   }
+
+  k.play("drinking-gulp");
 
   // scale the flask, move it up, and fade it out
   if (!flask.color) flask.use(k.color(1,1,1,1));

@@ -1,11 +1,12 @@
 import { k } from "/kaboom.js";
 import { config } from "/config.js";
-import { uiUpdateHealth } from "/ui.js";
+import { uiUpdateHealth, uiUpdateBurps } from "/ui.js";
 import { createSword } from "/objects/weapons/sword.js";
 import { tween, easing } from "/utils.js";
 import { coordsInBbox, getRenderedMapBbox } from "/levels/spatial.js"
 
 import hp from "/components/hp.js";
+import burp from "/components/burp.js";
 
 // https://developer.mozilla.org/en-US/docs/Web/API/Gamepad_API/Using_the_Gamepad_API
 
@@ -44,9 +45,9 @@ export const createPlayer = (type, attrs) => {
       forcedMoving: false, // when true, ignore input and move player in dir
       hit: false,          // animation for hit & temporary loss of control
       invulnerable: false, // player is temporarily invulnerable after being hit
-      canBurp: true,       // controls how often the player can burp
     },
     hp({ current: 6, max: 6 }),
+    burp({ current: 0 }),
     ...(attrs ?? []),
   ]);
 
@@ -64,7 +65,7 @@ export const createPlayer = (type, attrs) => {
     }
 
     const anim = player.curAnim();
-    if (player.hit) {
+    if (player.hit || player.burping) {
       if (anim !== "hit") {
         const hitTime = 0.5;
         player.play("hit");
@@ -112,14 +113,7 @@ export const createPlayer = (type, attrs) => {
     player.pushOutAll(); // TODO - find a way to make this more efficient
   });
 
-  k.keyPress(burpKey, () => {
-    if (player.dead || !player.canBurp) return;
-    player.canBurp = false;
-    player.hit = true;
-    k.burp();
-    k.camShake(7);
-    k.wait(1, () => player.canBurp = true);
-  });
+  k.keyPress(burpKey, player.burp);
 
   const controlMoving = (dir, moving) => {
     if (player.forcedMoving) return;
@@ -139,6 +133,9 @@ export const createPlayer = (type, attrs) => {
   k.keyRelease(moveLeftKey, () => controlMoving({ x: 0 }, false));
   k.keyDown(moveRightKey, () => controlMoving({ x: 1 }, true));
   k.keyRelease(moveRightKey, () => controlMoving({ x: 0 }, false));
+
+  player.on("burped", () => uiUpdateBurps(player.burps()));
+  player.on("burps-added", () => uiUpdateBurps(player.burps()));
 
   player.on("heal", (amt, healedBy) => {
     uiUpdateHealth(player.hp(), player.maxHp());
@@ -211,8 +208,9 @@ export const createPlayer = (type, attrs) => {
     uiUpdateHealth(player.hp(), player.maxHp());
   });
 
-  // initialize health
+  // initialize health & burps
   uiUpdateHealth(player.hp(), player.maxHp());
+  uiUpdateBurps(0);
 
   cachedPlayer = player;
   return cachedPlayer;
