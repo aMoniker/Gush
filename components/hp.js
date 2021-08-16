@@ -5,15 +5,23 @@ export default (options) => {
   let currentHp = options.current;
   const maxHp = options.max ?? currentHp;
   if (currentHp > maxHp) currentHp = maxHp;
+  const maxShields = 3;
+  let currentShields = Math.max(0, Math.min(maxShields, options.currentShield ?? 0));
 
   return {
     id: "hp",
     require: ["killable", "pos"],
     dead: false,
     healing: false,
+
     hurt(x, hurtBy) {
-      const amt = x ?? 1;
-      currentHp -= amt;
+      let amt = x ?? 1;
+      if (currentShields) {
+        amt = 0; // shields absorb any amount of dmg, and lose one point
+        currentShields--;
+      } else {
+        currentHp -= amt;
+      }
       if (currentHp <= 0) {
         this.dead = true;
         this.trigger("death", hurtBy);
@@ -21,6 +29,7 @@ export default (options) => {
         this.trigger("hurt", amt, hurtBy);
       }
     },
+
     heal(x, healedBy) {
       const amt = x ?? 1;
       currentHp = Math.min(currentHp + amt, maxHp);
@@ -59,7 +68,14 @@ export default (options) => {
 
       this.trigger("heal", amt, healedBy);
     },
+
+    addShields(shieldAmt) {
+      currentShields = Math.max(0, Math.min(maxShields, currentShields + shieldAmt));
+      this.trigger("shielded", shieldAmt);
+    },
+
     hp() { return currentHp; },
     maxHp() { return maxHp; },
+    shields() { return currentShields; },
   };
 }

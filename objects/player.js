@@ -134,12 +134,15 @@ export const createPlayer = (type, attrs) => {
   k.keyDown(moveRightKey, () => controlMoving({ x: 1 }, true));
   k.keyRelease(moveRightKey, () => controlMoving({ x: 0 }, false));
 
-  player.on("burped", () => uiUpdateBurps(player.burps()));
-  player.on("burps-added", () => uiUpdateBurps(player.burps()));
+  const updatePlayerUI = () => {
+    uiUpdateBurps(player.burps());
+    uiUpdateHealth(player.hp(), player.maxHp(), player.shields());
+  };
 
-  player.on("heal", (amt, healedBy) => {
-    uiUpdateHealth(player.hp(), player.maxHp());
-  });
+  player.on("burped", updatePlayerUI);
+  player.on("burps-added", updatePlayerUI);
+  player.on("shielded", () => updatePlayerUI());
+  player.on("heal", updatePlayerUI);
 
   player.on("hurt", (amt, hurtBy) => {
     if (player.invulnerable) return;
@@ -155,9 +158,11 @@ export const createPlayer = (type, attrs) => {
     player.hit = true;
     player.invulnerable = true;
 
-    // paint the player & weapon red
-    if (!player.color) player.use(k.color(1, 0, 0, 1));
-    if (!weapon.color) weapon.use(k.color(1, 0, 0, 1));
+    // paint the player & weapon red if any dmg was taken
+    if (amt) {
+      if (!player.color) player.use(k.color(1, 0, 0, 1));
+      if (!weapon.color) weapon.use(k.color(1, 0, 0, 1));
+    }
 
     // oof
     k.play("punch-squelch-heavy", {
@@ -177,7 +182,7 @@ export const createPlayer = (type, attrs) => {
       weapon.color = undefined;
     });
 
-    uiUpdateHealth(player.hp(), player.maxHp());
+    updatePlayerUI();
   });
 
   // womp womp
@@ -205,12 +210,11 @@ export const createPlayer = (type, attrs) => {
       // k.go("gameover");
     });
 
-    uiUpdateHealth(player.hp(), player.maxHp());
+    updatePlayerUI();
   });
 
-  // initialize health & burps
-  uiUpdateHealth(player.hp(), player.maxHp());
-  uiUpdateBurps(0);
+  // initialize UI
+  updatePlayerUI();
 
   cachedPlayer = player;
   return cachedPlayer;

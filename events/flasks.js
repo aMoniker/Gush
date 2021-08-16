@@ -8,15 +8,12 @@ const processRedFlaskEffects = (player, flask) => {
 };
 
 const processBlueFlaskEffects = (player, flask) => {
-  // add shield charges (add this to hp component)
-  // shield shows blue dots or bar after hearts
-  // when hit, shield dies first
-  // shield cannot be healed, that still affects hp
+  const shieldAmt = flask.is("flask_size_big") ? 3 : 1;
+  player.addShields(shieldAmt);
 };
 
 const processGreenFlaskEffects = (player, flask) => {
   const burpsAmt = flask.is("flask_size_big") ? 3 : 1;
-  // player.burps = Math.min(3, player.burps + burpsAmt);
   player.addBurps(burpsAmt);
 };
 

@@ -21,6 +21,10 @@ let yBot = 0;
 let heartScale = 2;
 let hearts = [];
 
+// shield meter
+let shieldsScale = 2;
+let shields = [];
+
 // burp meter
 let burpsScale = 2;
 let burps = [];
@@ -49,14 +53,22 @@ export const uiUpdatePositions = () => {
   botBlackBar.pos.y = yBot;
 
   // adjust hearts
+  let lastHeartX = 0;
   for (let i = 0; i < hearts.length; i++) {
-    hearts[i].pos.x = 6 + (i * (17 * heartScale));
+    lastHeartX = 6 + (i * (17 * heartScale));
+    hearts[i].pos.x = lastHeartX;
     hearts[i].pos.y = yTop + 6;
+  }
+
+  // adjust shields
+  for (let i = 0; i < shields.length; i++) {
+    shields[i].pos.x = lastHeartX + (42 + i * 17 * shieldsScale);
+    shields[i].pos.y = yTop + 6;
   }
 
   // adjust burp meter
   for (let i = 0; i < burps.length; i++) {
-    burps[i].pos.x = 5 + (i * (17 * burpsScale));
+    burps[i].pos.x = 5 + (i * 17 * burpsScale);
     burps[i].pos.y = yTop + 42;
   }
 };
@@ -78,11 +90,11 @@ export const initializeUi = () => {
   uiUpdatePositions();
 };
 
-export const uiUpdateHealth = (curHp, maxHp) => {
+export const uiUpdateHealth = (curHp, maxHp, curShields) => {
+  const maxShields = 3;
+  let updatePositions = false;
   if (!hearts.length || !hearts[0].exists()) {
-    for (let heart of hearts) {
-      heart.destroy();
-    }
+    for (let heart of hearts) heart.destroy();
     hearts = [];
     const maxHearts = Math.ceil(maxHp / 2);
     for (let i = 0; i < maxHearts; i++) {
@@ -93,8 +105,22 @@ export const uiUpdateHealth = (curHp, maxHp) => {
         k.scale(heartScale),
       ]));
     }
-    uiUpdatePositions();
+    updatePositions = true;
   }
+  if (!shields.length || !shields[0].exists()) {
+    for (let shield of shields) shield.destroy();
+    shields = [];
+    for (let i = 0; i < maxShields; i++) {
+      shields.push(k.add([
+        k.sprite("bars", { frame: i + 12 }),
+        k.layer("ui"),
+        k.pos(0, 0),
+        k.scale(shieldsScale),
+      ]));
+    }
+    updatePositions = true;
+  }
+  if (updatePositions) uiUpdatePositions();
   for (let heart of hearts) {
     if (curHp >= 2) {
       heart.frame = 1;
@@ -106,11 +132,16 @@ export const uiUpdateHealth = (curHp, maxHp) => {
       heart.frame = 0;
     }
   }
+  for (let i = 0; i < maxShields; i++) {
+    // if (curShie)
+    shields[i].hidden = curShields <= i;
+    // shields[i].frame = (curShields > i) ? i + 12 : i;
+  }
 };
 
 export const uiUpdateBurps = (curBurps) => {
   const maxBurps = 3;
-  if (!burps.lenghth || !burps[0].exists) {
+  if (!burps.length || !burps[0].exists) {
     for (const burp of burps) burp.destroy();
     burps = [];
     for (let i = 0; i < maxBurps; i++) {
@@ -123,9 +154,12 @@ export const uiUpdateBurps = (curBurps) => {
     }
     uiUpdatePositions();
   }
-  if (curBurps >= 1) burps[0].frame = 6;
-  if (curBurps >= 2) burps[1].frame = 7;
-  if (curBurps >= 3) burps[2].frame = 8;
+  for (let i = 0; i < maxBurps; i++) {
+    burps[i].frame = (curBurps > i) ? i + 6 : i;
+  }
+  // if (curBurps >= 1) burps[0].frame = 6;
+  // if (curBurps >= 2) burps[1].frame = 7;
+  // if (curBurps >= 3) burps[2].frame = 8;
 };
 
 // when kaboom starts, the aspect ratio is locked to the screen size at that moment.
