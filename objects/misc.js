@@ -63,6 +63,7 @@ export const chest = () => ([
   "boundary", // chests can't be walked over
   {
     opened: false,
+    wasEmpty: false,
   }
 ]);
 

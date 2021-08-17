@@ -19,8 +19,8 @@ A dungeon brawler game built with [Kaboom.js](https://kaboomjs.com/) on [Replit.
   - [ ] Use more tiles: banners, fountains, slime, traps
   - [ ] Load next level at ladder down
 - [ ] Triggered events & boss fights
-  - [ ] Walking over trigger sets off scripted events for the map
-  - [ ] Rooms can be closed off with crates blocking exit until event finishes
+  - [x] Walking over trigger sets off scripted events for the map
+  - [x] Rooms can be closed off with crates blocking exit until event finishes
   - [ ] Music changes for certain events
 - [ ] Music for each level (simple music manager w/ crossfade)
 - [ ] Loading screen

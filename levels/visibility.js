@@ -140,17 +140,38 @@ export const drawVisibleObjects = (pwx, pwy) => {
         // else get all objects in extantMap for coords, and destroy them
         const extant = extantObjects.get(x, y);
 
-        // if an object was destroyed itself, or is in the process,
-        // remove it from objectConfigs so it won't re-render next time.
-        // also remove non-static objects that have rendered once, like monsters
-        // so they don't render again when the tile is shown.
-        // TODO - better handling for monsters
+        // check if any objects need their configs permanently changed
         for (const obj of extant) {
+          // if an object was destroyed itself, or is in the process,
+          // remove it from objectConfigs so it won't re-render next time.
+          // also remove non-static objects that have rendered once, like monsters
+          // so they don't render again when the tile is shown.
+          // TODO - better handling for monsters
           if (obj.isDestroying || !obj.exists() || !obj.is("static")) {
             const confs = objectConfigs.get(x, y);
             for (let i = 0; i < (confs ?? []).length; i++) {
               if (confs[i]._cachedId === obj._cachedId) {
                 confs[i] = undefined;
+              }
+            }
+          }
+
+          // make sure that chests can't be opened multiple times
+          if (obj.is("chest") && obj.opened) {
+            const confs = objectConfigs.get(x, y)
+            for (let i = 0; i < (confs ?? []).length; i++) {
+              if (confs[i]._cachedId === obj._cachedId) {
+                for (const c of confs[i]) {
+                  if (c.opened === false) {
+                    c.opened = true;
+                    c.wasEmpty = obj.wasEmpty;
+                    continue;
+                  }
+                  if (c.id === "sprite") {
+                    c.frame = obj.wasEmpty ? 2 : 5;
+                    continue;
+                  }
+                }
               }
             }
           }

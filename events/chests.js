@@ -11,6 +11,7 @@ const processChestOpen = (player, chest) => {
   chest.play(isEmpty ? "empty_open" : "full_open", false);
 
   if (isEmpty) {
+    chest.wasEmpty = true;
     k.wait(0.5, () => {
       k.play("chest-empty", { volume: 1 });
     });
