@@ -21,6 +21,14 @@ export const createSword = (player) => {
   ]);
   vfxSlash.hidden = true;
 
+  let cancelWhooshTimeoutId = 0;
+  const whooshes = ["slash-1", "slash-2", "slash-5"];
+  let whoosh = 0;
+
+  let cancelSlashTimeoutId = 0;
+  const slashes = ["metal-slash-1", "metal-slash-2", "metal-slash-3"];
+  let slash = 0;
+
   const weapon = k.add([
     k.sprite("weapon_knight_sword", { noArea: true }),
     k.origin("bot"),
@@ -35,6 +43,11 @@ export const createSword = (player) => {
         weapon.attacking = true;
         weapon.attackingDir = player.dir.clone();
 
+        const slashSound = slashes[slash % slashes.length];
+        slash++;
+        if (cancelSlashTimeoutId) window.clearTimeout(cancelSlashTimeoutId);
+        cancelSlashTimeoutId = window.setTimeout(() => slash = 0, 1000);
+
         // We do two separate checks to see if the player hit a monster.
         // The first checks if the hitbox is already overlapping a monster,
         // because the overlap event won't trigger if it's already overlapping.
@@ -45,24 +58,30 @@ export const createSword = (player) => {
         hitBox.hidden = false;
         for (const m of k.get("monster")) {
           if (!m.hidden && !m.dead && hitBox.isOverlapped(m) && !hits.has(m._id)) {
-            hits.add(m._id);
             m.hurt(weapon.damage, player);
+            if (!hits.size) k.play(slashSound, { volume: 0.666 });
+            hits.add(m._id);
           }
         }
         const cancelHitboxOverlapEvent = k.overlaps(
           "player_weapon_hitbox", "monster", (hb, m) => {
             if (!m.hidden && !m.dead && !hits.has(m._id)) {
-              hits.add(m._id);
               m.hurt(weapon.damage, player);
+              if (!hits.size) k.play(slashSound, { volume: 0.666 });
+              hits.add(m._id);
             }
           }
         );
-
-        k.play("whoosh-swing", {
+        
+        const whooshSound = whooshes[whoosh % whooshes.length];
+        whoosh++;
+        if (cancelWhooshTimeoutId) window.clearTimeout(cancelWhooshTimeoutId);
+        cancelWhooshTimeoutId = window.setTimeout(() => whoosh = 0, 1000);
+        k.play(whooshSound, {
           loop: false,
           volume: 0.5,
           speed: 0.5,
-          detune: -100,
+          detune: 0,
         });
 
         const vfxTime = vfxSlash.animSpeed * vfxSlash.numFrames();

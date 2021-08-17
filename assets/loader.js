@@ -243,6 +243,12 @@ export const loadAssets = () => {
   // sound effects
   // promises.push(k.loadSound("whoosh-swing", "/assets/sounds/whoosh-swing.mp3"));
   promises.push(loadBasicSound("whoosh-swing"));
+  promises.push(loadBasicSound("slash-1"));
+  promises.push(loadBasicSound("slash-2"));
+  promises.push(loadBasicSound("slash-5"));
+  promises.push(loadBasicSound("metal-slash-1"));
+  promises.push(loadBasicSound("metal-slash-2"));
+  promises.push(loadBasicSound("metal-slash-3"));
   promises.push(loadBasicSound("punch-clean-heavy"));
   promises.push(loadBasicSound("trap-spring"));
   promises.push(loadBasicSound("coin-flung"));
