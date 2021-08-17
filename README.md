@@ -7,7 +7,6 @@ A dungeon brawler game built with [Kaboom.js](https://kaboomjs.com/) on [Replit.
 - [x] HP is always in increments of 1, each 1 represents half a heart
 - [x] Blue flask gives a shield on top of HP
 - [x] Green flask gives charges of Power Belch, burp kills enemies around player, small one charge, large 3 charges
-- [ ] Yellow flask gives temporary attack dmg boost (maybe show this on weapon graphic)
 - [ ] Chests can contain flasks or coins
  - [ ] Show coint count on UI
 - [ ] Coins can be collected through multiple game runs to unlock more characters
@@ -43,6 +42,7 @@ A dungeon brawler game built with [Kaboom.js](https://kaboomjs.com/) on [Replit.
 - [ ] Orc shaman can heal his orc friends
 - [ ] Some enemies drop a skull as a visual effect (non-interactive).
 - [ ] Column tiles
+- [ ] Yellow flask gives temporary attack dmg boost (maybe show this on weapon graphic)
 
 ### Potential game mechanics
 - [ ] Certain weapons can be picked up for a limited time, more powerful, replaces normal weapon
