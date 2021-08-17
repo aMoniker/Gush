@@ -36,6 +36,7 @@ export const createPlayer = (type, attrs) => {
     "killable",
     {
       dir: k.vec2(0, 0),   // which direction the player is moving
+      dirAttack: k.vec2(0, 0), // which direction the player is attacking
       speed: 77,           // how fast the player moves
       xFlipped: false,     // determines which way the player/weapon are facing
       moving: false,       // when true, move player in dir by speed
@@ -48,11 +49,13 @@ export const createPlayer = (type, attrs) => {
     ...(attrs ?? []),
   ]);
 
+  // attack keys
   const weapon = createSword(player);
   k.keyPress(weaponKey, () => {
     if (player.dead) return;
     weapon.attack();
   });
+  k.keyPress(burpKey, player.burp);
 
   // TODO - should these be called every frame, or only change on events?
   const handleAnimation = () => {
@@ -110,16 +113,40 @@ export const createPlayer = (type, attrs) => {
     player.pushOutAll(); // TODO - find a way to make this more efficient
   });
 
-  k.keyPress(burpKey, player.burp);
 
+  let timeoutZeroDirX = 0;
+  let timeoutZeroDirY = 0;
   const controlMoving = (dir, moving) => {
     if (player.forcedMoving) return;
     player.dir.x = dir.x ?? player.dir.x;
     player.dir.y = dir.y ?? player.dir.y;
-    // TODO - store weapon direction based on movement
-    //        don't reset it when movement stops
+
+    if (moving) {
+      if (player.dir.x !== 0) player.dirAttack.x = player.dir.x;
+      if (player.dir.y !== 0) player.dirAttack.y = player.dir.y;
+    } else {
+      // special handling for diagonal movement - don't zero out
+      // immediately when player releases one key of a diagonal
+      // this allow dirAttack to remain diagonal when releasing
+      // both keys within 100ms of each other
+      if (player.dir.x === 0) {
+        window.clearTimeout(timeoutZeroDirX);
+        timeoutZeroDirX = setTimeout(() => {
+          if (player.moving) player.dirAttack.x = 0
+        }, 100);
+      }
+      if (player.dir.y === 0) {
+        window.clearTimeout(timeoutZeroDirY);
+        timeoutZeroDirY = setTimeout(() => {
+          if (player.moving) player.dirAttack.y = 0;
+        }, 100);
+      }
+    }
+
     player.moving = moving;
   };
+
+  
 
   // movement keys
   k.keyDown(moveUpKey, () => controlMoving({ y: -1 }, true));

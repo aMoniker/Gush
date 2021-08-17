@@ -41,7 +41,7 @@ export const createSword = (player) => {
       attack: () => {
         if (weapon.attacking) return;
         weapon.attacking = true;
-        weapon.attackingDir = player.dir.clone();
+        weapon.attackingDir = player.dirAttack.clone();
 
         const slashSound = slashes[slash % slashes.length];
         slash++;
@@ -118,7 +118,7 @@ export const createSword = (player) => {
 
         // use the stored dir when attacking, so the hitbox/vfx stick to the player,
         // but don't reposition or spin during the attack
-        const dir = weapon.attacking ? weapon.attackingDir : player.dir;
+        const dir = weapon.attacking ? weapon.attackingDir : player.dirAttack;
 
         // If the player isn't moving, they can attack either left or right
         const atRest = dir.x === 0 && dir.y === 0;
