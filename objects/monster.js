@@ -56,7 +56,7 @@ export const goblin = () => buildMonster("goblin", [-4, 0, 4, 7], [
 ]);
 
 export const imp = () => buildMonster("imp", [-4, -2, 4, 7], [
-  hp({ current: 2, max: 2 }),
+  hp({ current: 1, max: 1 }),
   gusher({ size: "small" }),
   monsterAISimple({ speed: 54 }),
 ]);
@@ -132,7 +132,7 @@ export const zombieTiny = () => buildMonster("zombie_tiny", [-3, 0, 3, 7], [
   monsterAISimple({ speed: 13 }),
 ]);
 export const zombiePlain = () => buildMonster("zombie", [-4, -5, 4, 7], [
-  hp({ current: 3, max: 3 }),
+  hp({ current: 2, max: 2 }),
   gusher({ size: "small" }),
   monsterAISimple({ speed: 18 }),
 ]);

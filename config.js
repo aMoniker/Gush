@@ -1,6 +1,6 @@
 const tileWidth = 16;
 const tileHeight = 16;
-const tilesPerScreen = 16;
+const tilesPerScreen = 20;
 
 const renderedAspectRatio = 1.5;
 const viewableWidth = tilesPerScreen * tileWidth;

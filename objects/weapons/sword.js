@@ -35,7 +35,7 @@ export const createSword = (player) => {
     k.layer("game"),
     "weapon",
     {
-      damage: 2,
+      damage: 1,
       attacking: false,
       attackingDir: null,
       attack: () => {

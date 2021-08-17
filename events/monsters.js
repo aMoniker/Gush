@@ -35,11 +35,14 @@ const handleMonsterHurt = (monster, amt, hurtBy) => {
 };
 
 const handleMonsterDeath = (monster, killedBy) => {
+  console.log('handle monster death', monster.color);
+
   monster.isDestroying = true;
-  monster.solid = undefined;
-  if (monster.color === null) monster.use(k.color(1, 0, 0, 1));
-  if (monster.angle === null) monster.use(k.rotate(0));
-  if (monster.scale === null) monster.use(k.scale(1));
+  monster.aiEnabled = false;
+  monster.solid = false;
+  monster.color ?? monster.use(k.color(1, 0, 0, 1));
+  monster.angle ?? monster.use(k.rotate(0));
+  monster.scale ?? monster.use(k.scale(1));
   const flip = killedBy.pos.x - monster.pos.x >= 0 ? 1 : -1;
 
   // death effects; bye bye monster
@@ -49,6 +52,7 @@ const handleMonsterDeath = (monster, killedBy) => {
     "pos.y": monster.pos.y - config.tileHeight / 2,
     "pos.x": monster.pos.x - (config.tileWidth * 2 * flip),
   }, easing.easeOutQuart).then(() => {
+    console.log('dstroye');
     monster.destroy();
     monster.isDestroying = false;
   });

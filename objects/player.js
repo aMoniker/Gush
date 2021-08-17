@@ -110,7 +110,7 @@ export const createPlayer = (type, attrs) => {
     handleAnimation();
     handleCamera();
     weapon.updatePosition();
-    player.pushOutAll(); // TODO - find a way to make this more efficient
+    player.pushOutAll();
   });
 
 
@@ -145,7 +145,6 @@ export const createPlayer = (type, attrs) => {
 
     player.moving = moving;
   };
-
   
 
   // movement keys
@@ -218,7 +217,7 @@ export const createPlayer = (type, attrs) => {
 
     music.fadeOut();
 
-    if (player.angle === null) player.use(k.rotate(0));
+    player.angle ?? player.use(k.rotate(0));
     Promise.all([
       tween(player, 1, {
         "pos.x": player.pos.x + playerSlapDir.x * config.tileWidth,
@@ -254,11 +253,8 @@ export const createPlayer = (type, attrs) => {
           k.origin("center"),
           k.pos(k.width() / 2, k.height() / 2 + 60),
           k.layer("ui"),
-          // k.color()
         ]);
       });
-
-
     });
 
     updatePlayerUI();
