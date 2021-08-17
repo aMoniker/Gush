@@ -11,7 +11,7 @@ class Music {
   }
 
   stop() {
-    this.currentTrack.stop();
+    if (this.currentTrack) this.currentTrack.stop();
   }
 
   fadeOut() {
@@ -31,7 +31,7 @@ class Music {
     audioConfig = audioConfig ?? {};
     const prevTrack = this.currentTrack;
     const curTrackVolume = audioConfig.volume ?? 1;
-    const prevTrackVolume = prevTrack.volume();
+    const prevTrackVolume = prevTrack ? prevTrack.volume() : 0;
     if (audioConfig.volume) delete audioConfig.volume;
 
     this.play(trackName, {
@@ -47,10 +47,12 @@ class Music {
       const percent = Math.min(1, (spent / fadeTime));
       if (percent === 0) return;
       this.currentTrack.volume(curTrackVolume * percent);
-      prevTrack.volume(prevTrackVolume - (prevTrackVolume * percent));
+      if (prevTrack) {
+        prevTrack.volume(prevTrackVolume - (prevTrackVolume * percent));
+      }
       if (percent === 1) {
         cancelCrossFade();
-        prevTrack.stop();
+        if (prevTrack) prevTrack.stop();
       }
     });
   }

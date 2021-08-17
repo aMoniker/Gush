@@ -83,11 +83,6 @@ export const regenerateObjectConfigs = (map) => {
 // within it can be destroyed
 let prevMapBbox = null;
 
-// some objects are in the middle of a destroy animation and shouldn't
-// be destroyed immediately. Objects added to this array are checked
-// every draw cycle, and destroyed if their `isDestroying` flag is false.
-const deferredDestroy = [];
-
 // Add only the objects that are visible to the player on the screen,
 // and destroy any that are now off-screen. This is necessary because
 // the kaboom engine absolutely tanks with any serious number of objects.
@@ -211,6 +206,10 @@ export const drawVisibleObjects = (pwx, pwy) => {
   // store the current bbox to be checked against next time
   prevMapBbox = nextMapBbox;
 }
+
+export const resetDrawLoop = () => {
+  prevMapBbox = null;
+};
 
 // update every monster as to whether it can see the player
 export const startMonsterLOSLoop = (player) => {

@@ -1,10 +1,11 @@
 import { k } from "/kaboom.js";
 import { generateMap } from "/levels/maps/index.js";
 import { getWorldPos, regenerateBoundaryMap } from "/levels/spatial.js";
-import { drawVisibleObjects, objectConfigs, regenerateObjectConfigs, startMinimapDrawLoop, startMonsterLOSLoop } from "/levels/visibility.js";
+import { extantObjects, drawVisibleObjects, resetDrawLoop, objectConfigs, regenerateObjectConfigs, startMinimapDrawLoop, startMonsterLOSLoop } from "/levels/visibility.js";
 import { createPlayer } from "/objects/player.js";
 import { getMapWidth } from "/levels/utils.js";
 import state from "/state.js";
+import music from "/music.js";
 
 // add the player at the appropriate position on the map
 // this should be done last so the player sprite is above others.
@@ -37,12 +38,24 @@ let cancelDrawLoop = null;
 let cancelMinimapLoop = null;
 let cancelMonsterLOSLoop = null;
 
-// main level generation function
-export const generateLevel = () => {
+const resetLevel = () => {
+  music.stop();   
+  
   // cancel all existing loops started during the last level
   if (cancelDrawLoop) cancelDrawLoop();
   if (cancelMinimapLoop) cancelMinimapLoop();
   if (cancelMonsterLOSLoop) cancelMonsterLOSLoop();
+  resetDrawLoop();
+
+  // destroy all existing game objects
+  k.every((obj) => obj.destroy());
+  extantObjects.clear();
+};
+
+// main level generation function
+export const generateLevel = () => {
+  // reset all settings from any previous levels
+  resetLevel();
 
   // get the new map for the level
   const map = generateMap();
@@ -54,17 +67,18 @@ export const generateLevel = () => {
   // add the player directly since it's more complex than a typical object config
   const player = createPlayerOnMap(map);
 
-  // draw only the visible objects around the player for performance
+  // there were some intermittent freezing issues when calling this
+  // synchronously that I wasn't able to track down, so use setTimeout.
   setTimeout(() => {
     cancelDrawLoop = k.action(() => {
+      // draw only the visible objects around the player for performance
       drawVisibleObjects(player.pos.x, player.pos.y);
     });
+
+    // cancelMinimapLoop = startMinimapDrawLoop(map, player);
+    cancelMonsterLOSLoop = startMonsterLOSLoop(player);
+    enableTriggers(map);
   }, 0);
-
-  // cancelMinimapLoop = startMinimapDrawLoop(map, player);
-  cancelMonsterLOSLoop = startMonsterLOSLoop(player);
-
-  enableTriggers(map);
 
   if (map.onStart) map.onStart();
 }

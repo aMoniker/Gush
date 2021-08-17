@@ -95,7 +95,7 @@ map.onStart = () => {
 const triggered = {};
 
 map.triggers = {
-  1: () => {
+  0: () => {
     state.set(tutorialKey, false);
   },
   1: () => {

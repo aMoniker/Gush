@@ -44,7 +44,7 @@ export const createPlayer = (type, attrs) => {
       hit: false,          // animation for hit & temporary loss of control
       invulnerable: false, // player is temporarily invulnerable after being hit
     },
-    hp({ current: 6, max: 6 }),
+    hp({ current: 1, max: 6 }),
     burp({ current: 0 }),
     ...(attrs ?? []),
   ]);
@@ -187,7 +187,7 @@ export const createPlayer = (type, attrs) => {
     // oof
     k.play("punch-squelch-heavy", {
       loop: false,
-      volume: 0.666,
+      volume: 0.53,
       detune: -100,
     });
 
@@ -228,11 +228,6 @@ export const createPlayer = (type, attrs) => {
         "angle": weapon.angle + Math.PI * 3,
       }, easing.easeOutQuart),
     ]).then(() => {
-
-      k.keyPress("r", () => {
-        k.go("gameover");
-      });
-
       const youDied = k.add([
         k.text("YOU DIED", 32),
         k.origin("center"),
@@ -241,11 +236,14 @@ export const createPlayer = (type, attrs) => {
         k.scale(1),
         k.color(1, 0, 0, 0),
       ]);
-      tween(youDied, 5, {
+      tween(youDied, 4, {
         "scale.x": 2.5,
         "scale.y": 2.5,
         "color.a": 1,
       }, easing.easeOutQuart).then(() => {
+        k.keyPress("r", () => {
+          k.go("main");
+        });
         k.add([
           k.text("Press R to restart level", 24),
           k.origin("center"),
