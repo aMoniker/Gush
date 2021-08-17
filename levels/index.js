@@ -21,6 +21,18 @@ const createPlayerOnMap = (map) => {
   return player;
 }
 
+let cancelTriggers = null;
+const enableTriggers = (map) => {
+  if (cancelTriggers) cancelTriggers();
+  cancelTriggers = k.overlaps("player", "trigger", (p, t) => {
+    if (t.triggered || !t.triggerKey) return;
+    k.every(`trigger_${t.triggerKey}`, t => t.triggered = true);
+    if (map.triggers && map.triggers[t.triggerKey]) {
+      setTimeout(() => map.triggers[t.triggerKey](), 0);
+    }
+  });
+};
+
 let cancelDrawLoop = null;
 let cancelMinimapLoop = null;
 let cancelMonsterLOSLoop = null;
@@ -49,4 +61,8 @@ export const generateLevel = () => {
 
   // cancelMinimapLoop = startMinimapDrawLoop(map, player);
   cancelMonsterLOSLoop = startMonsterLOSLoop(player);
+
+  enableTriggers(map);
+
+  if (map.onStart) map.onStart();
 }

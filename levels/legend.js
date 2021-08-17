@@ -3,6 +3,7 @@ import * as misc from "/objects/misc.js";
 import * as structure from "/objects/structure.js";
 import * as monster from "/objects/monster.js";
 import * as powerups from "/objects/powerups.js";
+import lifecycle from "/components/lifecycle.js";
 import { config } from "/config.js";
 import { isEmptySymbol, isWallSymbol } from "/levels/utils.js";
 import { boundaryMap, getWorldPos } from "/levels/spatial.js";
@@ -98,6 +99,11 @@ const trigger = (ctx) => ([
   ...floorTile(ctx),
   "trigger",
   `trigger_${ctx.self}`,
+  k.layer("game"),
+  {
+    triggerKey: ctx.self,
+    triggered: false,
+  }
 ]);
 
 /**

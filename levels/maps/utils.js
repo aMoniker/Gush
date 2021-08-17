@@ -1,3 +1,39 @@
+import { k } from "/kaboom.js";
+import { tween } from "/utils.js";
+import * as misc from "/objects/misc.js";
+import * as powerups from "/objects/powerups.js";
+import { spawnObject } from "/levels/spatial.js";
+
+export const monsterWave = (spawner) => {
+  return new Promise((resolve) => {
+    let killed = 0;
+    const wave = spawner();
+    // grace period before attacking player
+    wave.forEach(m => {
+      m.solid = false;
+      m.aiEnabled = false;
+      if (!m.color) m.use(k.color(1, 1, 1, 0));
+      tween(m, 1, { "color.a": 1 }).then(() => {
+        m.solid = true;
+        m.aiEnabled = true;
+      });
+    });
+    const handleDeath = () => {
+      killed++;
+      if (killed === wave.length) resolve();
+    };
+    wave.forEach(obj => obj.on("death", handleDeath));
+  });
+};
+
+export const coinReward = (...locations) => {
+  return locations.map(loc => spawnObject(powerups.coin(), ...loc));
+};
+
+export const crateWall = (...locations) => {
+  return locations.map(loc => spawnObject(misc.crate(), ...loc));
+}
+
 export const nullMap = [
   "@",
 ];

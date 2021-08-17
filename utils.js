@@ -78,9 +78,9 @@ export const announce = (announcement) => {
     ]);
     text.pos.x = (k.width() / 2);
     text.pos.y = (k.height() / 2) - 77;
-    return tween(text, 1, { "color.a": 1 })
-      .then(() => k.wait(3))
-      .then(() => tween(text, 1, { "color.a": 0 }))
+    return tween(text, 0.5, { "color.a": 1 })
+      .then(() => k.wait(1.5))
+      .then(() => tween(text, 0.5, { "color.a": 0 }))
       .then(() => text.destroy())
       ;
   });

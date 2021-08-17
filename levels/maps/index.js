@@ -43,6 +43,6 @@ import { testSecretsMap, smallTestMap } from "/levels/maps/utils.js";
 
 // TODO - generate random map here
 export const generateMap = () => {
-  return smallTestMap;
-  // return level_1_1;
+  // return smallTestMap;
+  return level_1_1;
 };
