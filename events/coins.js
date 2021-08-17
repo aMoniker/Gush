@@ -1,6 +1,7 @@
 import { k } from "/kaboom.js";
 import { config } from "/config.js";
 import { tween, easing } from "/utils.js";
+import state from "/state.js";
 
 // coins are saved between games and used to unlock new characters
 export const handleCoinPickup = (player, coin) => {
@@ -12,7 +13,7 @@ export const handleCoinPickup = (player, coin) => {
   const fadeOutTime = 1.3;
 
   // save coins to the player's localStorage
-  config.set("coins", config.get("coins") + 1);
+  state.set("coins", state.get("coins") + 1);
 
   k.play("coin-flung", {
     loop: false,

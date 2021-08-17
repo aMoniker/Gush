@@ -1,10 +1,10 @@
 import { k } from "/kaboom.js";
-import { config } from "/config.js";
 import { generateMap } from "/levels/maps/index.js";
 import { getWorldPos, regenerateBoundaryMap } from "/levels/spatial.js";
 import { drawVisibleObjects, objectConfigs, regenerateObjectConfigs, startMinimapDrawLoop, startMonsterLOSLoop } from "/levels/visibility.js";
 import { createPlayer } from "/objects/player.js";
 import { getMapWidth } from "/levels/utils.js";
+import state from "/state.js";
 
 // add the player at the appropriate position on the map
 // this should be done last so the player sprite is above others.
@@ -14,7 +14,7 @@ const createPlayerOnMap = (map) => {
   for (let y = 0; y < map.length; y++) {
     for (let x = 0; x < getMapWidth(map); x++) {
       if (map[y][x] !== '@') continue;
-      player = createPlayer(config.playerType, [getWorldPos(x, y)]);
+      player = createPlayer(state.playerType, [getWorldPos(x, y)]);
       break createPlayerLoop;
     }
   }
