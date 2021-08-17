@@ -54,10 +54,12 @@ export const generateLevel = () => {
   // add the player directly since it's more complex than a typical object config
   const player = createPlayerOnMap(map);
 
-  // draw only the visibile objects around the player for performance
-  cancelDrawLoop = k.action(() => {
-    drawVisibleObjects(player.pos.x, player.pos.y);
-  });
+  // draw only the visible objects around the player for performance
+  setTimeout(() => {
+    cancelDrawLoop = k.action(() => {
+      drawVisibleObjects(player.pos.x, player.pos.y);
+    });
+  }, 0);
 
   // cancelMinimapLoop = startMinimapDrawLoop(map, player);
   cancelMonsterLOSLoop = startMonsterLOSLoop(player);

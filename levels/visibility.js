@@ -175,6 +175,21 @@ export const drawVisibleObjects = (pwx, pwy) => {
               }
             }
           }
+
+          // make sure triggers stay triggered
+          if (obj.is("trigger") && obj.triggered) {
+            const confs = objectConfigs.get(x, y)
+            for (let i = 0; i < (confs ?? []).length; i++) {
+              if (confs[i]._cachedId === obj._cachedId) {
+                for (const c of confs[i]) {
+                  if (c.triggered === false) {
+                    c.triggered = true;
+                    break;
+                  }
+                }
+              }
+            }
+          }
         }
 
         // destroy all unrendered objects that are ready to be destroyed

@@ -258,6 +258,7 @@ export const loadAssets = () => {
 
   // music
   promises.push(loadBasicMusic("stark-nuances"));
+  promises.push(loadBasicMusic("battle-3"));
 
 
   return Promise.all(promises);
