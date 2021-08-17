@@ -1,5 +1,6 @@
 import level_1_1 from "/levels/maps/level_1_1.js";
 import { testSecretsMap, smallTestMap } from "/levels/maps/utils.js";
+import state from "/state.js";
 
 /**
  * --- Symbol Legend ---
@@ -41,8 +42,13 @@ import { testSecretsMap, smallTestMap } from "/levels/maps/utils.js";
  * z random zombie
  */
 
+const mapOrder = [
+  level_1_1,
+];
+
 // TODO - generate random map here
 export const generateMap = () => {
   // return smallTestMap;
-  return level_1_1;
+  // return level_1_1;
+  return mapOrder[state.level];
 };

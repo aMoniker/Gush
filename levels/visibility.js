@@ -12,7 +12,6 @@ import {
   translateWorldToMapCoords,
 } from "/levels/spatial.js";
 import { getObjectConfigsForSymbol } from "/levels/legend.js";
-import { createPlayer } from "/objects/player.js";
 
 // store references to all object configs on the map
 export const objectConfigs = new GameObjectsMap();

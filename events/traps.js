@@ -12,6 +12,7 @@ const handleFloorTrap = (player, trap) => {
   }
 
   if (!trap.canSpring) return; // trap hasn't finished re-spring timeout yet
+  if (player.dead) return;
   
   // spring the trap, then retract, then rearm
   trap.sprung = true;

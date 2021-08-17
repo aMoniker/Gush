@@ -26,7 +26,7 @@ A dungeon brawler game built with [Kaboom.js](https://kaboomjs.com/) on [Replit.
 - [ ] Loading screen
 - [ ] Main menu screen
 - [ ] Select/unlock character screen
-- [ ] Game over/reset level screen (YOU DIED)
+- [x] Game over/reset level screen (YOU DIED)
 - [ ] Win screen & credits
 
 ### Monster AI
@@ -37,7 +37,8 @@ A dungeon brawler game built with [Kaboom.js](https://kaboomjs.com/) on [Replit.
 - [ ] Demons cast fireballs at you
 
 ### Nice to have
-- [ ] Simple tutorial messages on game start (only show once, turn off in localStorage)
+- [ ] Controller support
+- [x] Simple tutorial messages on game start (only show once, turn off in localStorage)
 - [ ] Store player's last attack dir so attacking while stationary feels right
 - [ ] More sound effects, player footsteps, more sword swings, etc.
 - [ ] Orc shaman can heal his orc friends

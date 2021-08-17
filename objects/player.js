@@ -12,9 +12,6 @@ import burp from "/components/burp.js";
 
 // https://developer.mozilla.org/en-US/docs/Web/API/Gamepad_API/Using_the_Gamepad_API
 
-// cached player to prevent any duplicates
-let cachedPlayer = null;
-
 const hitReactionTime = 0.33;
 
 // TODO - make these configurable
@@ -30,8 +27,6 @@ const moveRightKey = "d";
  * types: elf_f, elf_m, knight, lizard_f, lizard_m, wizard_f, wizard_m
  */
 export const createPlayer = (type, attrs) => {
-  if (cachedPlayer) return cachedPlayer;
-
   const player = k.add([
     k.origin("center"),
     k.sprite(type, { animSpeed: 0.3, noArea: true }),
@@ -209,8 +204,34 @@ export const createPlayer = (type, attrs) => {
         "angle": weapon.angle + Math.PI * 3,
       }, easing.easeOutQuart),
     ]).then(() => {
-      k.debug.log("you died");
-      // k.go("gameover");
+
+      k.keyPress("r", () => {
+        k.go("gameover");
+      });
+
+      const youDied = k.add([
+        k.text("YOU DIED", 32),
+        k.origin("center"),
+        k.pos(k.width() / 2, k.height() / 2),
+        k.layer("ui"),
+        k.scale(1),
+        k.color(1, 0, 0, 0),
+      ]);
+      tween(youDied, 5, {
+        "scale.x": 2.5,
+        "scale.y": 2.5,
+        "color.a": 1,
+      }, easing.easeOutQuart).then(() => {
+        k.add([
+          k.text("Press R to restart level", 24),
+          k.origin("center"),
+          k.pos(k.width() / 2, k.height() / 2 + 60),
+          k.layer("ui"),
+          // k.color()
+        ]);
+      });
+
+
     });
 
     updatePlayerUI();
@@ -219,11 +240,5 @@ export const createPlayer = (type, attrs) => {
   // initialize UI
   updatePlayerUI();
 
-  cachedPlayer = player;
-  return cachedPlayer;
+  return player;
 };
-
-export const destroyPlayer = () => {
-  k.destroy(cachedPlayer);
-  cachedPlayer = null;
-}
