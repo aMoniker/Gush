@@ -35,8 +35,6 @@ const handleMonsterHurt = (monster, amt, hurtBy) => {
 };
 
 const handleMonsterDeath = (monster, killedBy) => {
-  console.log('handle monster death', monster.color);
-
   monster.isDestroying = true;
   monster.aiEnabled = false;
   monster.solid = false;
@@ -52,7 +50,6 @@ const handleMonsterDeath = (monster, killedBy) => {
     "pos.y": monster.pos.y - config.tileHeight / 2,
     "pos.x": monster.pos.x - (config.tileWidth * 2 * flip),
   }, easing.easeOutQuart).then(() => {
-    console.log('dstroye');
     monster.destroy();
     monster.isDestroying = false;
   });
