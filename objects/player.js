@@ -5,6 +5,7 @@ import { createSword } from "/objects/weapons/sword.js";
 import { tween, easing } from "/utils.js";
 import { coordsInBbox, getRenderedMapBbox } from "/levels/spatial.js";
 import state from "/state.js";
+import music from "/music.js";
 
 import hp from "/components/hp.js";
 import burp from "/components/burp.js";
@@ -192,6 +193,8 @@ export const createPlayer = (type, attrs) => {
 
     k.play("punch-intense-heavy", { volume: 0.86 });
     k.wait(0.8, () => k.play("implode"));
+
+    music.fadeOut();
 
     if (player.angle === null) player.use(k.rotate(0));
     Promise.all([

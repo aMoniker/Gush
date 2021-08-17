@@ -15,7 +15,9 @@ export default (options) => {
     healing: false,
 
     hurt(x, hurtBy) {
-      if (this.dead || !this.solid) return;
+      if (this.dead) return;
+      if (this.is("monster") && !this.solid) return;
+
       let amt = x ?? 1;
       if (currentShields) {
         amt = 0; // shields absorb any amount of dmg, and lose one point

@@ -14,6 +14,19 @@ class Music {
     this.currentTrack.stop();
   }
 
+  fadeOut() {
+    if (!this.currentTrack || this.currentTrack.stopped()) return;
+    const curTrackVolume = this.currentTrack.volume();
+    const fadeTime = 3;
+    let spent = 0;
+    const cancelFadeOut = k.action(() => {
+      spent += k.dt();
+      const percent = 1 - Math.min(1, (spent / fadeTime));
+      this.currentTrack.volume(curTrackVolume * percent);
+      if (percent <= 0) cancelFadeOut();
+    });
+  }
+
   crossFade(trackName, audioConfig) {
     audioConfig = audioConfig ?? {};
     const prevTrack = this.currentTrack;

@@ -16,13 +16,13 @@ A dungeon brawler game built with [Kaboom.js](https://kaboomjs.com/) on [Replit.
 
 ### Essential features
 - [ ] Different levels
-  - [ ] Use more tiles: banners, fountains, slime, traps
+  - [x] Use more tiles: banners, fountains, slime, traps
   - [ ] Load next level at ladder down
 - [ ] Triggered events & boss fights
   - [x] Walking over trigger sets off scripted events for the map
   - [x] Rooms can be closed off with crates blocking exit until event finishes
-  - [ ] Music changes for certain events
-- [ ] Music for each level (simple music manager w/ crossfade)
+  - [x] Music changes for certain events
+- [x] Music for each level (simple music manager w/ crossfade)
 - [ ] Loading screen
 - [ ] Main menu screen
 - [ ] Select/unlock character screen
@@ -43,7 +43,7 @@ A dungeon brawler game built with [Kaboom.js](https://kaboomjs.com/) on [Replit.
 - [ ] Orc shaman can heal his orc friends
 - [ ] Some enemies drop a skull as a visual effect (non-interactive).
 - [ ] Column tiles
-- [ ] Yellow flask gives temporary attack dmg boost (maybe show this on weapon graphic)
+- [ ] Yellow flask gives charges of resurrect, allowing player to come back to life
 
 ### Potential game mechanics
 - [ ] Certain weapons can be picked up for a limited time, more powerful, replaces normal weapon

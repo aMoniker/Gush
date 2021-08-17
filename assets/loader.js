@@ -221,7 +221,12 @@ export const loadAssets = () => {
   
   promises.push(loadBasicSprite("vfx-healing", { x: 10, y: 10 }, {
     main: [0, 90],
-  }))
+  }));
+
+  promises.push(loadBasicSprite("explosion-vertical-small", { x: 10, y: 7 }, {
+    main: [0, 64]
+  }));
+
 
   // maybe re-do these as filmstrips
   // after this runs, this error happens:
@@ -232,9 +237,7 @@ export const loadAssets = () => {
   // promises.push(loadBasicSprite("explosion-vertical", {x:10,y:7}, {
   //   main: [0, 83]
   // }));
-  // promises.push(loadBasicSprite("explosion-vertical-small", {x:10,y:8}, {
-  //   main: [0, 74]
-  // }));
+  
 
 
   // sound effects
@@ -254,6 +257,7 @@ export const loadAssets = () => {
   promises.push(loadBasicSound("lock"));
   promises.push(loadBasicSound("chest-opening"));
   promises.push(loadBasicSound("chest-empty"));
+  promises.push(loadBasicSound("poof"));
 
 
   // music

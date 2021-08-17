@@ -8,16 +8,31 @@ export const monsterWave = (spawner) => {
   return new Promise((resolve) => {
     let killed = 0;
     const wave = spawner();
-    // grace period before attacking player
+    const effects = [];
+
+    // grace period before attacking player, also entrance effect
     wave.forEach(m => {
       m.solid = false;
       m.aiEnabled = false;
       if (!m.color) m.use(k.color(1, 1, 1, 0));
-      tween(m, 1, { "color.a": 1 }).then(() => {
+      tween(m, 0.5, { "color.a": 1 }).then(() => {
         m.solid = true;
         m.aiEnabled = true;
       });
+      const effect = k.add([
+        k.sprite("explosion-vertical-small", { noArea: true, animSpeed: 0.1 }),
+        k.color(1, 1, 1, 0.33),
+        k.origin("center"),
+        k.layer("fx"),
+        k.pos(m.pos),
+      ]);
+      effect.play("main");
+      effects.push(effect);
     });
+    k.wait(1, () => {
+      effects.forEach(eff => eff.destroy());
+    });
+    k.play("poof", { loop: false });
     const handleDeath = () => {
       killed++;
       if (killed === wave.length) resolve();
