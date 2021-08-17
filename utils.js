@@ -56,11 +56,33 @@ export const tween = (obj, time, changes, ease, cb) => {
         const updated = orig[path].val + (ease(percent) * orig[path].diff);
         _.set(obj, path, updated);
       }
-      if (cb) cb();
-      if (spent >= time) {
+      let shouldCancel = false;
+      if (cb) shouldCancel = !!cb();
+      if (shouldCancel || spent >= time) {
         cancelAction();
         resolve();
       }
     });
   });
+};
+
+let cachedPromise = Promise.resolve();
+export const announce = (announcement) => {
+  cachedPromise = cachedPromise.then(() => {
+    const text = k.add([
+      k.text(announcement, 23),
+      k.pos(0, 0),
+      k.color(0.77, 0.77, 0.77, 0),
+      k.origin("center"),
+      k.layer("ui"),
+    ]);
+    text.pos.x = (k.width() / 2);
+    text.pos.y = (k.height() / 2) - 77;
+    return tween(text, 1, { "color.a": 1 })
+      .then(() => k.wait(3))
+      .then(() => tween(text, 1, { "color.a": 0 }))
+      .then(() => text.destroy())
+      ;
+  });
+  return cachedPromise;
 };

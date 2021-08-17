@@ -13,8 +13,6 @@ k.scene("main", (args = {}) => {
   generateLevel();
   if (kaboomOptions.debug) showFps();
 
-
-
   // k.play("stark-nuances", {
   //   loop: true,
   //   volume: 1,

@@ -8,8 +8,9 @@ A dungeon brawler game built with [Kaboom.js](https://kaboomjs.com/) on [Replit.
 - [x] Blue flask gives a shield on top of HP
 - [x] Green flask gives charges of Power Belch, burp kills enemies around player, small one charge, large 3 charges
 - [x] Chests can contain flasks or coins
- - [ ] Show coint count on UI
-- [ ] Coins can be collected through multiple game runs to unlock more characters
+ - [x] Show coint count on UI
+- [ ] Multiple characters with different health & weapons
+  - [ ] Coins can be collected through multiple game runs to unlock more characters
 - [ ] Current level can be reset if a player really messes things up.
   - [ ] Pause menu with options
 
