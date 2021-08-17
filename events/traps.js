@@ -19,7 +19,6 @@ const handleFloorTrap = (player, trap) => {
   trap.canSpring = false;
   k.wait(springDelay, () => {
     trap.play("trap_sprung", false);
-    // TODO - make this a utility to only play sounds from objects in view?
     if (!trap.hidden) {
       k.play("trap-spring", {
         loop: false,

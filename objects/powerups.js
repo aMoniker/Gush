@@ -1,5 +1,6 @@
 import { k } from "/kaboom.js";
 import lifecycle from "/components/lifecycle.js"
+import { rng } from "/utils.js";
 
 /**
  * Powerups - objects the player can pick up for a bonus effect
@@ -45,9 +46,16 @@ export const flask = (size, color) => ([
   }
 ]);
 
-// TODO - make some flasks more rare than others?
 export const randomFlask = () => {
-  const size = k.choose(["big", "small"]);
-  const color = k.choose(["blue", "green", "red"]); // "yellow"
+  const size = rng.gen() > 0.77 ? "big" : "small";
+  const colorRoll = rng.gen();
+  let color = "blue";
+  if (colorRoll > 0.33 && colorRoll <= 0.55) {
+    color = "green";
+  } else if (colorRoll > 0.55 && colorRoll <= 0.95) {
+    color = "red";
+  } else if (colorRoll > 0.95) {
+    // color = "yellow";
+  }
   return flask(size, color);
 };

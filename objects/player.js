@@ -57,13 +57,11 @@ export const createPlayer = (type, attrs) => {
   });
   k.keyPress(burpKey, player.burp);
 
-  // TODO - should these be called every frame, or only change on events?
   const handleAnimation = () => {
     if (player.dead) {
       player.play("hit");
       return;
     }
-
     const anim = player.curAnim();
     if (player.hit || player.burping) {
       if (anim !== "hit") {
