@@ -29,6 +29,11 @@ let shields = [];
 let burpsScale = 2;
 let burps = [];
 
+// coin count
+let coinsScale = 3;
+let coinSprite = null;
+let coinText = null;
+
 export const uiUpdatePositions = () => {
   const w = k.width();
   const h = k.height();
@@ -70,6 +75,16 @@ export const uiUpdatePositions = () => {
   for (let i = 0; i < burps.length; i++) {
     burps[i].pos.x = 5 + (i * 17 * burpsScale);
     burps[i].pos.y = yTop + 42;
+  }
+
+  // adjust coin count
+  if (coinSprite) {
+    coinSprite.pos.x = 12;
+    coinSprite.pos.y = yTop + 77;
+  }
+  if (coinText) {
+    coinText.pos.x = 42;
+    coinText.pos.y = yTop + 82;
   }
 };
 
@@ -157,9 +172,28 @@ export const uiUpdateBurps = (curBurps) => {
   for (let i = 0; i < maxBurps; i++) {
     burps[i].frame = (curBurps > i) ? i + 6 : i;
   }
-  // if (curBurps >= 1) burps[0].frame = 6;
-  // if (curBurps >= 2) burps[1].frame = 7;
-  // if (curBurps >= 3) burps[2].frame = 8;
+};
+
+export const uiUpdateCoins = (numCoins) => {
+  if (!coinSprite) {
+    coinSprite = k.add([
+      k.sprite("coin", 64, { noArea: true }),
+      k.layer("ui"),
+      k.pos(0, 0),
+      k.scale(coinsScale),
+    ]);
+  }
+  if (!coinText) {
+    coinText = k.add([
+      k.text(""),
+      k.layer("ui"),
+      k.pos(0, 0),
+      // k.scale(coinsScale),
+      k.color(1, 1, 1, 1),
+    ]);
+  }
+  coinText.text = numCoins.toString();
+  uiUpdatePositions();
 };
 
 // when kaboom starts, the aspect ratio is locked to the screen size at that moment.

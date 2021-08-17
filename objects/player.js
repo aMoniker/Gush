@@ -1,9 +1,10 @@
 import { k } from "/kaboom.js";
 import { config } from "/config.js";
-import { uiUpdateHealth, uiUpdateBurps } from "/ui.js";
+import { uiUpdateHealth, uiUpdateBurps, uiUpdateCoins } from "/ui.js";
 import { createSword } from "/objects/weapons/sword.js";
 import { tween, easing } from "/utils.js";
-import { coordsInBbox, getRenderedMapBbox } from "/levels/spatial.js"
+import { coordsInBbox, getRenderedMapBbox } from "/levels/spatial.js";
+import state from "/state.js";
 
 import hp from "/components/hp.js";
 import burp from "/components/burp.js";
@@ -137,6 +138,7 @@ export const createPlayer = (type, attrs) => {
   const updatePlayerUI = () => {
     uiUpdateBurps(player.burps());
     uiUpdateHealth(player.hp(), player.maxHp(), player.shields());
+    uiUpdateCoins(state.get("coins"));
   };
 
   player.on("burped", updatePlayerUI);
