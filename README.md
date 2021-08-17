@@ -1,6 +1,40 @@
 # Gush
 
-A dungeon brawler game built with [Kaboom.js](https://kaboomjs.com/) on [Replit.com](https://replit.com/) for a [1729.com](https://1729.com/) contest.
+Gush is a dungeon brawler game built with [Kaboom.js](https://kaboomjs.com/) on [Replit.com](https://replit.com/) for a [1729.com](https://1729.com/) [contest](https://1729.com/replit-kaboom).
+
+## Tools used
+- [Replit.com](https://replit.com/)
+- [Kaboom.js v0.6.0](https://kaboomjs.com/)
+- [Stitches (spritesheet generator)](https://draeton.github.io/stitches/)
+- [Aseprite](https://www.aseprite.org/)
+- [EZGif Sprite Cutter](https://ezgif.com/sprite-cutter)
+- And of course, Google & Stack Overflow
+
+## Graphics
+- [Dungeon Tileset 2](https://0x72.itch.io/dungeontileset-ii)
+- [Blood FX](https://jasontomlee.itch.io/blood-fx)
+- [Assets Free Laser Bullets Pack 2020](https://wenrexa.itch.io/laser2020)
+- [Pixel Art Effect - FX084 (+15 Effects)](https://kvsr.itch.io/fx084)
+- [Pixel Effects Pack](https://codemanu.itch.io/pixelart-effect-pack)
+- [Kenney.nl Pixel UI Pack](https://kenney.nl/assets/pixel-ui-pack)
+
+## Sound
+- [Shapeforms Audio Free Sounds](https://shapeforms.itch.io/shapeforms-audio-free-sfx)
+- [Hypercasual Music Pack 1](https://www.void1gaming.com/hypercasual-music-pack-1)
+- [Hypercasual Music Pack 4](https://www.void1gaming.com/hypercasual-music-pack-4)
+- [Action RPG Music Free](https://vgcomposer.itch.io/action-rpg-music-free)
+- [Sound Effect Starter Pack](https://simon13666.itch.io/sound-starter-pack)
+
+## Maybe will use (not implemented yet)
+- [Magical Animation Effects](https://pimen.itch.io/magical-animation-effects)
+- [Free Pixel Effects Pack #12 - Mini Magick Shoots 3](https://xyezawr.itch.io/gif-free-pixel-effects-pack-12-mini-magick-shoots-3)
+- [GIF Free Pixel Effects Pack #6 - forks of flame](https://xyezawr.itch.io/gif-free-pixel-effects-pack-6-forks-of-flame)
+
+## Lots more cool assets (not implemented in this game)
+- [https://xyezawr.itch.io/](https://xyezawr.itch.io/)
+- [https://kvsr.itch.io/](https://kvsr.itch.io/)
+
+## Feature Tracker
 
 ### Basic game mechanics
 - [x] Red flask restores hp of course
@@ -18,7 +52,7 @@ A dungeon brawler game built with [Kaboom.js](https://kaboomjs.com/) on [Replit.
 - [ ] Different levels
   - [x] Use more tiles: banners, fountains, slime, traps
   - [ ] Load next level at ladder down
-- [ ] Triggered events & boss fights
+- [x] Triggered events & boss fights
   - [x] Walking over trigger sets off scripted events for the map
   - [x] Rooms can be closed off with crates blocking exit until event finishes
   - [x] Music changes for certain events
@@ -39,8 +73,11 @@ A dungeon brawler game built with [Kaboom.js](https://kaboomjs.com/) on [Replit.
 ### Nice to have
 - [ ] Controller support
 - [x] Simple tutorial messages on game start (only show once, turn off in localStorage)
-- [ ] Store player's last attack dir so attacking while stationary feels right
-- [ ] More sound effects, player footsteps, more sword swings, etc.
+- [x] Store player's last attack dir so attacking while stationary feels right
+- [ ] More sound effects
+  - [ ] player footsteps
+  - [x] more sword swings
+  - [ ] monster noises
 - [ ] Orc shaman can heal his orc friends
 - [ ] Some enemies drop a skull as a visual effect (non-interactive).
 - [ ] Column tiles
@@ -58,35 +95,3 @@ A dungeon brawler game built with [Kaboom.js](https://kaboomjs.com/) on [Replit.
 - [ ] Smashy Dino - fast attack in all directions, good hp
 - [ ] Burny Mage - ranged fire attack, heavy dmg, low hp
 - [ ] LASER WIZARD - laser attack fires through enemies, lower dmg than fire, low hp
-
-## Tools
-- [Replit.com](https://replit.com/)
-- [Kaboom.js v 0.6.0](https://kaboomjs.com/)
-- [Stitches (spritesheet generator)](https://draeton.github.io/stitches/)
-- [Aseprite](https://www.aseprite.org/)
-- [EZGif Sprite Cutter](https://ezgif.com/sprite-cutter)
-- Google, Stack Overflow
-
-## Graphics
-- [Dungeon Tileset 2](https://0x72.itch.io/dungeontileset-ii)
-- [Blood FX](https://jasontomlee.itch.io/blood-fx)
-- [Assets Free Laser Bullets Pack 2020](https://wenrexa.itch.io/laser2020)
-- [Pixel Art Effect - FX084 (+15 Effects)](https://kvsr.itch.io/fx084)
-- [Pixel Effects Pack](https://codemanu.itch.io/pixelart-effect-pack)
-- [Kenney.nl Pixel UI Pack](https://kenney.nl/assets/pixel-ui-pack)
-
-## Sound
-- [Shapeforms Audio Free Sounds](https://shapeforms.itch.io/shapeforms-audio-free-sfx)
-- [Hypercasual Music Pack 1](https://www.void1gaming.com/hypercasual-music-pack-1)
-- [Hypercasual Music Pack 4](https://www.void1gaming.com/hypercasual-music-pack-4)
-- [Action RPG Music Free](https://vgcomposer.itch.io/action-rpg-music-free)
-
-## Maybe will use (not implemented yet)
-- [Magical Animation Effects](https://pimen.itch.io/magical-animation-effects)
-- [Free Pixel Effects Pack #12 - Mini Magick Shoots 3](https://xyezawr.itch.io/gif-free-pixel-effects-pack-12-mini-magick-shoots-3)
-- [GIF Free Pixel Effects Pack #6 - forks of flame](https://xyezawr.itch.io/gif-free-pixel-effects-pack-6-forks-of-flame)
-- [Sound Effect Starter Pack](https://simon13666.itch.io/sound-starter-pack)
-
-## Lots more cool assets (not implemented in this game)
-- [https://xyezawr.itch.io/](https://xyezawr.itch.io/)
-- [https://kvsr.itch.io/](https://kvsr.itch.io/)
