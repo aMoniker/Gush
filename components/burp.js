@@ -17,8 +17,11 @@ export default (options) => {
 
       const usingDeadlyBurp = currentBurps > 0;
       this.burping = true;
-      k.burp(); // the most important kaboom.js function
-      k.camShake(usingDeadlyBurp ? 17 : 3);
+      k.burp({ // the most important kaboom.js function
+        volume: usingDeadlyBurp ? 1 : 0.33,
+        detune: usingDeadlyBurp ? -200 : 500,
+      });
+      k.camShake(usingDeadlyBurp ? 17 : 1);
       k.wait(0.5, () => this.burping = false);
 
       if (usingDeadlyBurp) {

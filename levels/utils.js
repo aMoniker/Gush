@@ -17,3 +17,8 @@ export const isEmptySymbol = (sym) => {
 export const isWallSymbol = (sym) => {
   return ["─", "│", "┌", "┐", "└", "┘", "/", "_", "`"].includes(sym);
 }
+
+// helper to get map width, in case you leave one line longer than others
+export const getMapWidth = (map) => map.reduce(
+  (a, s) => a = a > s.length ? a : s.length, 0
+);

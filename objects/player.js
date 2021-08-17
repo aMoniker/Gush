@@ -159,10 +159,8 @@ export const createPlayer = (type, attrs) => {
     player.invulnerable = true;
 
     // paint the player & weapon red if any dmg was taken
-    if (amt) {
-      if (!player.color) player.use(k.color(1, 0, 0, 1));
-      if (!weapon.color) weapon.use(k.color(1, 0, 0, 1));
-    }
+    if (!player.color) player.use(k.color(1, 0, 0, 1));
+    if (!weapon.color) weapon.use(k.color(1, 0, 0, 1));
 
     // oof
     k.play("punch-squelch-heavy", {

@@ -5,28 +5,50 @@ A dungeon brawler game built with [Kaboom.js](https://kaboomjs.com/) on [Replit.
 ### Basic game mechanics
 - [x] Red flask restores hp of course
 - [x] HP is always in increments of 1, each 1 represents half a heart
-- ~~Blue flask... maybe invincibility? faster attacks?~~
 - [x] Blue flask gives a shield on top of HP
-- ~~Green flask makes player hulk out, transform to huge sprite, trample enemies, super punch? (maybe gain green hearts?)~~
 - [x] Green flask gives charges of Power Belch, burp kills enemies around player, small one charge, large 3 charges
 - [ ] Yellow flask gives temporary attack dmg boost (maybe show this on weapon graphic)
-- [ ] Chests can contain flasks, coins, or may be mimics
-- ~~Crates can be whacked and sent flying into enemies~~
-- ~~Coins can be collected and spent in shops, enemies drop and scatter coins~~
+- [ ] Chests can contain flasks or coins
+ - [ ] Show coint count on UI
 - [ ] Coins can be collected through multiple game runs to unlock more characters
-- [ ] Necromancers raise armies of 1 hit skeletons
-- ~~Skeletons drop skulls, which can be whacked into mobs like crates~~
-- [ ] Enemies drop a skull as a visual effect (non-interactive).
-- [ ] Crates can be pushed around to solve puzzles
 - [ ] Current level can be reset if a player really messes things up.
+  - [ ] Pause menu with options
+
+### Essential features
+- [ ] Different levels
+  - [ ] Use more tiles: banners, fountains, slime, traps
+  - [ ] Load next level at ladder down
+- [ ] Triggered events & boss fights
+  - [ ] Walking over trigger sets off scripted events for the map
+  - [ ] Rooms can be closed off with crates blocking exit until event finishes
+  - [ ] Music changes for certain events
+- [ ] Music for each level (simple music manager w/ crossfade)
+- [ ] Loading screen
+- [ ] Main menu screen
+- [ ] Select/unlock character screen
+- [ ] Game over/reset level screen (YOU DIED)
+- [ ] Win screen & credits
+
+### Monster AI
+- [x] Basic monster movement AI
+- [ ] Necromancers raise armies of 1 hit skeletons
+- [ ] Orc Shaman can heal their friends
+- [ ] Mimics lie in wait, then bump you back and chase you
+- [ ] Demons cast fireballs at you
+
+### Nice to have
+- [ ] Simple tutorial messages on game start (only show once, turn off in localStorage)
+- [ ] Store player's last attack dir so attacking while stationary feels right
+- [ ] More sound effects, player footsteps, more sword swings, etc.
+- [ ] Orc shaman can heal his orc friends
+- [ ] Some enemies drop a skull as a visual effect (non-interactive).
+- [ ] Column tiles
 
 ### Potential game mechanics
 - [ ] Certain weapons can be picked up for a limited time, more powerful, replaces normal weapon
-- [ ] Orc shaman can heal his orc friends
 - [ ] You only get to keep coins if you beat the level
 
-
-Character classes:
+### Character classes:
 - [x] Swordy Boi - starting char, all other are unlocks. decent sword, decent hp
 - [ ] Pokey Elf - killer spear, mediocre hp
 - [ ] Shootie Pie - decent bow, decent hp
@@ -41,6 +63,7 @@ Character classes:
 - [Stitches (spritesheet generator)](https://draeton.github.io/stitches/)
 - [Aseprite](https://www.aseprite.org/)
 - [EZGif Sprite Cutter](https://ezgif.com/sprite-cutter)
+- Google, Stack Overflow
 
 ## Graphics
 - [Dungeon Tileset 2](https://0x72.itch.io/dungeontileset-ii)

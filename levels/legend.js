@@ -250,8 +250,8 @@ const legend = {
     ret.push(invisibleWall(ctx));
     return ret;
   },
-  "/": arrayWrap(objectConfig(verticalWallGraphic, [k.color(0.93, 0.93, 0.93, 1)])),
-  "_": (ctx) => horizontalWallGraphics(ctx, "ceiling", [k.color(0.93, 0.93, 0.93, 1)]),
+  "/": arrayWrap(objectConfig(verticalWallGraphic, [k.color(0.88, 0.88, 0.88, 1)])),
+  "_": (ctx) => horizontalWallGraphics(ctx, "ceiling", [k.color(0.88, 0.88, 0.88, 1)]),
   "=": arrayWrap(invisibleWall),
   // "+": door // TODO - implement door
 

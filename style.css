@@ -10,4 +10,15 @@ body {
 }
 canvas#game {
   display: block;
+  position: relative;
+  z-index: 100;
+}
+canvas#minimap {
+  position: absolute;
+  top: 100px;
+  left: 100px;
+  width: 250px;
+  height: 250px;
+  z-index: 101;
+  pointer-events: none;
 }

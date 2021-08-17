@@ -31,6 +31,7 @@ export const floorTile = () => {
     k.layer("floor"),
     k.origin("center"),
     "static",
+    "floor"
   ];
 };
 
