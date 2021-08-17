@@ -61,6 +61,9 @@ export const chest = () => ([
   "static",
   "chest",
   "boundary", // chests can't be walked over
+  {
+    opened: false,
+  }
 ]);
 
 export const crate = () => ([

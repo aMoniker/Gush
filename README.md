@@ -7,7 +7,7 @@ A dungeon brawler game built with [Kaboom.js](https://kaboomjs.com/) on [Replit.
 - [x] HP is always in increments of 1, each 1 represents half a heart
 - [x] Blue flask gives a shield on top of HP
 - [x] Green flask gives charges of Power Belch, burp kills enemies around player, small one charge, large 3 charges
-- [ ] Chests can contain flasks or coins
+- [x] Chests can contain flasks or coins
  - [ ] Show coint count on UI
 - [ ] Coins can be collected through multiple game runs to unlock more characters
 - [ ] Current level can be reset if a player really messes things up.

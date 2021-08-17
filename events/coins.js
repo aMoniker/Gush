@@ -3,7 +3,7 @@ import { config } from "/config.js";
 import { tween, easing } from "/utils.js";
 
 // coins are saved between games and used to unlock new characters
-const handleCoinPickup = (player, coin) => {
+export const handleCoinPickup = (player, coin) => {
   if (coin.pickedUp) return;
   coin.pickedUp = true;
   coin.isDestroying = true;

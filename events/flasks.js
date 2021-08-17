@@ -29,7 +29,7 @@ const processYellowFlaskEffects = (player, flask) => {
  *  green flask: SUPER BURP POWER
  *  yellow flask: temporary invincibility
  */
-const handleFlaskPickup = (player, flask) => {
+export const handleFlaskPickup = (player, flask) => {
   if (flask.pickedUp) return;
   flask.pickedUp = true;
 

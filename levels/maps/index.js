@@ -1,5 +1,5 @@
 import level_1_1 from "/levels/maps/level_1_1.js";
-import { testSecretsMap } from "/levels/maps/utils.js";
+import { testSecretsMap, smallTestMap } from "/levels/maps/utils.js";
 
 /**
  * --- Symbol Legend ---
@@ -43,6 +43,6 @@ import { testSecretsMap } from "/levels/maps/utils.js";
 
 // TODO - generate random map here
 export const generateMap = () => {
-  // return testSecretsMap;
-  return level_1_1;
+  return smallTestMap;
+  // return level_1_1;
 };

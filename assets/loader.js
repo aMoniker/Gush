@@ -251,6 +251,9 @@ export const loadAssets = () => {
   promises.push(loadBasicSound("punch-intense-heavy"));
   promises.push(loadBasicSound("implode"));
   promises.push(loadBasicSound("drinking-gulp"));
+  promises.push(loadBasicSound("lock"));
+  promises.push(loadBasicSound("chest-opening"));
+  promises.push(loadBasicSound("chest-empty"));
 
 
   // music
