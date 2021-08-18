@@ -1,22 +1,6 @@
 import { k } from "/kaboom.js";
 import { config } from "/config.js";
 
-// we paint black bars over the top and bottom of the screen
-// to ensure a 1.5 aspect ratio in the game itself.
-// Game object rendering adheres to this, but without black bars,
-// you can see objects popping in and out suddenly as they're rendered.
-// The camera does not affect the UI layer, so we use k.width/height and not config
-let topBlackBar = null;
-let botBlackBar = null;
-
-// the origins for the top left corner for UI objects can vary
-// depending on how much of the canvas the black bars cover.
-// UI elements should render using these origin points for reference.
-let xLeft = 0;
-let xRight = 0;
-let yTop = 0;
-let yBot = 0;
-
 // heart objects for displaying the player's health
 let heartScale = 2;
 let hearts = [];
@@ -35,75 +19,42 @@ let coinSprite = null;
 let coinText = null;
 
 export const uiUpdatePositions = () => {
-  const w = k.width();
-  const h = k.height();
-  const rh = w / config.gameAspectRatio;
-
-  // store ui reference points
-  xLeft = 0;
-  xRight = w;
-  yTop = (h - rh) / 2;
-  yBot = yTop + rh;
-
-  // adjust black bars
-  if (topBlackBar && botBlackBar) {
-    const barWidth = w;
-    const barHeight = yTop;
-    topBlackBar.height = barHeight
-    topBlackBar.width = barWidth;
-    topBlackBar.pos.x = 0;
-    topBlackBar.pos.y = 0;
-    botBlackBar.height = barHeight;
-    botBlackBar.width = barWidth;
-    botBlackBar.pos.x = 0;
-    botBlackBar.pos.y = yBot;
-  }
+  const w = config.gameWidth;
+  const h = config.gameHeight;
 
   // adjust hearts
   let lastHeartX = 0;
   for (let i = 0; i < hearts.length; i++) {
     lastHeartX = 6 + (i * (17 * heartScale));
     hearts[i].pos.x = lastHeartX;
-    hearts[i].pos.y = yTop + 6;
+    hearts[i].pos.y = 6;
   }
 
   // adjust shields
   for (let i = 0; i < shields.length; i++) {
     shields[i].pos.x = lastHeartX + (42 + i * 17 * shieldsScale);
-    shields[i].pos.y = yTop + 6;
+    shields[i].pos.y = 6;
   }
 
   // adjust burp meter
   for (let i = 0; i < burps.length; i++) {
     burps[i].pos.x = 5 + (i * 17 * burpsScale);
-    burps[i].pos.y = yTop + 42;
+    burps[i].pos.y = 42;
   }
 
   // adjust coin count
   if (coinSprite) {
     coinSprite.pos.x = 12;
-    coinSprite.pos.y = yTop + 77;
+    coinSprite.pos.y = 77;
   }
   if (coinText) {
     coinText.pos.x = 42;
-    coinText.pos.y = yTop + 82;
+    coinText.pos.y = 82;
   }
 };
 
 // initialize all ui objects
 export const initializeUi = () => {
-  topBlackBar = k.add([
-    k.rect(0, 0, { noArea: true }),
-    k.pos(0, 0),
-    k.color(0, 0, 0, 1),
-    k.layer("ui"),
-  ]);
-  botBlackBar = k.add([
-    k.rect(0, 0, { noArea: true }),
-    k.pos(0, 0),
-    k.color(0, 0, 0, 1),
-    k.layer("ui"),
-  ]);
   uiUpdatePositions();
 };
 
@@ -150,9 +101,7 @@ export const uiUpdateHealth = (curHp, maxHp, curShields) => {
     }
   }
   for (let i = 0; i < maxShields; i++) {
-    // if (curShie)
     shields[i].hidden = curShields <= i;
-    // shields[i].frame = (curShields > i) ? i + 12 : i;
   }
 };
 
@@ -190,7 +139,6 @@ export const uiUpdateCoins = (numCoins) => {
       k.text(""),
       k.layer("ui"),
       k.pos(0, 0),
-      // k.scale(coinsScale),
       k.color(1, 1, 1, 1),
     ]);
   }
@@ -198,25 +146,21 @@ export const uiUpdateCoins = (numCoins) => {
   uiUpdatePositions();
 };
 
-// when kaboom starts, the aspect ratio is locked to the screen size at that moment.
-// if the window resizes, the best we can do is to scale while maintaining that ratio.
-
+// on window resize, scale the canvas while maintaining the aspect ratio.
 let windowResizeTimeout = 0;
-
 const handleResize = (canvas) => {
-  const {innerWidth,innerHeight} = window;
-  const ratio = canvas.clientWidth / canvas.clientHeight;
-  const newRatio = innerWidth / innerHeight;
-  if (newRatio > ratio) {
+  const { innerWidth,innerHeight } = window;
+  const windowAspectRatio = innerWidth / innerHeight;
+  const { gameAspectRatio } = config;
+  if (windowAspectRatio > gameAspectRatio) {
     // if it got wider, then the height is the limiter
-    canvas.style.width = `${ratio * innerHeight}px`;
+    canvas.style.width = `${gameAspectRatio * innerHeight}px`;
     canvas.style.height = `${innerHeight}px`;
   } else {
     // if it got taller, then the width is the limiter
     canvas.style.width = `${innerWidth}px`;
-    canvas.style.height = `${innerWidth / ratio}px`;
+    canvas.style.height = `${innerWidth / gameAspectRatio}px`;
   }
-
   // finally, update the UI so it renders in the proper spot
   uiUpdatePositions();
 }
