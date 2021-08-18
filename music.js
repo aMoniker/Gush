@@ -1,11 +1,17 @@
 import { k } from "/kaboom.js";
 
+const defaultTrackConfigs = {
+  "stark-nuances": { volume: 0.64 },
+  "battle-3": { volume: 0.76 },
+};
+
 class Music {
   currentTrack = null
 
   play(trackName, audioConfig) {
     this.currentTrack = k.play(trackName, {
       loop: true,
+      ...(defaultTrackConfigs[trackName] ?? {}),
       ...(audioConfig ?? {}),
     });
   }

@@ -84,12 +84,11 @@ let showTutorial = true;
 const tutorialKey = "level-1-1-tutorials";
 
 const bgMusic = "stark-nuances";
-const bgVolume = 0.77;
 
 map.onStart = () => {
   showTutorial = state.get(tutorialKey) ?? true;
   if (showTutorial) announce("WASD to move");
-  music.play(bgMusic, { volume: bgVolume });
+  music.play(bgMusic);
 }
 
 const triggered = {};
@@ -131,7 +130,7 @@ map.triggers = {
     ]));
   },
   8: async () => {
-    music.crossFade("battle-3", { volume: 0.8 });
+    music.crossFade("battle-3");
 
     // block off exit with crates
     const crates = crateWall([26, 24], [26, 25], [26, 26]);
@@ -166,9 +165,7 @@ map.triggers = {
     // remove wall of crates
     crates.forEach(c => c.destroy());
 
-    music.crossFade(bgMusic, {
-      volume: 0.77,
-    });
+    music.crossFade(bgMusic);
   }
 };
 
