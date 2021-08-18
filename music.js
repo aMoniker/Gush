@@ -1,8 +1,14 @@
 import { k } from "/kaboom.js";
 
 const defaultTrackConfigs = {
-  "stark-nuances": { volume: 0.64 },
-  "battle-3": { volume: 0.76 },
+  "stark-nuances": { volume: 0.53 },
+  "battle-3": { volume: 0.66 },
+  "cave-3": { volume: 0.63 },
+  "neon-synth": { volume: 0.60 },
+  "party-on-1": { volume: 0.47 },
+  "peek-a-boo-1": { volume: 0.61 },
+  "peek-a-boo-2": { volume: 0.61 },
+  "sunset-alleyway": { volume: 0.77 },
 };
 
 class Music {

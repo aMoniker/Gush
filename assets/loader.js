@@ -269,6 +269,13 @@ export const loadAssets = () => {
   // music
   promises.push(loadBasicMusic("stark-nuances"));
   promises.push(loadBasicMusic("battle-3"));
+  promises.push(loadBasicMusic("battle-8"));
+  promises.push(loadBasicMusic("cave-3"));
+  promises.push(loadBasicMusic("neon-synth"));
+  promises.push(loadBasicMusic("party-on-1"));
+  promises.push(loadBasicMusic("peek-a-boo-1"));
+  promises.push(loadBasicMusic("peek-a-boo-2"));
+  promises.push(loadBasicMusic("sunset-alleyway"));
 
 
   return Promise.all(promises);
