@@ -27,12 +27,14 @@ const playerType = {
     createWeapon: createSword,
     flipDuringAttack: false,
     holdToAttack: false,
+    hurtSound: "male-grunt-5",
   },
   elf_f: {
     hp: 4,
     createWeapon: createBow,
     flipDuringAttack: true,
     holdToAttack: true,
+    hurtSound: "female-grunt-7",
   }
 };
 
@@ -231,8 +233,13 @@ export const createPlayer = (typeName, attrs) => {
     // oof
     k.play("punch-squelch-heavy", {
       loop: false,
-      volume: 0.53,
+      volume: 0.43,
       detune: -100,
+    });
+    k.play(type.hurtSound, {
+      loop: false,
+      volume: 0.53,
+      detune: k.map(rng.gen(), 0, 1, -200, 100),
     });
 
     // clear all the hit effects
