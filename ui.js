@@ -19,9 +19,6 @@ let coinSprite = null;
 let coinText = null;
 
 export const uiUpdatePositions = () => {
-  const w = config.gameWidth;
-  const h = config.gameHeight;
-
   // adjust hearts
   let lastHeartX = 0;
   for (let i = 0; i < hearts.length; i++) {
@@ -55,6 +52,11 @@ export const uiUpdatePositions = () => {
 
 // initialize all ui objects
 export const initializeUi = () => {
+  hearts = [];
+  shields = [];
+  burps = [];
+  coinSprite = null;
+  coinText = null;
   uiUpdatePositions();
 };
 
