@@ -28,6 +28,7 @@ export const createBow = (player) => {
         };
         const hitBoundary = (b) => {
           // TODO - bounce off wall
+          if (b.is("crevasse")) return;
           cancelCollides();
           struck = true;
           a.destroy();

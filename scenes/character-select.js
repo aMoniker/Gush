@@ -2,6 +2,8 @@ import { k } from "/kaboom.js";
 import { config } from "/config.js";
 import state from "/state.js";
 
+state.set("coins", 3000);
+
 const types = [
   {
     key: "knight",

@@ -40,7 +40,9 @@ const tileConfig = (tileFn, ctx, layer, extraAttrs) => {
 
 // commonly used tiles
 const floorTile = objectConfig(misc.floorTile);
-const invisibleWall = objectConfig(structure.invisibleWall);
+const invisibleWall = (ctx, extraAttrs) => {
+  return objectConfig(structure.invisibleWall, extraAttrs)(ctx);
+}
 
 // this is re-used for secret walls
 const horizontalWallGraphics = (ctx, layerOverride, extraAttrs) => {
@@ -253,7 +255,7 @@ const legend = {
   "#": (ctx) => {
     const ret = [];
     if (ctx.u !== "#") ret.push(tileConfig(misc.edgeTile, ctx));
-    ret.push(invisibleWall(ctx));
+    ret.push(invisibleWall(ctx, ["crevasse"]));
     return ret;
   },
   "/": arrayWrap(objectConfig(verticalWallGraphic, [k.color(0.88, 0.88, 0.88, 1)])),
