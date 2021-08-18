@@ -75,7 +75,7 @@ Gush is a dungeon brawler game built with [Kaboom.js](https://kaboomjs.com/) on 
 - [x] Simple tutorial messages on game start (only show once, turn off in localStorage)
 - [x] Store player's last attack dir so attacking while stationary feels right
 - [ ] More sound effects
-  - [ ] player footsteps
+  - [x] player footsteps
   - [x] more sword swings
   - [ ] monster noises
 - [ ] Orc shaman can heal his orc friends
@@ -91,7 +91,7 @@ Gush is a dungeon brawler game built with [Kaboom.js](https://kaboomjs.com/) on 
 ### Character classes:
 - [x] Swordy Boi - starting char, all other are unlocks. decent sword, decent hp
 - [ ] Pokey Elf - killer spear, mediocre hp
-- [ ] Shootie Pie - decent bow, decent hp
+- [x] Shootie Pie - decent bow, decent hp
 - [ ] Crushy Lizard - slow, powerful attack, good hp
 - [ ] Smashy Dino - fast attack in all directions, good hp
 - [ ] Burny Mage - ranged fire attack, heavy dmg, low hp

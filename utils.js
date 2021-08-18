@@ -4,7 +4,7 @@ export const rng = k.makeRng(Date.now());
 
 export const randInt = (min, max) => {
   return min + Math.floor(rng.gen() * ((max - min) + 1));
-}
+};
 
 export const showFps = () => {
   const fpsText = k.add([
@@ -15,7 +15,7 @@ export const showFps = () => {
   fpsText.action(() => {
     fpsText.text = k.debug.fps();
   });
-}
+};
 
 export const curry = (fn, ...curriedArgs) => {
   return (...moreArgs) => fn(...curriedArgs, ...moreArgs);
@@ -82,6 +82,7 @@ export const announce = (announcement) => {
       .then(() => tween(text, 0.5, { "color.a": 0 }))
       .then(() => text.destroy())
       ;
+    k.play("pop-1");
   });
   return cachedPromise;
 };

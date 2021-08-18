@@ -104,6 +104,8 @@ export const loadAssets = () => {
 
   // weapons
   promises.push(loadBasicSprite("weapon_knight_sword"));
+  promises.push(loadBasicSprite("weapon_bow"));
+  promises.push(loadBasicSprite("weapon_arrow"));
 
 
   // monsters
@@ -243,6 +245,7 @@ export const loadAssets = () => {
   // sound effects
   // promises.push(k.loadSound("whoosh-swing", "/assets/sounds/whoosh-swing.mp3"));
   promises.push(loadBasicSound("whoosh-swing"));
+  promises.push(loadBasicSound("whoosh-flutter"));
   promises.push(loadBasicSound("slash-1"));
   promises.push(loadBasicSound("slash-2"));
   promises.push(loadBasicSound("slash-5"));
@@ -268,6 +271,11 @@ export const loadAssets = () => {
   promises.push(loadBasicSound("bubbles-3"));
   promises.push(loadBasicSound("footstep-armor-1"));
   promises.push(loadBasicSound("footstep-armor-2"));
+  promises.push(loadBasicSound("arrow-impact-1"));
+  promises.push(loadBasicSound("bow-release-2"));
+  promises.push(loadBasicSound("female-grunt-7"));
+  promises.push(loadBasicSound("male-grunt-5"));
+  promises.push(loadBasicSound("pop-1"));
 
 
   // music

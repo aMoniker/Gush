@@ -1,6 +1,7 @@
 import { k } from "/kaboom.js";
 import { config } from "/config.js";
 import { uiUpdateHealth, uiUpdateBurps, uiUpdateCoins } from "/ui.js";
+import { createBow } from "/objects/weapons/bow.js";
 import { createSword } from "/objects/weapons/sword.js";
 import { tween, easing, rng } from "/utils.js";
 import { coordsInBbox, getRenderedMapBbox } from "/levels/spatial.js";
@@ -20,21 +21,38 @@ const moveDownKey = "s";
 const moveLeftKey = "a";
 const moveRightKey = "d";
 
+const playerType = {
+  knight: {
+    hp: 6,
+    createWeapon: createSword,
+    flipDuringAttack: false,
+    holdToAttack: false,
+  },
+  elf_f: {
+    hp: 4,
+    createWeapon: createBow,
+    flipDuringAttack: true,
+    holdToAttack: true,
+  }
+};
+
 /**
  * Add a new player to the game. There can only be one at a time.
  * types: elf_f, elf_m, knight, lizard_f, lizard_m, wizard_f, wizard_m
  */
-export const createPlayer = (type, attrs) => {
+export const createPlayer = (typeName, attrs) => {
+  const type = playerType[typeName];
+
   const player = k.add([
     k.origin("center"),
-    k.sprite(type, { animSpeed: 0.3, noArea: true }),
-    k.area(k.vec2(-5, -2), k.vec2(5, 12)),
+    k.sprite(typeName, { animSpeed: 0.3, noArea: true }),
+    k.area(k.vec2(-5, 0), k.vec2(5, 12)),
     k.layer("game"),
     "player",
     "killable",
     {
       dir: k.vec2(0, 0),   // which direction the player is moving
-      dirAttack: k.vec2(0, 0), // which direction the player is attacking
+      dirAttack: k.vec2(1, 0), // which direction the player is attacking
       speed: 77,           // how fast the player moves
       xFlipped: false,     // determines which way the player/weapon are facing
       moving: false,       // when true, move player in dir by speed
@@ -42,14 +60,20 @@ export const createPlayer = (type, attrs) => {
       hit: false,          // animation for hit & temporary loss of control
       invulnerable: false, // player is temporarily invulnerable after being hit
     },
-    hp({ current: 6, max: 6 }),
+    hp({ 
+      max: type.hp,
+      current: type.hp,
+    }),
     burp({ current: 0 }),
     ...(attrs ?? []),
   ]);
 
   // attack keys
-  const weapon = createSword(player);
-  k.keyPress(weaponKey, () => {
+  // const weapon = createSword(player);
+  const weapon = type.createWeapon(player);
+
+  const attackKeyEvent = type.holdToAttack ? k.keyDown : k.keyPress;
+  attackKeyEvent(weaponKey, () => {
     if (player.dead) return;
     weapon.attack();
   });
@@ -85,7 +109,9 @@ export const createPlayer = (type, attrs) => {
   const handleMoving = () => {
     if (player.dead) return;
     if (!player.moving && !player.forcedMoving) return;
-    if (!player.forcedMoving && !weapon.attacking) {
+    if (!player.forcedMoving
+     && !(!type.flipDuringAttack && weapon.attacking)
+    ) {
       if (player.dir.x !== 0) {
         player.xFlipped = player.dir.x < 0;
       }
@@ -109,7 +135,6 @@ export const createPlayer = (type, attrs) => {
     const scale = k.width() / config.viewableWidth;
     k.camScale(scale);
     k.camPos(player.pos);
-
     // readd the player each frame, so it's always on top
     k.readd(player);
     k.readd(weapon);
@@ -146,13 +171,13 @@ export const createPlayer = (type, attrs) => {
       if (player.dir.x === 0) {
         window.clearTimeout(timeoutZeroDirX);
         timeoutZeroDirX = setTimeout(() => {
-          if (player.moving) player.dirAttack.x = 0
+          if (player.moving && player.dir.y !== 0) player.dirAttack.x = 0
         }, diagonalGraceTime);
       }
       if (player.dir.y === 0) {
         window.clearTimeout(timeoutZeroDirY);
         timeoutZeroDirY = setTimeout(() => {
-          if (player.moving) player.dirAttack.y = 0;
+          if (player.moving && player.dir.x !== 0) player.dirAttack.y = 0;
         }, diagonalGraceTime);
       }
     }
