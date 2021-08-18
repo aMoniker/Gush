@@ -2,7 +2,7 @@ import { k } from "/kaboom.js";
 import { config } from "/config.js";
 import { uiUpdateHealth, uiUpdateBurps, uiUpdateCoins } from "/ui.js";
 import { createSword } from "/objects/weapons/sword.js";
-import { tween, easing } from "/utils.js";
+import { tween, easing, rng } from "/utils.js";
 import { coordsInBbox, getRenderedMapBbox } from "/levels/spatial.js";
 import state from "/state.js";
 import music from "/music.js";
@@ -79,6 +79,9 @@ export const createPlayer = (type, attrs) => {
     }
   };
 
+  const footstepTime = 0.38;
+  let footstepFlip = false;
+  let timeSinceFootstep = 0;
   const handleMoving = () => {
     if (player.dead) return;
     if (!player.moving && !player.forcedMoving) return;
@@ -89,6 +92,17 @@ export const createPlayer = (type, attrs) => {
       player.flipX(player.xFlipped);
     }
     player.pos = player.pos.add(player.dir.scale(player.speed * k.dt()));
+    timeSinceFootstep += k.dt();
+    if (timeSinceFootstep > footstepTime) {
+      timeSinceFootstep = 0;
+      const footstepSound = `footstep-armor-${footstepFlip ? 1 : 2}`
+      k.play(footstepSound, {
+        speed: 2.5,
+        volume: footstepFlip ? 0.05 : 0.1,
+        detune: k.map(rng.gen(), 0, 1, -250, 250),
+      });
+      footstepFlip = !footstepFlip;
+    }
   };
 
   const handleCamera = () => {
@@ -119,6 +133,7 @@ export const createPlayer = (type, attrs) => {
     if (player.forcedMoving) return;
     player.dir.x = dir.x ?? player.dir.x;
     player.dir.y = dir.y ?? player.dir.y;
+    if (player.dir.x === 0 && player.dir.y === 0) timeSinceFootstep = 0;
 
     if (moving) {
       if (player.dir.x !== 0) player.dirAttack.x = player.dir.x;

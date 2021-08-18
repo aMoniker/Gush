@@ -266,6 +266,8 @@ export const loadAssets = () => {
   promises.push(loadBasicSound("poof"));
   promises.push(loadBasicSound("bubbles-1"));
   promises.push(loadBasicSound("bubbles-3"));
+  promises.push(loadBasicSound("footstep-armor-1"));
+  promises.push(loadBasicSound("footstep-armor-2"));
 
 
   // music
