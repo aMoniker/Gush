@@ -12,8 +12,6 @@ import burp from "/components/burp.js";
 
 // https://developer.mozilla.org/en-US/docs/Web/API/Gamepad_API/Using_the_Gamepad_API
 
-const hitReactionTime = 0.33;
-
 // TODO - make these configurable
 const burpKey = "b";
 const weaponKey = "space";
@@ -172,6 +170,9 @@ export const createPlayer = (type, attrs) => {
   player.on("hurt", (amt, hurtBy) => {
     if (player.invulnerable) return;
 
+    const hitReactionTime = 0.33;
+    const invulnerbilityTime = 1;
+
     // push the player in the opposite direction if they ran into something solid
     if (hurtBy.solid) {
       player.moving = false;
@@ -197,12 +198,15 @@ export const createPlayer = (type, attrs) => {
     // clear all the hit effects
     k.wait(hitReactionTime, () => {
       player.hit = false;
-      player.invulnerable = false;
       player.forcedMoving = false;
       player.dir.x = 0;
       player.dir.y = 0;
       player.color = undefined;
       weapon.color = undefined;
+    });
+
+    k.wait(invulnerbilityTime, () => {
+      player.invulnerable = false;
     });
 
     updatePlayerUI();
