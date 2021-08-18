@@ -43,7 +43,8 @@ export const handleFlaskPickup = (player, flask) => {
     processYellowFlaskEffects(player, flask);
   }
 
-  k.play("drinking-gulp");
+  const gulp = flask.is("flask_size_big") ? "bubbles-3" : "bubbles-1";
+  k.play(gulp);
 
   // scale the flask, move it up, and fade it out
   if (!flask.color) flask.use(k.color(1,1,1,1));
