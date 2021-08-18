@@ -107,13 +107,16 @@ export const createPlayer = (type, attrs) => {
     handleMoving();
     handleAnimation();
     handleCamera();
-    weapon.updatePosition();
-    player.pushOutAll();
+    if (!player.dead) {
+      weapon.updatePosition();
+      player.pushOutAll();
+    }
   });
 
 
   let timeoutZeroDirX = 0;
   let timeoutZeroDirY = 0;
+  const diagonalGraceTime = 50;
   const controlMoving = (dir, moving) => {
     if (player.forcedMoving) return;
     player.dir.x = dir.x ?? player.dir.x;
@@ -126,18 +129,18 @@ export const createPlayer = (type, attrs) => {
       // special handling for diagonal movement - don't zero out
       // immediately when player releases one key of a diagonal
       // this allow dirAttack to remain diagonal when releasing
-      // both keys within 100ms of each other
+      // both keys within diagonalGraceTime of each other
       if (player.dir.x === 0) {
         window.clearTimeout(timeoutZeroDirX);
         timeoutZeroDirX = setTimeout(() => {
           if (player.moving) player.dirAttack.x = 0
-        }, 100);
+        }, diagonalGraceTime);
       }
       if (player.dir.y === 0) {
         window.clearTimeout(timeoutZeroDirY);
         timeoutZeroDirY = setTimeout(() => {
           if (player.moving) player.dirAttack.y = 0;
-        }, 100);
+        }, diagonalGraceTime);
       }
     }
 

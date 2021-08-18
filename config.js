@@ -2,16 +2,24 @@ const tileWidth = 16;
 const tileHeight = 16;
 const tilesPerScreen = 20;
 
-const renderedAspectRatio = 1.5;
-const viewableWidth = tilesPerScreen * tileWidth;
-const viewableHeight = viewableWidth / renderedAspectRatio;
+// the actual screen dimensions, used to initialize kaboom
+const gameWidth = 834;
+const gameHeight = 557;
+const gameAspectRatio = gameWidth / gameHeight;
 
-// buffer of is added to prevent tile pop-in at screen edges
+// these control how much of the screen is covered by the camera
+const viewableWidth = tilesPerScreen * tileWidth;
+const viewableHeight = viewableWidth / gameAspectRatio;
+
+// these control the far game objects render around the player
 const renderedBuffer = tileWidth * 4;
 const renderedWidth = viewableWidth + renderedBuffer;
-const renderedHeight = renderedWidth / renderedAspectRatio;
+const renderedHeight = renderedWidth / gameAspectRatio;
 
 export const config = {
+  gameWidth,
+  gameHeight,
+  gameAspectRatio,
   tileWidth,
   tileHeight,
   tilesPerScreen,
@@ -19,6 +27,5 @@ export const config = {
   viewableHeight,
   renderedWidth,
   renderedHeight,
-  renderedAspectRatio,
   mapOrigin: { x: 0, y: 0 },
 };

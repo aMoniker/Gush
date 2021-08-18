@@ -1,11 +1,9 @@
-// TODO - ensure the canvas starts with the largest size possible
-//        while maintaining the renderedAspectRatio
+import { config } from "/config.js";
 
 export const kaboomOptions = {
-  fullscreen: true,
   canvas: document.getElementById("game"),
-  // width: 240,
-  // height: 240,
+  width: config.gameWidth,
+  height: config.gameHeight,
   scale: 1,
   version: "0.6.0",
   global: false,

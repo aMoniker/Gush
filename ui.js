@@ -37,7 +37,7 @@ let coinText = null;
 export const uiUpdatePositions = () => {
   const w = k.width();
   const h = k.height();
-  const rh = w / config.renderedAspectRatio;
+  const rh = w / config.gameAspectRatio;
 
   // store ui reference points
   xLeft = 0;
@@ -46,16 +46,18 @@ export const uiUpdatePositions = () => {
   yBot = yTop + rh;
 
   // adjust black bars
-  const barWidth = w;
-  const barHeight = yTop;
-  topBlackBar.height = barHeight
-  topBlackBar.width = barWidth;
-  topBlackBar.pos.x = 0;
-  topBlackBar.pos.y = 0;
-  botBlackBar.height = barHeight;
-  botBlackBar.width = barWidth;
-  botBlackBar.pos.x = 0;
-  botBlackBar.pos.y = yBot;
+  if (topBlackBar && botBlackBar) {
+    const barWidth = w;
+    const barHeight = yTop;
+    topBlackBar.height = barHeight
+    topBlackBar.width = barWidth;
+    topBlackBar.pos.x = 0;
+    topBlackBar.pos.y = 0;
+    botBlackBar.height = barHeight;
+    botBlackBar.width = barWidth;
+    botBlackBar.pos.x = 0;
+    botBlackBar.pos.y = yBot;
+  }
 
   // adjust hearts
   let lastHeartX = 0;
@@ -198,11 +200,31 @@ export const uiUpdateCoins = (numCoins) => {
 
 // when kaboom starts, the aspect ratio is locked to the screen size at that moment.
 // if the window resizes, the best we can do is to scale while maintaining that ratio.
+
+let windowResizeTimeout = 0;
+
+const handleResize = (canvas) => {
+  const {innerWidth,innerHeight} = window;
+  const ratio = canvas.clientWidth / canvas.clientHeight;
+  const newRatio = innerWidth / innerHeight;
+  if (newRatio > ratio) {
+    // if it got wider, then the height is the limiter
+    canvas.style.width = `${ratio * innerHeight}px`;
+    canvas.style.height = `${innerHeight}px`;
+  } else {
+    // if it got taller, then the width is the limiter
+    canvas.style.width = `${innerWidth}px`;
+    canvas.style.height = `${innerWidth / ratio}px`;
+  }
+
+  // finally, update the UI so it renders in the proper spot
+  uiUpdatePositions();
+}
+
 export const watchWindowResizing = () => {
   const c = document.getElementsByTagName("canvas");
   if (c && c.length && c[0]) {
     const canvas = c[0];
-    const ratio = canvas.clientWidth / canvas.clientHeight;
 
     // keep the canvas centered in its container
     canvas.parentNode.style.display = "flex";
@@ -210,25 +232,14 @@ export const watchWindowResizing = () => {
     canvas.parentNode.style.justifyContent = "center";
 
     // debounced resize
-    let timeout = 0;
     window.addEventListener("resize", () => {
-      window.clearTimeout(timeout);
-      timeout = window.setTimeout(() => {
-        const {innerWidth,innerHeight} = window;
-        const newRatio = innerWidth / innerHeight;
-        if (newRatio > ratio) {
-          // if it got wider, then the height is the limiter
-          canvas.style.width = `${ratio * innerHeight}px`;
-          canvas.style.height = `${innerHeight}px`;
-        } else {
-          // if it got taller, then the width is the limiter
-          canvas.style.width = `${innerWidth}px`;
-          canvas.style.height = `${innerWidth / ratio}px`;
-        }
-
-        // finally, update the UI so it renders in the proper spot
-        // uiUpdatePositions();
+      window.clearTimeout(windowResizeTimeout);
+      windowResizeTimeout = window.setTimeout(() => {
+        handleResize(canvas);
       }, 200);
     });
+
+    // initial resize
+    handleResize(canvas);
   }
 };
