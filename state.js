@@ -2,6 +2,7 @@ import { k } from "/kaboom.js";
 
 const defaultSavedState = {
   coins: 0,
+  musicVolume: 0,
 };
 
 // basic state variables

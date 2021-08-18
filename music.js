@@ -1,4 +1,5 @@
 import { k } from "/kaboom.js";
+import state from "/state.js";
 
 const defaultTrackConfigs = {
   "stark-nuances": { volume: 0.53 },
@@ -17,11 +18,14 @@ class Music {
 
   play(trackName, audioConfig) {
     this.currentTrackName = trackName;
-    this.currentTrack = k.play(trackName, {
+    const trackConfig = {
       loop: true,
       ...(defaultTrackConfigs[trackName] ?? {}),
       ...(audioConfig ?? {}),
-    });
+    };
+    if (typeof trackConfig.volume !== "number") trackConfig.volume = 1;
+    trackConfig.volume *= state.get("musicVolume");
+    this.currentTrack = k.play(trackName, trackConfig);
   }
 
   stop() {
@@ -50,6 +54,7 @@ class Music {
   }
 
   crossFade(trackName, audioConfig) {
+    return;
     audioConfig = audioConfig ?? {};
     const prevTrack = this.currentTrack;
     const curTrackVolume = audioConfig.volume ?? 1;
