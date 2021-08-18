@@ -117,6 +117,54 @@ map.triggers = {
       spawnObject(monster.imp(), 55, 28),
     ]));
   },
+  5: async () => {
+    let seek = 0;
+    if (music.name() === bgMusic) seek = music.time();
+
+    music.crossFade("battle-3");
+    const crates = crateWall([35, 55], [35, 56], [12, 43], [12, 44]);
+    
+    await monsterWave(() => ([
+      spawnObject(monster.imp(), 23, 44),
+      spawnObject(monster.imp(), 23, 54),
+      spawnObject(monster.imp(), 18, 49),
+      spawnObject(monster.imp(), 28, 49),
+      spawnObject(monster.imp(), 26, 46),
+      spawnObject(monster.imp(), 26, 52),
+      spawnObject(monster.imp(), 20, 46),
+      spawnObject(monster.imp(), 20, 52),
+    ]));
+
+    await monsterWave(() => ([
+      spawnObject(monster.goblin(), 23, 44),
+      spawnObject(monster.goblin(), 23, 54),
+      spawnObject(monster.goblin(), 18, 49),
+      spawnObject(monster.goblin(), 28, 49),
+      spawnObject(monster.goblin(), 26, 46),
+      spawnObject(monster.goblin(), 26, 52),
+      spawnObject(monster.goblin(), 20, 46),
+      spawnObject(monster.goblin(), 20, 52),
+    ]));
+
+    await monsterWave(() => ([
+      spawnObject(monster.wogol(), 23, 44),
+      spawnObject(monster.wogol(), 23, 54),
+      spawnObject(monster.wogol(), 18, 49),
+      spawnObject(monster.wogol(), 28, 49),
+      spawnObject(monster.wogol(), 26, 46),
+      spawnObject(monster.wogol(), 26, 52),
+      spawnObject(monster.wogol(), 20, 46),
+      spawnObject(monster.wogol(), 20, 52),
+    ]));
+
+    coinReward(
+      [23, 44], [23, 54], [18, 49], [28, 49],
+      [26, 46], [26, 52], [20, 46], [20, 52]
+    );
+
+    crates.forEach(c => c.destroy());
+    music.crossFade(bgMusic, { seek });
+  },
   6: () => {
     monsterWave(() => ([
       spawnObject(monster.imp(), 22, 67),
@@ -130,6 +178,8 @@ map.triggers = {
     ]));
   },
   8: async () => {
+    let seek = 0;
+    if (music.name() === bgMusic) seek = music.time();
     music.crossFade("battle-3");
 
     // block off exit with crates
@@ -164,8 +214,7 @@ map.triggers = {
 
     // remove wall of crates
     crates.forEach(c => c.destroy());
-
-    music.crossFade(bgMusic);
+    music.crossFade(bgMusic, { seek });
   }
 };
 

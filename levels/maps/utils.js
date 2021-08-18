@@ -11,11 +11,13 @@ export const monsterWave = (spawner) => {
     const effects = [];
 
     // grace period before attacking player, also entrance effect
+    const gracePeriod = 1;
     wave.forEach(m => {
       m.solid = false;
       m.aiEnabled = false;
       if (!m.color) m.use(k.color(1, 1, 1, 0));
-      tween(m, 0.5, { "color.a": 1 }).then(() => {
+      tween(m, gracePeriod, { "color.a": 0.5 }).then(() => {
+        m.color.a = 1;
         m.solid = true;
         m.aiEnabled = true;
       });

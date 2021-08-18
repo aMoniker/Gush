@@ -7,8 +7,10 @@ const defaultTrackConfigs = {
 
 class Music {
   currentTrack = null
+  currentTrackName = null;
 
   play(trackName, audioConfig) {
+    this.currentTrackName = trackName;
     this.currentTrack = k.play(trackName, {
       loop: true,
       ...(defaultTrackConfigs[trackName] ?? {}),
@@ -18,6 +20,14 @@ class Music {
 
   stop() {
     if (this.currentTrack) this.currentTrack.stop();
+  }
+  
+  time() {
+    return this.currentTrack ? this.currentTrack.time() : 0;
+  }
+
+  name() {
+    return this.currentTrackName;
   }
 
   fadeOut() {

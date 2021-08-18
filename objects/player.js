@@ -44,7 +44,7 @@ export const createPlayer = (type, attrs) => {
       hit: false,          // animation for hit & temporary loss of control
       invulnerable: false, // player is temporarily invulnerable after being hit
     },
-    hp({ current: 1, max: 6 }),
+    hp({ current: 6, max: 6 }),
     burp({ current: 0 }),
     ...(attrs ?? []),
   ]);
