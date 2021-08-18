@@ -1,5 +1,6 @@
-import "/scenes/loading.js";
 import "/scenes/intro.js";
+import "/scenes/loading.js";
 import "/scenes/mainmenu.js";
+import "/scenes/character-select.js";
 import "/scenes/main.js";
 import "/scenes/gameover.js";

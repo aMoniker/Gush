@@ -3,6 +3,13 @@ import { k } from "/kaboom.js";
 const defaultSavedState = {
   coins: 0,
   musicVolume: 0,
+  unlocked_knight: true,
+  unlocked_elf_f: false,
+  unlocked_elf_m: false,
+  unlocked_lizard_f: false,
+  unlocked_lizard_m: false,
+  unlocked_wizard_f: false,
+  unlocked_wizard_m: false,
 };
 
 // basic state variables

@@ -8,7 +8,8 @@ watchWindowResizing();
 k.go("loading");
 
 loadAssets().then(() => {
-  k.go("main");
+  // k.go("main");
+  k.go("character-select");
 })
 
 // pause the game (events are still being listened to)
