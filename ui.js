@@ -130,11 +130,12 @@ export const uiUpdateBurps = (curBurps) => {
 export const uiUpdateCoins = (numCoins) => {
   if (!coinSprite) {
     coinSprite = k.add([
-      k.sprite("coin", 64, { noArea: true }),
+      k.sprite("coin", { animSpeed: 0.3, noArea: true }),
       k.layer("ui"),
       k.pos(0, 0),
       k.scale(coinsScale),
     ]);
+    coinSprite.play("spin");
   }
   if (!coinText) {
     coinText = k.add([
