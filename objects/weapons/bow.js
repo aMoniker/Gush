@@ -40,7 +40,6 @@ export const createBow = (player) => {
         // check if the arrow is overlapping a monster immediately
         for (const m of k.get("monster")) {
           if (!a.isOverlapped(m)) continue;
-
           hitMonster(m);
           break; // arrows only hitMonster one monster at a time
         }

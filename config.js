@@ -1,6 +1,6 @@
 const tileWidth = 16;
 const tileHeight = 16;
-const tilesPerScreen = 20;
+const tilesPerScreen = 16;
 
 // the actual screen dimensions, used to initialize kaboom
 const gameWidth = 834;
@@ -12,7 +12,7 @@ const viewableWidth = tilesPerScreen * tileWidth;
 const viewableHeight = viewableWidth / gameAspectRatio;
 
 // these control the far game objects render around the player
-const renderedBuffer = tileWidth * 4;
+const renderedBuffer = tileWidth * 2;
 const renderedWidth = viewableWidth + renderedBuffer;
 const renderedHeight = renderedWidth / gameAspectRatio;
 

@@ -1,5 +1,6 @@
 import { k } from "/kaboom.js";
 import { config } from "/config.js";
+import state from "/state.js";
 
 const forceAttackDist = config.tileWidth * 7.77;
 
@@ -11,7 +12,7 @@ export default (options) => {
     speed: options.speed ?? 47,
     update() { // called every frame
       if (this.hidden || !this.aiEnabled) return;
-      const player = k.get("player")[0];
+      const { player } = state;
       if (!this.playerLOS) {
         // if out of LOS, stop attacking unless close enough to force
         if (this.pos.dist(player.pos) > forceAttackDist) return;

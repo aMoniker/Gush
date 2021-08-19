@@ -190,3 +190,13 @@ export const watchWindowResizing = () => {
     handleResize(canvas);
   }
 };
+
+// allow going fullscreen with F key
+window.addEventListener("keypress", function(e) {
+  if (e.key !== "f") return;
+  if (!document.fullscreenElement) {
+    document.documentElement.requestFullscreen();
+  } else {
+    if (document.exitFullscreen) document.exitFullscreen();
+  }
+}, false);

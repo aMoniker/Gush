@@ -166,7 +166,7 @@ export const createPlayer = (typeName, attrs) => {
     }
   };
 
-  const footstepTime = 0.38;
+  const footstepTime = 0.39;
   let footstepFlip = false;
   let timeSinceFootstep = 0;
   const handleMoving = () => {
@@ -196,6 +196,8 @@ export const createPlayer = (typeName, attrs) => {
   const handleCamera = () => {
     const scale = k.width() / config.viewableWidth;
     k.camScale(scale);
+    // k.camScale(1);
+
     k.camPos(player.pos);
     // readd the player each frame, so it's always on top
     k.readd(player);
@@ -338,5 +340,6 @@ export const createPlayer = (typeName, attrs) => {
   // initialize UI
   updatePlayerUI();
 
+  state.player = player;
   return player;
 };
