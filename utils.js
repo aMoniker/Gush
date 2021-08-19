@@ -28,7 +28,23 @@ export const easing = {
   easeOutQuart: (x) => 1 - (1-x)**4,
   easeInOutQuint: (x) => x < 0.5 ? 16 * x**5 : 1 - (-2 * x + 2)**5 / 2,
   easeInBack: (x) => 2.70158 * x**3 - 1.70158 * x**2,
+  easeInOutBack: (x) => {
+    const c1 = 1.70158;
+    const c2 = c1 * 1.525;
+    return x < 0.5
+      ? ((2*x)**2 * ((c2 + 1) * 2 * x - c2)) / 2
+      : ((2*x-2)**2 * ((c2 + 1) * (x * 2 - 2) + c2) + 2) / 2;
+  },
 };
+
+// function easeInOutBack(x: number): number {
+// const c1 = 1.70158;
+// const c2 = c1 * 1.525;
+
+// return x < 0.5
+//   ? (pow(2 * x, 2) * ((c2 + 1) * 2 * x - c2)) / 2
+//   : (pow(2 * x - 2, 2) * ((c2 + 1) * (x * 2 - 2) + c2) + 2) / 2;
+// }
 
 /**
  * Change the given numeric properties of `obj` over `time`.

@@ -5,7 +5,7 @@ import state from "/state.js";
 import { uiUpdateCoins } from "/ui.js";
 
 // coins are saved between games and used to unlock new characters
-export const handleCoinPickup = (player, coin) => {
+export const handleCoinPickup = (player, coin, coinCount = 1) => {
   if (coin.pickedUp) return;
   coin.pickedUp = true;
   coin.isDestroying = true;
@@ -14,7 +14,7 @@ export const handleCoinPickup = (player, coin) => {
   const fadeOutTime = 1.3;
 
   // save coins to the player's localStorage
-  const curCoins = state.get("coins") + 1;
+  const curCoins = state.get("coins") + coinCount;
   state.set("coins", curCoins);
 
   k.play("coin-flung", {

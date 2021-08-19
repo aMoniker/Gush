@@ -1,8 +1,9 @@
 import { k } from "/kaboom.js";
-import { rng, tween, easing } from "/utils.js";
+import { rng, randInt, tween, easing } from "/utils.js";
 import { handleCoinPickup } from "/events/coins.js";
 import { handleFlaskPickup } from "/events/flasks.js";
 import { coin, randomFlask } from "/objects/powerups.js";
+import { config } from "/config.js";
 
 const processChestOpen = (player, chest) => {
   k.play("chest-opening", { volume: 0.8 });
@@ -18,17 +19,28 @@ const processChestOpen = (player, chest) => {
     return;
   }
 
-  const prizeConfig = [
+  const prizeConfig = () => ([
     k.origin("center"),
     k.pos(chest.pos),
-  ];
+  ]);
   let prize = null;
   const prizeRoll = rng.gen();
-  if (prizeRoll <= 0.666) {
-    prize = k.add([ ...coin(), ...prizeConfig ]);
-    handleCoinPickup(player, prize);
+  if (prizeRoll <= 0.777) {
+    prize = k.add([ ...coin(), ...prizeConfig() ]);
+    const coinCount = randInt(2, 11);
+    handleCoinPickup(player, prize, coinCount);
+    const coinsText = k.add([
+      k.text(`${coinCount}`, 8),
+      k.color(1,1,1,1),
+      ...prizeConfig(),
+    ]);
+    tween(coinsText, 1, {
+      "pos.y": coinsText.pos.y - config.tileWidth
+    }, easing.easeInOutBack)
+      .then(() => tween(coinsText, 1, { "color.a": 0 }))
+      .then(() => coinsText.destroy());
   } else {
-    prize = k.add([ ...randomFlask(), ...prizeConfig ]);
+    prize = k.add([ ...randomFlask(), ...prizeConfig() ]);
     handleFlaskPickup(player, prize);
   }
 };
