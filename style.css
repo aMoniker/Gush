@@ -7,11 +7,13 @@ body {
   height: 100%;
   overflow: hidden;
   background-color: black;
+  cursor: none !important;
 }
 canvas#game {
   display: block;
   position: relative;
   z-index: 100;
+  cursor: none !important;
 }
 canvas#minimap {
   position: absolute;
@@ -21,4 +23,5 @@ canvas#minimap {
   height: 250px;
   z-index: 101;
   pointer-events: none;
+  cursor: none !important;
 }
