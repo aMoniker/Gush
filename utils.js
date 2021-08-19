@@ -26,6 +26,7 @@ export const easing = {
   easeInQuart: (x) => x**4,
   easeOutQuart: (x) => 1 - (1-x)**4,
   easeInOutQuint: (x) => x < 0.5 ? 16 * x**5 : 1 - (-2 * x + 2)**5 / 2,
+  easeInBack: (x) => 2.70158 * x**3 - 1.70158 * x**2,
 };
 
 /**

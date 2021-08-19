@@ -74,15 +74,14 @@ Gush is a dungeon brawler game built with [Kaboom.js](https://kaboomjs.com/) on 
 - [ ] Controller support
 - [ ] Main menu screen
   - [ ] sound/music adjust
-  - [ ] control remapping (probably not worth it)
+  - [ ] control remapping (maybe not worth it)
 - [x] Simple tutorial messages on game start (only show once, turn off in localStorage)
 - [x] Store player's last attack dir so attacking while stationary feels right
 - [ ] More sound effects
   - [x] player footsteps
   - [x] more sword swings
   - [ ] monster noises
-- [ ] Orc shaman can heal his orc friends
-- [ ] Some enemies drop a skull as a visual effect (non-interactive).
+- [x] Some enemies drop a skull as a visual effect (non-interactive).
 - [ ] Column tiles
 - [ ] Yellow flask gives charges of resurrect, allowing player to come back to life
 - [ ] Pause menu with options
