@@ -83,20 +83,30 @@ export const regenerateObjectConfigs = (map) => {
 // within it can be destroyed
 let prevMapBbox = null;
 
+let lastDrawX = null;
+let lastDrawY = null;
+
 // Add only the objects that are visible to the player on the screen,
 // and destroy any that are now off-screen. This is necessary because
 // the kaboom engine absolutely tanks with any serious number of objects.
 // TODO - optimize by calculating only the bbox indexes that must change.
 export const drawVisibleObjects = (pwx, pwy) => {
+  const { x: px, y: py } = translateWorldToMapCoords(pwx, pwy);
+
+  // skip drawing if players map x/y position hasn't changed
+  if (px === lastDrawX && py === lastDrawY) return;
+  lastDrawX = px;
+  lastDrawY = py;
+
   // iterate current visible bbox, render in-view items
   const nextMapBbox = getRenderedMapBbox(pwx, pwy);
   for (let x = nextMapBbox[0]; x <= nextMapBbox[2]; x++) {
     for (let y = nextMapBbox[1]; y <= nextMapBbox[3]; y++) {
-      // if there's nothing nothing at these coords, skip
-      if (!objectConfigs.has(x, y)) continue;
-
       // if coordinates are in prev bbox, skip (since already rendered)
       if (prevMapBbox && coordsInBbox(x, y, prevMapBbox)) continue;
+
+      // if there's nothing nothing at these coords, skip
+      if (!objectConfigs.has(x, y)) continue;
 
       // create all objects in objectConfigs for these coords
       for (let objConfig of objectConfigs.get(x, y)) {
@@ -125,11 +135,11 @@ export const drawVisibleObjects = (pwx, pwy) => {
   if (prevMapBbox) {
     for (let x = prevMapBbox[0]; x <= prevMapBbox[2]; x++) {
       for (let y = prevMapBbox[1]; y <= prevMapBbox[3]; y++) {
-        // if nothing at these coords, skip
-        if (!extantObjects.has(x, y)) continue;
-
         // if coords in nextVisibleBbox, skip (objects remain rendered)
         if (coordsInBbox(x, y, nextMapBbox)) continue;
+
+        // if nothing at these coords, skip
+        if (!extantObjects.has(x, y)) continue;
 
         // else get all objects in extantMap for coords, and destroy them
         const extant = extantObjects.get(x, y);
