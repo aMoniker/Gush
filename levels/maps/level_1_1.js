@@ -5,6 +5,7 @@ import { spawnObject } from "/levels/spatial.js";
 import * as monster from "/objects/monster.js";
 import { monsterWave, coinReward, crateWall } from "/levels/maps/utils.js";
 import music from "/music.js";
+import input from "/input.js";
 
 const map = [
   "┌{─{─{┐     ┌──)────)──┐     ┌───────┐            ┌──────────────────┐",
@@ -87,7 +88,9 @@ const bgMusic = "neon-synth";
 
 map.onStart = () => {
   showTutorial = state.get(tutorialKey) ?? true;
-  if (showTutorial) announce("WASD to move");
+  if (showTutorial) {
+    announce(input.gamepadConnected ? "ANALOG STICK to move" : "WASD to move");
+  }
   music.play(bgMusic);
 }
 
@@ -98,12 +101,16 @@ map.triggers = {
     state.set(tutorialKey, false);
   },
   1: () => {
-    if (showTutorial) announce("SPACE to attack");
+    if (showTutorial) {
+      announce(input.gamepadConnected ? "MAIN BUTTON to attack" : "SPACE to attack");
+    }
   },
   2: () => {
     if (showTutorial) {
       announce("GREEN potions charge BURP meter");
-      announce("Press B to BURP");
+      announce(
+        input.gamepadConnected ? "SECONDARY BUTTON to BURP" : "Press B to BURP"
+      );
     }
   },
   3: () => {

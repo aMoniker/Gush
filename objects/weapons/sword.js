@@ -85,7 +85,7 @@ export const createSword = (player) => {
         });
 
         const vfxTime = vfxSlash.animSpeed * vfxSlash.numFrames();
-        vfxSlash.hidden = false
+        vfxSlash.hidden = false;
         vfxSlash.stop();
         vfxSlash.play("main", false);
         k.wait(vfxTime, () => {
@@ -129,7 +129,6 @@ export const createSword = (player) => {
         hitBox.pos = player.pos.add(k.vec2(dirX * scale, dirY * scale));
         hitBox.angle = Math.atan2(dirX, dirY) + Math.PI / 2;
         vfxSlash.pos = hitBox.pos;
-
         if (!weapon.attacking) {
           weapon.angle = flip * Math.PI / 3;
           vfxSlash.angle = hitBox.angle + -Math.PI / 2;

@@ -1,8 +1,7 @@
 import { k } from "/kaboom.js";
 import { config } from "/config.js";
 import state from "/state.js";
-
-state.set("coins", 3000);
+import input, { enableInputListeners, vibrateGamepad } from "/input.js";
 
 const types = [
   {
@@ -79,6 +78,8 @@ const basicAttributes = () => ([
 ]);
 
 k.scene("character-select", (args = {}) => {
+  enableInputListeners();
+
   // CHARACTER SELECT
   const charSelectText = k.add([
     ...basicAttributes(),
@@ -88,13 +89,13 @@ k.scene("character-select", (args = {}) => {
   // (wasd or arrows)
   const instructionOneText = k.add([
     ...basicAttributes(),
-    k.text("WASD or ARROWS to view", 16),
+    k.text("WASD or ANALOG STICK to view", 16),
   ]);
 
   // (space to select/unlock)
   const instructionTwoText = k.add([
     ...basicAttributes(),
-    k.text("SPACE to choose (or unlock)", 16),
+    k.text("ATTACK to choose (or unlock)", 16),
   ]);
 
   // <    sprite    >
@@ -242,6 +243,7 @@ k.scene("character-select", (args = {}) => {
     if (n !== curIdx) {
       curIdx = n;
       updateScreen();
+      vibrateGamepad(50, 0.1, 0);
     }
   }
   const next = () => {
@@ -249,15 +251,42 @@ k.scene("character-select", (args = {}) => {
     if (p !== curIdx) {
       curIdx = p
       updateScreen();
+      vibrateGamepad(50, 0.1, 0);
     }
   }
 
-  k.keyPress("a", prev);
-  k.keyPress("left", prev);
-  k.keyPress("d", next);
-  k.keyPress("right", next);
+  const delay = 500;
+  let canNavLeft = true;
+  let canNavRight = true;
+  let cancelLeftTimeout = null;
+  let cancelRightTimeout = null;
+  k.action(() => {
+    if (input.x < 0 && canNavLeft) {
+      prev();
+      canNavLeft = false;
+      if (cancelLeftTimeout) clearTimeout(cancelLeftTimeout);
+      cancelLeftTimeout = setTimeout(() => canNavLeft = true, delay);
+    } else if (input.x > 0 && canNavRight) {
+      next();
+      canNavRight = false;
+      if (cancelRightTimeout) clearTimeout(cancelRightTimeout);
+      cancelRightTimeout = setTimeout(() => canNavRight = true, delay);
+    } else if (input.x === 0) {
+      canNavLeft = true;
+      canNavRight = true;
+    }
 
-  k.keyPress("space", () => {
+    handleSelect();
+  });
+
+  let canSelect = true;
+  const handleSelect = () => {
+    if (!input.attack) {
+      canSelect = true;
+      return;
+    }
+    if (!canSelect) return;
+    canSelect = false;
     const curType = types[curIdx];
     const unlocked = state.get(`unlocked_${curType.key}`);
     if (unlocked) {
@@ -271,6 +300,7 @@ k.scene("character-select", (args = {}) => {
         k.play("coin-5", { loop: false });
         k.wait(0.5, () => { k.play("spell-7"); });
         updateScreen();
+        vibrateGamepad(1000, 1, 1);
       } else {
         k.play("alarm-2", {
           loop: false,
@@ -279,9 +309,10 @@ k.scene("character-select", (args = {}) => {
           detune: -200,
         });
         k.camShake(10);
+        vibrateGamepad(444, 1, 0.5);
       }
     }
-  });
+  };
 
   setTimeout(updateScreen, 0);
 });

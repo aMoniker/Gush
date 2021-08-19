@@ -10,6 +10,13 @@ const defaultSavedState = {
   unlocked_lizard_m: false,
   unlocked_wizard_f: false,
   unlocked_wizard_m: false,
+  keyUse: "e",
+  keyBurp: "b",
+  keyAttack: "space",
+  keyUp: "w",
+  keyDown: "s",
+  keyLeft: "a",
+  keyRight: "d",
 };
 
 // basic state variables

@@ -7,25 +7,17 @@ import { tween, easing, rng } from "/utils.js";
 import { coordsInBbox, getRenderedMapBbox } from "/levels/spatial.js";
 import state from "/state.js";
 import music from "/music.js";
+import input, { vibrateGamepad } from "/input.js";
 
 import hp from "/components/hp.js";
 import burp from "/components/burp.js";
-
-// https://developer.mozilla.org/en-US/docs/Web/API/Gamepad_API/Using_the_Gamepad_API
-
-// TODO - make these configurable
-const burpKey = "b";
-const weaponKey = "space";
-const moveUpKey = "w";
-const moveDownKey = "s";
-const moveLeftKey = "a";
-const moveRightKey = "d";
 
 const playerType = {
   knight: {
     hp: 6,
     createWeapon: createSword,
     flipDuringAttack: false,
+    attackWithStick: false,
     holdToAttack: false,
     hurtSound: "male-grunt-5",
   },
@@ -33,6 +25,7 @@ const playerType = {
     hp: 4,
     createWeapon: createBow,
     flipDuringAttack: true,
+    attackWithStick: true,
     holdToAttack: true,
     hurtSound: "female-grunt-7",
   }
@@ -70,16 +63,84 @@ export const createPlayer = (typeName, attrs) => {
     ...(attrs ?? []),
   ]);
 
-  // attack keys
-  // const weapon = createSword(player);
   const weapon = type.createWeapon(player);
 
-  const attackKeyEvent = type.holdToAttack ? k.keyDown : k.keyPress;
-  attackKeyEvent(weaponKey, () => {
+  let timeoutZeroDirX = 0;
+  let timeoutZeroDirY = 0;
+  const diagonalGraceTime = 50;
+  let lastInputX = 0;
+  let lastInputY = 0;
+  const handleMovementInput = () => {
+    if (player.forcedMoving || player.dead) return;
+    if (input.x === 0 && input.y === 0) timeSinceFootstep = 0;
+    player.moving = input.x !== 0 || input.y !== 0;
+
+    if (type.attackWithStick && (input.x2 || input.y2)) {
+      // if the second stick is being used, then set the attackDir equal to it
+      const aim = k.vec2(input.x2, input.y2).unit();
+      player.dirAttack.x = aim.x;
+      player.dirAttack.y = aim.y;
+    } else if (input.y === 0 && input.x !== 0 && (lastInputY === 1 || lastInputY === -1)) {
+      // allow player to release one key of a diagonal slightly before the other,
+      // while remaining pointed in that direction for attacks
+      window.clearTimeout(timeoutZeroDirY);
+      timeoutZeroDirY = setTimeout(() => {
+        if (player.moving && player.dir.x !== 0) player.dirAttack.y = 0;
+      }, diagonalGraceTime);
+    } else if (input.x === 0 && input.y !== 0 && (lastInputX === 1 || lastInputX === -1)) {
+      // allow player to release one key of a diagonal slightly before the other,
+      // while remaining pointed in that direction for attacks
+      window.clearTimeout(timeoutZeroDirX);
+      timeoutZeroDirX = setTimeout(() => {
+        if (player.moving && player.dir.y !== 0) player.dirAttack.x = 0;
+      }, diagonalGraceTime);
+    } else if (player.moving) {
+      // when moving, keep the attack dir updated
+      player.dirAttack.x = input.x;
+      player.dirAttack.y = input.y;
+    }
+
+    lastInputX = input.x;
+    lastInputY = input.y;
+
+    // scale keyboard diagonals to match gamepad stick
+    let { x, y } = input;
+    if (Math.abs(input.x) === 1 && Math.abs(input.y) === 1) {
+      const scaled = k.vec2(input.x, input.y).unit();
+      x = scaled.x;
+      y = scaled.y;
+    }
+
+    player.dir.x = x;
+    player.dir.y = y;
+  };
+
+  let canBurp = true;
+  let canAttack = true;
+  const handleAttack = () => {
     if (player.dead) return;
-    weapon.attack();
-  });
-  k.keyPress(burpKey, player.burp);
+    // allow attacking with the attack button, or if the second stick is used
+    // const shouldAttack = canAttack && (input.attack || (input.x2 || input.y2));
+    const shouldAttack = canAttack && (
+      input.attack || (type.attackWithStick && input.stickAttack)
+    );
+    if (shouldAttack) {
+      if (!player.forcedMoving && type.flipDuringAttack) {
+        player.xFlipped = player.dirAttack.x < 0;
+        player.flipX(player.xFlipped);
+      }
+      weapon.attack();
+      if (!type.holdToAttack) canAttack = false;
+    } else if (!input.attack) {
+      canAttack = true;
+    }
+    if (canBurp && input.burp) {
+      player.burp();
+      canBurp = false;
+    } else if (!input.burp) {
+      canBurp = true;
+    }
+  }
 
   const handleAnimation = () => {
     if (player.dead) {
@@ -111,14 +172,13 @@ export const createPlayer = (typeName, attrs) => {
   const handleMoving = () => {
     if (player.dead) return;
     if (!player.moving && !player.forcedMoving) return;
-    if (!player.forcedMoving
-     && !(!type.flipDuringAttack && weapon.attacking)
-    ) {
-      if (player.dir.x !== 0) {
-        player.xFlipped = player.dir.x < 0;
+    if (!player.forcedMoving) {
+      if (player.dirAttack.x !== 0) {
+        player.xFlipped = player.dirAttack.x < 0;
       }
       player.flipX(player.xFlipped);
     }
+
     player.pos = player.pos.add(player.dir.scale(player.speed * k.dt()));
     timeSinceFootstep += k.dt();
     if (timeSinceFootstep > footstepTime) {
@@ -141,9 +201,12 @@ export const createPlayer = (typeName, attrs) => {
     k.readd(player);
     k.readd(weapon);
   };
-
+  
+  // main player loop
   player.action(() => {
+    handleMovementInput();
     handleMoving();
+    handleAttack();
     handleAnimation();
     handleCamera();
     if (!player.dead) {
@@ -151,52 +214,6 @@ export const createPlayer = (typeName, attrs) => {
       player.pushOutAll();
     }
   });
-
-
-  let timeoutZeroDirX = 0;
-  let timeoutZeroDirY = 0;
-  const diagonalGraceTime = 50;
-  const controlMoving = (dir, moving) => {
-    if (player.forcedMoving) return;
-    player.dir.x = dir.x ?? player.dir.x;
-    player.dir.y = dir.y ?? player.dir.y;
-    if (player.dir.x === 0 && player.dir.y === 0) timeSinceFootstep = 0;
-
-    if (moving) {
-      if (player.dir.x !== 0) player.dirAttack.x = player.dir.x;
-      if (player.dir.y !== 0) player.dirAttack.y = player.dir.y;
-    } else {
-      // special handling for diagonal movement - don't zero out
-      // immediately when player releases one key of a diagonal
-      // this allow dirAttack to remain diagonal when releasing
-      // both keys within diagonalGraceTime of each other
-      if (player.dir.x === 0) {
-        window.clearTimeout(timeoutZeroDirX);
-        timeoutZeroDirX = setTimeout(() => {
-          if (player.moving && player.dir.y !== 0) player.dirAttack.x = 0
-        }, diagonalGraceTime);
-      }
-      if (player.dir.y === 0) {
-        window.clearTimeout(timeoutZeroDirY);
-        timeoutZeroDirY = setTimeout(() => {
-          if (player.moving && player.dir.x !== 0) player.dirAttack.y = 0;
-        }, diagonalGraceTime);
-      }
-    }
-
-    player.moving = moving;
-  };
-  
-
-  // movement keys
-  k.keyDown(moveUpKey, () => controlMoving({ y: -1 }, true));
-  k.keyRelease(moveUpKey, () => controlMoving({ y: 0 }, false));
-  k.keyDown(moveDownKey, () => controlMoving({ y: 1 }, true));
-  k.keyRelease(moveDownKey, () => controlMoving({ y: 0 }, false));
-  k.keyDown(moveLeftKey, () => controlMoving({ x: -1 }, true));
-  k.keyRelease(moveLeftKey, () => controlMoving({ x: 0 }, false));
-  k.keyDown(moveRightKey, () => controlMoving({ x: 1 }, true));
-  k.keyRelease(moveRightKey, () => controlMoving({ x: 0 }, false));
 
   const updatePlayerUI = () => {
     uiUpdateBurps(player.burps());
@@ -213,7 +230,7 @@ export const createPlayer = (typeName, attrs) => {
     if (player.invulnerable) return;
 
     const hitReactionTime = 0.33;
-    const invulnerbilityTime = 1;
+    const invulnerbilityTime = 0.5;
 
     // push the player in the opposite direction if they ran into something solid
     if (hurtBy.solid) {
@@ -241,6 +258,8 @@ export const createPlayer = (typeName, attrs) => {
       volume: 0.53,
       detune: k.map(rng.gen(), 0, 1, -200, 100),
     });
+    vibrateGamepad(444, 0, 1);
+
 
     // clear all the hit effects
     k.wait(hitReactionTime, () => {
@@ -266,6 +285,8 @@ export const createPlayer = (typeName, attrs) => {
 
     k.play("punch-intense-heavy", { volume: 0.86 });
     k.wait(0.8, () => k.play("implode"));
+    vibrateGamepad(1000, 1, 1);
+    setTimeout(() => vibrateGamepad(1337, 1, 0), 1000);
 
     music.fadeOut();
 
@@ -295,11 +316,15 @@ export const createPlayer = (typeName, attrs) => {
         "scale.y": 2.5,
         "color.a": 1,
       }, easing.easeOutQuart).then(() => {
-        k.keyPress("r", () => {
-          k.go("main");
+        const clearRestart = k.action(() => {
+          if (input.attack) {
+            clearRestart();
+            k.go("main");
+            vibrateGamepad(100, 1, 0);
+          }
         });
         k.add([
-          k.text("Press R to restart level", 24),
+          k.text("Press ATTACK to restart level", 24),
           k.origin("center"),
           k.pos(k.width() / 2, k.height() / 2 + 60),
           k.layer("ui"),
