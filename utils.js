@@ -1,4 +1,5 @@
 import { k } from "/kaboom.js"
+import { config } from "/config.js";
 
 export const rng = k.makeRng(Date.now());
 
@@ -90,3 +91,29 @@ export const announce = (announcement) => {
   });
   return cachedPromise;
 };
+
+const addFade = () => {
+  return k.add([
+    k.rect(config.gameWidth, config.gameHeight),
+    k.pos(0, 0),
+    k.layer("fade"),
+    k.color(0, 0, 0, 0),
+  ]);
+}
+
+export const fadeToScene = (sceneName) => {
+  const fade = addFade();
+  tween(fade, 1, { "color.a": 1 }, easing.easeOutQuart)
+    .then(() => { k.go(sceneName) });
+};
+
+export const fadeIn = () => {
+  const fade = addFade();
+  fade.color.a = 1;
+  tween(fade, 1, { "color.a": 0 }, easing.easeOutQuart)
+    .then(() => fade.destroy());
+}
+
+// export const fadeIn = () => {
+
+// }

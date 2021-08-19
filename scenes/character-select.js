@@ -2,6 +2,9 @@ import { k } from "/kaboom.js";
 import { config } from "/config.js";
 import state from "/state.js";
 import input, { enableInputListeners, vibrateGamepad } from "/input.js";
+import music from "/music.js";
+import { addLayers } from "/layers.js";
+import { fadeIn, fadeToScene } from "/utils.js";
 
 const types = [
   {
@@ -78,7 +81,15 @@ const basicAttributes = () => ([
 ]);
 
 k.scene("character-select", (args = {}) => {
-  enableInputListeners();
+  addLayers();
+  fadeIn();
+
+  // prevent held input from entry screen immediately selecting character
+  setTimeout(() => {
+    enableInputListeners();
+  }, 500);
+
+  music.play("peek-a-boo-2");
 
   // CHARACTER SELECT
   const charSelectText = k.add([
@@ -157,6 +168,7 @@ k.scene("character-select", (args = {}) => {
 
   const updateScreen = () => {
     const curType = types[curIdx];
+    const unlocked = state.get(`unlocked_${curType.key}`)
     let dy = 0;
 
     charSelectText.pos.y = (dy += 37);
@@ -175,8 +187,11 @@ k.scene("character-select", (args = {}) => {
     characterSprite.pos.y = (dy += 80);
     characterSprite.pos.x = hw;
     characterSprite.color.a = 1;
-    if (characterSprite.curAnim() !== "run") {
+    const curAnim = characterSprite.curAnim();
+    if (unlocked && (curAnim !== "run" || curAnim !== "hit")) {
       characterSprite.play("run");
+    } else if (curAnim !== "idle") {
+      characterSprite.play("idle");
     }
 
     leftArrowText.pos.y = dy + 28;
@@ -225,7 +240,6 @@ k.scene("character-select", (args = {}) => {
       difficultyText.color[x] = curType.difficultyColor[i];
     });
 
-    const unlocked = state.get(`unlocked_${curType.key}`)
     costText.text = `Cost: ${curType.cost} coins`;
     costText.pos.y = (dy += 40);
     costText.pos.x = hw;
@@ -303,7 +317,7 @@ k.scene("character-select", (args = {}) => {
     const unlocked = state.get(`unlocked_${curType.key}`);
     if (unlocked) {
       state.playerType = curType.key;
-      k.go("main");
+      fadeToScene("main");
     } else {
       const curCoins = Number.parseInt(state.get("coins"));
       if (curCoins >= curType.cost) {
@@ -313,6 +327,8 @@ k.scene("character-select", (args = {}) => {
         k.wait(0.5, () => { k.play("spell-7"); });
         updateScreen();
         vibrateGamepad(1000, 1, 1);
+        characterSprite.play("hit");
+        k.wait(1, () => characterSprite.play("run"));
       } else {
         k.play("alarm-2", {
           loop: false,

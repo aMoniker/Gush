@@ -12,7 +12,7 @@ const viewableWidth = tilesPerScreen * tileWidth;
 const viewableHeight = viewableWidth / gameAspectRatio;
 
 // these control the far game objects render around the player
-const renderedBuffer = tileWidth * 2;
+const renderedBuffer = tileWidth * 3;
 const renderedWidth = viewableWidth + renderedBuffer;
 const renderedHeight = renderedWidth / gameAspectRatio;
 

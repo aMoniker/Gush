@@ -3,7 +3,7 @@ import { config } from "/config.js";
 import { uiUpdateHealth, uiUpdateBurps, uiUpdateCoins } from "/ui.js";
 import { createBow } from "/objects/weapons/bow.js";
 import { createSword } from "/objects/weapons/sword.js";
-import { tween, easing, rng } from "/utils.js";
+import { fadeToScene, tween, easing, rng } from "/utils.js";
 import { coordsInBbox, getRenderedMapBbox } from "/levels/spatial.js";
 import state from "/state.js";
 import music from "/music.js";
@@ -321,7 +321,7 @@ export const createPlayer = (typeName, attrs) => {
         const clearRestart = k.action(() => {
           if (input.attack) {
             clearRestart();
-            k.go("main");
+            fadeToScene("main");
             vibrateGamepad(100, 1, 0);
           }
         });

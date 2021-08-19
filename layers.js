@@ -8,6 +8,7 @@ export const addLayers = () => {
     "ceiling",
     "fx",
     "ui",
+    "fade",
   ], "game");
-  k.camIgnore(["bg", "ui"]);
+  k.camIgnore(["bg", "ui", "fade"]);
 };

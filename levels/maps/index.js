@@ -2,6 +2,7 @@ import { k } from "/kaboom.js";
 import level_1_1 from "/levels/maps/level_1_1.js";
 import { testSecretsMap, smallTestMap } from "/levels/maps/utils.js";
 import state from "/state.js";
+import { fadeToScene } from "/utils.js";
 
 const mapOrders = {
   knight: [level_1_1, smallTestMap],
@@ -21,9 +22,9 @@ export const loadNextLevel = () => {
   const maps = mapOrders[state.playerType];
   if (state.level < 0) state.level = 0; // should never happen™
   if (state.level >= maps.length) {
-    k.go("gameover");
+    fadeToScene("gameover");
   } else {
-    k.go("main");
+    fadeToScene("main");
   }
 }
 

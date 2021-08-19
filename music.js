@@ -2,10 +2,10 @@ import { k } from "/kaboom.js";
 import state from "/state.js";
 
 const defaultTrackConfigs = {
-  "stark-nuances": { volume: 0.53 },
+  "stark-nuances": { volume: 0.63 },
   "battle-3": { volume: 0.66 },
   "cave-3": { volume: 0.63 },
-  "neon-synth": { volume: 0.60 },
+  "neon-synth": { volume: 0.52 },
   "party-on-1": { volume: 0.47 },
   "peek-a-boo-1": { volume: 0.61 },
   "peek-a-boo-2": { volume: 0.61 },
@@ -54,7 +54,6 @@ class Music {
   }
 
   crossFade(trackName, audioConfig) {
-    return;
     audioConfig = audioConfig ?? {};
     const prevTrack = this.currentTrack;
     const curTrackVolume = audioConfig.volume ?? 1;

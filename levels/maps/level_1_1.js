@@ -84,7 +84,7 @@ const map = [
 let showTutorial = true;
 const tutorialKey = "level-1-1-tutorials";
 
-const bgMusic = "neon-synth";
+const bgMusic = "stark-nuances";
 
 map.onStart = () => {
   showTutorial = state.get(tutorialKey) ?? true;

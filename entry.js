@@ -4,13 +4,9 @@ import { watchWindowResizing } from "/ui.js";
 import "/scenes/index.js"; // initializes all scenes
 
 watchWindowResizing();
+loadAssets();
 
-k.go("loading");
-
-loadAssets().then(() => {
-  // k.go("main");
-  k.go("character-select");
-})
+k.go("intro");
 
 // pause the game (events are still being listened to)
 // k.debug.paused = true;
