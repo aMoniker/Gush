@@ -58,12 +58,20 @@ Gush is a dungeon brawler game built with [Kaboom.js](https://kaboomjs.com/) on 
   - [x] Rooms can be closed off with crates blocking exit until event finishes
   - [x] Music changes for certain events
 - [x] Music for each level (simple music manager w/ crossfade)
-- [ ] Loading screen
 - [x] Select/unlock character screen
 - [x] Game over/reset level screen (YOU DIED)
-- [ ] Win screen & credits
+- [ ] Full map rotation for each character
 
-### Monster AI
+#### Character classes:
+- [x] Swordy Boi - starting char, all other are unlocks. decent sword, decent hp
+- [ ] Pokey Elf - killer spear, mediocre hp
+- [x] Shootie Pie - decent bow, decent hp
+- [ ] Crushy Lizard - slow, powerful attack, good hp
+- [ ] Smashy Dino - fast attack in all directions, good hp
+- [ ] Burny Mage - ranged fire attack, heavy dmg, low hp
+- [ ] LASER WIZARD - laser attack fires through enemies, lower dmg than fire, low hp
+
+#### Monster AI
 - [x] Basic monster movement AI
 - [ ] Necromancers raise armies of 1 hit skeletons
 - [ ] Orc Shaman can heal their friends
@@ -71,10 +79,12 @@ Gush is a dungeon brawler game built with [Kaboom.js](https://kaboomjs.com/) on 
 - [ ] Demons cast fireballs at you
 
 ### Nice to have
-- [ ] Controller support
+- [x] Controller support
+- [ ] Loading screen
 - [ ] Main menu screen
   - [ ] sound/music adjust
   - [ ] control remapping (maybe not worth it)
+- [ ] Win screen & credits
 - [x] Simple tutorial messages on game start (only show once, turn off in localStorage)
 - [x] Store player's last attack dir so attacking while stationary feels right
 - [ ] More sound effects
@@ -85,16 +95,3 @@ Gush is a dungeon brawler game built with [Kaboom.js](https://kaboomjs.com/) on 
 - [ ] Column tiles
 - [ ] Yellow flask gives charges of resurrect, allowing player to come back to life
 - [ ] Pause menu with options
-
-### Potential game mechanics
-- [ ] Certain weapons can be picked up for a limited time, more powerful, replaces normal weapon
-- [ ] You only get to keep coins if you beat the level
-
-### Character classes:
-- [x] Swordy Boi - starting char, all other are unlocks. decent sword, decent hp
-- [ ] Pokey Elf - killer spear, mediocre hp
-- [x] Shootie Pie - decent bow, decent hp
-- [ ] Crushy Lizard - slow, powerful attack, good hp
-- [ ] Smashy Dino - fast attack in all directions, good hp
-- [ ] Burny Mage - ranged fire attack, heavy dmg, low hp
-- [ ] LASER WIZARD - laser attack fires through enemies, lower dmg than fire, low hp
