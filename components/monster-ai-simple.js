@@ -2,7 +2,8 @@ import { k } from "/kaboom.js";
 import { config } from "/config.js";
 import state from "/state.js";
 
-const forceAttackDist = config.tileWidth * 7.77;
+const losAttackDist = config.tileWidth * 7.77;
+const forceAttackDist = config.tileWidth * 5;
 
 export default (options) => {  
   return {
@@ -13,14 +14,15 @@ export default (options) => {
     update() { // called every frame
       if (this.hidden || !this.aiEnabled) return;
       const { player } = state;
-      if (!this.playerLOS) {
-        // if out of LOS, stop attacking unless close enough to force
-        if (this.pos.dist(player.pos) > forceAttackDist) return;
+      if (!player || player.hit || player.dead) return;
+
+      const dist = this.pos.dist(player.pos);
+      if (dist < forceAttackDist
+      || (this.playerLOS && dist < losAttackDist)
+      ) {
+        this.dir = player.pos.sub(this.pos).unit(),
+        this.move(this.dir.scale(this.speed));
       }
-      if (!player) return;
-      if (player.hit || player.dead) return;
-      this.dir = player.pos.sub(this.pos).unit(),
-      this.move(this.dir.scale(this.speed));
     },
   };
 }
