@@ -43,23 +43,23 @@ Gush is a dungeon brawler game built with [Kaboom.js](https://kaboomjs.com/) on 
 - [x] Green flask gives charges of Power Belch, burp kills enemies around player, small one charge, large 3 charges
 - [x] Chests can contain flasks or coins
  - [x] Show coint count on UI
-- [ ] Multiple characters with different health & weapons
-  - [ ] Coins can be collected through multiple game runs to unlock more characters
+- [x] Multiple characters with different health & weapons
+  - [x] Coins can be collected through multiple game runs to unlock more characters
 - [x] Current level can be reset when player dies.
 - [x] Force 1.5 aspect ratio no matter screens size
 
 ### Essential features
-- [ ] Different levels
+- [x] Different levels
   - [x] Use more tiles: banners, fountains, slime, traps
-  - [ ] Load next level at ladder down
+  - [x] Load next level at ladder down
+  - [x] Different level rotations for each character
 - [x] Triggered events & boss fights
   - [x] Walking over trigger sets off scripted events for the map
   - [x] Rooms can be closed off with crates blocking exit until event finishes
   - [x] Music changes for certain events
 - [x] Music for each level (simple music manager w/ crossfade)
 - [ ] Loading screen
-- [ ] Main menu screen
-- [ ] Select/unlock character screen
+- [x] Select/unlock character screen
 - [x] Game over/reset level screen (YOU DIED)
 - [ ] Win screen & credits
 
@@ -72,6 +72,9 @@ Gush is a dungeon brawler game built with [Kaboom.js](https://kaboomjs.com/) on 
 
 ### Nice to have
 - [ ] Controller support
+- [ ] Main menu screen
+  - [ ] sound/music adjust
+  - [ ] control remapping (probably not worth it)
 - [x] Simple tutorial messages on game start (only show once, turn off in localStorage)
 - [x] Store player's last attack dir so attacking while stationary feels right
 - [ ] More sound effects

@@ -279,7 +279,8 @@ const legend = {
   "?": withFloorConfig(objectConfig(misc.chest)),
   "c": withFloorConfig(objectConfig(misc.crate)),
   "^": arrayWrap(objectConfig(misc.floorTrap)),
-  ">": arrayWrap(misc.floorLadderDown),
+  // ">": arrayWrap(misc.floorLadderDown),
+  ">": arrayWrap(objectConfig(misc.floorLadderDown)),
 
   // monsters
   "d": withFloorConfig(objectConfig(monster.demonSmall)),

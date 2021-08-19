@@ -1,5 +1,10 @@
 import { k } from "/kaboom.js";
 
 k.scene("gameover", () => {
-  // might not need this
+  k.add([
+    k.text("Game Over", 34),
+    k.layer("ui"),
+    k.origin("center"),
+    k.pos(k.width() / 2, k.height() / 2)
+  ])
 });

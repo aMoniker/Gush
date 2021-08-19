@@ -48,7 +48,11 @@ export const tween = (obj, time, changes, ease, cb) => {
     orig[path] = { val, diff };
   }
   return new Promise((resolve, reject) => {
-    const cancelAction = obj.action(() => {
+    // we use window.requestAnimationFrame here instead of
+    // k.action because scene changes cause k.action callbacks
+    // to stop, leaving this promise pending.
+    const stepTween = () => {
+      if (!obj.exists()) return resolve();
       spent = Math.min(spent + k.dt(), time);
       const percent = spent / time;
       for (const path of Object.keys(changes)) {
@@ -57,11 +61,10 @@ export const tween = (obj, time, changes, ease, cb) => {
       }
       let shouldCancel = false;
       if (cb) shouldCancel = !!cb();
-      if (shouldCancel || spent >= time) {
-        cancelAction();
-        resolve();
-      }
-    });
+      if (shouldCancel || spent >= time) return resolve();
+      window.requestAnimationFrame(stepTween);
+    };
+    window.requestAnimationFrame(stepTween);
   });
 };
 

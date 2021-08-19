@@ -47,7 +47,7 @@ const resetLevel = () => {
   if (cancelMonsterLOSLoop) cancelMonsterLOSLoop();
   resetDrawLoop();
 
-  // destroy all existing game objects
+  // destroy any existing game objects
   k.every((obj) => obj.destroy());
   extantObjects.clear();
 };
