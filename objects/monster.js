@@ -4,23 +4,6 @@ import gusher from "/components/gusher.js";
 import lifecycle from "/components/lifecycle.js";
 import monsterAISimple from "/components/monster-ai-simple.js";
 
-/**
- * Monsters:
- * d small demon
- * D big demon
- * g goblin
- * i imp
- * m muddy
- * n necromancer
- * o ogre
- * O random orc
- * s skeleton
- * S swampy
- * w wogol
- * Z big zombie
- * z random zombie
- */
-
 const buildMonster = (spriteName, area, extraAttrs) => ([
   k.sprite(spriteName, { noArea: true }),
   k.solid(),

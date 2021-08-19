@@ -160,6 +160,9 @@ const trigger = (ctx) => ([
  * w wogol
  * O ogre
  * Z big zombie
+ * p plain zombie
+ * t tiny zombie
+ * x ice zombie
  * z random zombie
  */
 
@@ -296,6 +299,9 @@ const legend = {
   "S": withFloorConfig(objectConfig(monster.swampy)),
   "w": withFloorConfig(objectConfig(monster.wogol)),
   "Z": withFloorConfig(objectConfig(monster.zombieBig)),
+  "p": withFloorConfig(objectConfig(monster.zombiePlain)),
+  "t": withFloorConfig(objectConfig(monster.zombieTiny)),
+  "x": withFloorConfig(objectConfig(monster.zombieIce)),
   "z": withFloorConfig(objectConfig(monster.randomZombie)),
 
   // triggers for custom events, rendered as floor tiles
