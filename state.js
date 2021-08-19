@@ -26,7 +26,7 @@ export default {
   level: 0, // current level index
   playerType: "knight", // TODO - select from menu screen
   get: (key) => {
-    const data = k.getData(key, defaultSavedState[key] ?? undefined);
+    const data = k.getData(key) ?? defaultSavedState[key] ?? undefined;
     // localStorage can only store strings
     if (data === "true") return true;
     if (data === "false") return false;

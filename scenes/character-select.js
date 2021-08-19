@@ -144,7 +144,13 @@ k.scene("character-select", (args = {}) => {
   const bankText = k.add([
     ...basicAttributes(),
     k.text("", 18),
-  ])
+  ]);
+
+  // LOCKED
+  const lockedText = k.add([
+    ...basicAttributes(),
+    k.text("LOCKED", 42),
+  ]);
 
   const {gameWidth: w, gameHeight: h} = config;
   const hw = w / 2;
@@ -198,7 +204,7 @@ k.scene("character-select", (args = {}) => {
         hearts[i].pos.y = hy;
         hearts[i].pos.x = (w / 2) + (pos * 47);
         hearts[i].color.a = 1;
-      });
+      }, 0);
     }
 
     nameText.text = curType.name;
@@ -219,14 +225,11 @@ k.scene("character-select", (args = {}) => {
       difficultyText.color[x] = curType.difficultyColor[i];
     });
 
-    if (state.get(`unlocked_${curType.key}`)) {
-      costText.text = "UNLOCKED";
-    } else {
-      costText.text = `Cost: ${curType.cost} coins`;
-    }
+    const unlocked = state.get(`unlocked_${curType.key}`)
+    costText.text = `Cost: ${curType.cost} coins`;
     costText.pos.y = (dy += 40);
     costText.pos.x = hw;
-    costText.color.a = 1;
+    costText.color.a = unlocked ? 0 : 1;
     costText.color.r = 1;
     costText.color.g = 0.84;
     costText.color.b = 0;
@@ -235,7 +238,16 @@ k.scene("character-select", (args = {}) => {
     bankText.text = `You have: ${curCoins} coins`;
     bankText.pos.y = (dy += 30);
     bankText.pos.x = hw;
-    bankText.color.a = 1;
+    bankText.color.a = unlocked ? 0 : 1;
+
+    setTimeout(() => {
+      lockedText.color.a = unlocked ? 0 : 0.9;
+      lockedText.color.r = 1;
+      lockedText.color.g = 0;
+      lockedText.color.b = 0;
+      lockedText.pos.x = hw;
+      lockedText.pos.y = (h / 2) - 63;
+    }, 1);
   };
 
   const prev = () => {
