@@ -89,11 +89,10 @@ let lastDrawY = null;
 // Add only the objects that are visible to the player on the screen,
 // and destroy any that are now off-screen. This is necessary because
 // the kaboom engine absolutely tanks with any serious number of objects.
-// TODO - optimize by calculating only the bbox indexes that must change.
 export const drawVisibleObjects = (pwx, pwy) => {
   const { x: px, y: py } = translateWorldToMapCoords(pwx, pwy);
 
-  // skip drawing if players map x/y position hasn't changed
+  // skip drawing if player's map x/y position hasn't changed
   if (px === lastDrawX && py === lastDrawY) return;
   lastDrawX = px;
   lastDrawY = py;
@@ -105,7 +104,7 @@ export const drawVisibleObjects = (pwx, pwy) => {
       // if coordinates are in prev bbox, skip (since already rendered)
       if (prevMapBbox && coordsInBbox(x, y, prevMapBbox)) continue;
 
-      // if there's nothing nothing at these coords, skip
+      // if there's nothing at these coords, skip
       if (!objectConfigs.has(x, y)) continue;
 
       // create all objects in objectConfigs for these coords
@@ -115,7 +114,7 @@ export const drawVisibleObjects = (pwx, pwy) => {
 
         const obj = k.add(objConfig);
 
-        if (!minimapSeen.has(x, y)) addToMinimap(x, y, obj);
+        // if (!minimapSeen.has(x, y)) addToMinimap(x, y, obj);
 
         // cache the object's id on the objConfig & the object,
         // so it can be matched against when removeed, in case the 
@@ -222,9 +221,13 @@ export const resetDrawLoop = () => {
 };
 
 // update every monster as to whether it can see the player
+const maxDist = config.renderedWidth / 2;
 export const startMonsterLOSLoop = (player) => {
-  return k.loop(0.1, () => {
+  return k.loop(0.5, () => {
     k.every("monster", (m) => {
+      // if the monster isn't nearby, don't recalculate
+      if (m.pos.dist(player.pos) > maxDist) return;
+
       const { x: mx, y: my } = translateWorldToMapCoords(m.pos.x, m.pos.y);
       const { x: px, y: py } = translateWorldToMapCoords(player.pos.x, player.pos.y);
       const blockedLOS = checkSupercover(mx, my, px, py, (x, y) => {
