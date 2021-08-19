@@ -36,8 +36,8 @@ const types = [
   },
   {
     key: "lizard_f",
-    name: "Crushy Liz",
-    description: "Lizard SMASH",
+    name: "Lizzy Butch",
+    description: "Meat Cleavers!",
     hearts: 3,
     difficulty: "Easy",
     difficultyColor: [0.3, 1, 0.3],
@@ -45,8 +45,8 @@ const types = [
   },
   {
     key: "lizard_m",
-    name: "Dino Rampage",
-    description: "RAAAAAAWR",
+    name: "Smashy Dino",
+    description: "GIANT. HAMMER.",
     hearts: 4,
     difficulty: "Very Easy",
     difficultyColor: [0, 1, 0],

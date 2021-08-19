@@ -113,7 +113,3 @@ export const fadeIn = () => {
   tween(fade, 1, { "color.a": 0 }, easing.easeOutQuart)
     .then(() => fade.destroy());
 }
-
-// export const fadeIn = () => {
-
-// }

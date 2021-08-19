@@ -8,6 +8,7 @@ Gush is a dungeon brawler game built with [Kaboom.js](https://kaboomjs.com/) on 
 - [Stitches (spritesheet generator)](https://draeton.github.io/stitches/)
 - [Aseprite](https://www.aseprite.org/)
 - [EZGif Sprite Cutter](https://ezgif.com/sprite-cutter)
+- [FFMpeg](https://www.ffmpeg.org/)
 - And of course, Google & Stack Overflow
 
 ## Graphics
@@ -60,14 +61,15 @@ Gush is a dungeon brawler game built with [Kaboom.js](https://kaboomjs.com/) on 
 - [x] Music for each level (simple music manager w/ crossfade)
 - [x] Select/unlock character screen
 - [x] Game over/reset level screen (YOU DIED)
+- [ ] All characters added with different weapons
 - [ ] Full map rotation for each character
 
 #### Character classes:
 - [x] Swordy Boi - starting char, all other are unlocks. decent sword, decent hp
-- [ ] Pokey Elf - killer spear, mediocre hp
 - [x] Shootie Pie - decent bow, decent hp
-- [ ] Crushy Lizard - slow, powerful attack, good hp
-- [ ] Smashy Dino - fast attack in all directions, good hp
+- [ ] Pokey Elf - killer spear, mediocre hp
+- [ ] Smashy Dino - slow, powerful attack with big hammer, great hp
+- [ ] Butcher Lizard - throws short-range meat cleavers, slow & powerful
 - [ ] Burny Mage - ranged fire attack, heavy dmg, low hp
 - [ ] LASER WIZARD - laser attack fires through enemies, lower dmg than fire, low hp
 
@@ -80,7 +82,8 @@ Gush is a dungeon brawler game built with [Kaboom.js](https://kaboomjs.com/) on 
 
 ### Nice to have
 - [x] Controller support
-- [ ] Loading screen
+- [ ] Minimap
+- [ ] Interim treasure levels
 - [ ] Main menu screen
   - [ ] sound/music adjust
   - [ ] control remapping (maybe not worth it)
@@ -91,6 +94,7 @@ Gush is a dungeon brawler game built with [Kaboom.js](https://kaboomjs.com/) on 
   - [x] player footsteps
   - [x] more sword swings
   - [ ] monster noises
+  - [ ] arrows bounce off walls
 - [x] Some enemies drop a skull as a visual effect (non-interactive).
 - [ ] Column tiles
 - [ ] Yellow flask gives charges of resurrect, allowing player to come back to life
