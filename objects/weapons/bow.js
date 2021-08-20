@@ -51,7 +51,7 @@ export const createBow = (player) => {
         for (const b of k.get("boundary")) {
           // TODO - make this use boundaryMap
           if (!a.isOverlapped(b)) continue;
-          hitBoundary();
+          hitBoundary(b);
           break;
         }
         // destroy the arrow no matter what if too much time has passed
