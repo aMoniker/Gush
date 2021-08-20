@@ -6,7 +6,7 @@ import { coordsInBbox, getRenderedWorldBbox } from "/levels/spatial.js";
 export const createFireStaff = (player) => {
   const fireballConfig = () => ([
     k.sprite("fireball", { noArea: true, animSpeed: 0.01 }),
-    k.area(k.vec2(-4, -4), k.vec2(4, 4)),
+    k.area(k.vec2(-8, -8), k.vec2(8, 8)),
     k.rotate(0),
     k.origin("center"),
     k.layer("game"),

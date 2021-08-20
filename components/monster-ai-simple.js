@@ -16,6 +16,7 @@ export default (options) => {
     speed: options.speed ?? 47,
     update() { // called every frame
       if (this.hidden || !this.aiEnabled) {
+        console.log('monster not enabled');
         wasDisabled = true;
         return;
       }
@@ -29,13 +30,18 @@ export default (options) => {
         // readd the monster the first time it's enabled
         // can't readd every frame since it changes the _id,
         // which we depend on for weapon comparisons elsewhere
-        if (wasDisabled) k.readd(this);
+        if (wasDisabled) {
+          k.readd(this);
+          if (this.curAnim() !== "run") this.play("run");
+        }
         wasDisabled = false;
 
         this.dir = player.pos.sub(this.pos).unit(),
         this.move(this.dir.scale(this.speed));
       } else {
+        console.log('monster idling');
         wasDisabled = true;
+        if (this.curAnim() !== "idle") this.play("idle");
       }
     },
   };
