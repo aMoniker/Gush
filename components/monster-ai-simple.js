@@ -16,6 +16,8 @@ export default (options) => {
       const { player } = state;
       if (!player || player.hit || player.dead) return;
 
+      k.readd(this);
+
       const dist = this.pos.dist(player.pos);
       if (dist < forceAttackDist
       || (this.playerLOS && dist < losAttackDist)

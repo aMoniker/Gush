@@ -61,6 +61,7 @@ export const createBow = (player) => {
         });
       },
       onUpdate: (a) => {
+        k.readd(a);
         a.move(a.dir.unit().scale(a.speed));
       },
     }),

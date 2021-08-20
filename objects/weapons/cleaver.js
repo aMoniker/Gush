@@ -61,6 +61,7 @@ export const createCleaver = (player) => {
         });
       },
       onUpdate: (a) => {
+        k.readd(a);
         a.move(a.dir.unit().scale(a.speed));
         a.angle += 0.5 * (a.dir.x >= 0 ? -1 : 1);
       },
