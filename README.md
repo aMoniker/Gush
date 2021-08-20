@@ -18,6 +18,7 @@ Gush is a dungeon brawler game built with [Kaboom.js](https://kaboomjs.com/) on 
 - [Pixel Art Effect - FX084 (+15 Effects)](https://kvsr.itch.io/fx084)
 - [Pixel Effects Pack](https://codemanu.itch.io/pixelart-effect-pack)
 - [Kenney.nl Pixel UI Pack](https://kenney.nl/assets/pixel-ui-pack)
+- [Will's Pixel Explosions](https://untiedgames.itch.io/five-free-pixel-explosions)
 
 ## Sound
 - [Shapeforms Audio Free Sounds](https://shapeforms.itch.io/shapeforms-audio-free-sfx)
@@ -68,8 +69,8 @@ Gush is a dungeon brawler game built with [Kaboom.js](https://kaboomjs.com/) on 
 - [x] Swordy Boi - starting char, all other are unlocks. decent sword, decent hp
 - [x] Shootie Pie - decent bow, decent hp
 - [x] Pokey Elf - killer spear, dash attack in one direction, mediocre hp
-- [ ] Smashy Dino - slow, powerful attack with big hammer, great hp
-- [ ] Butcher Lizard - throws short-range meat cleavers, slow & powerful
+- [x] Smashy Dino - slow, powerful attack with big hammer, great hp
+- [x] Butcher Lizard - throws short-range meat cleavers, slow & powerful
 - [ ] Burny Mage - cast fireballs, heavy dmg, low hp
 - [ ] LAZER WIZARD - laser attack fires through enemies, good dmg, low hp
 

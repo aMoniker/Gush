@@ -109,6 +109,7 @@ export const loadAssets = () => {
   promises.push(loadBasicSprite("weapon_spear"));
   promises.push(loadBasicSprite("weapon_cleaver"));
   promises.push(loadBasicSprite("weapon_hammer"));
+  promises.push(loadBasicSprite("weapon_red_magic_staff"));
 
 
   // monsters
@@ -229,9 +230,15 @@ export const loadAssets = () => {
   promises.push(loadBasicSprite("explosion-vertical-small", { x: 10, y: 7 }, {
     main: [0, 64]
   }));
+  promises.push(loadBasicSprite("explosion-round", { x: 10, y: 8 }, {
+    main: [0, 70]
+  }));
   promises.push(loadBasicSprite("vfx-thrust", 5, {
     main: [0, 4],
   }));
+  promises.push(loadBasicSprite("fireball", { x: 8, y: 8 }, {
+    main: [0, 60],
+  }))
 
 
   // maybe re-do these as filmstrips
@@ -288,6 +295,13 @@ export const loadAssets = () => {
   promises.push(loadBasicSound("punch-2"));
   promises.push(loadBasicSound("punch-5"));
   promises.push(loadBasicSound("punch-7"));
+  promises.push(loadBasicSound("explosion-2"));
+  promises.push(loadBasicSound("explosion-4"));
+  promises.push(loadBasicSound("explosion-5"));
+  promises.push(loadBasicSound("explosion-9"));
+  promises.push(loadBasicSound("fire-big-lit-1"));
+  promises.push(loadBasicSound("fire-big-lit-2"));
+  
 
 
   // music
