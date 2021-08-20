@@ -6,7 +6,7 @@ export const createSword = (player) => {
     k.rect(24, 48),
     k.origin("center"),
     k.rotate(0),
-    k.color(0 ,0, 0, 0),
+    k.color(0, 0, 0, 0),
     k.layer("game"),
     "player_weapon_hitbox",
   ]);
@@ -118,7 +118,7 @@ export const createSword = (player) => {
 
         // use the stored dir when attacking, so the hitbox/vfx stick to the player,
         // but don't reposition or spin during the attack
-        const dir = weapon.attacking ? weapon.attackingDir : player.dirAttack;
+        const dir = weapon.attacking ? weapon.attackingDir.unit() : player.dirAttack.unit();
 
         // If the player isn't moving, they can attack either left or right
         const atRest = dir.x === 0 && dir.y === 0;
