@@ -2,10 +2,10 @@ import { k } from "/kaboom.js";
 import { tween, easing } from "/utils.js";
 import lifecycle from "/components/lifecycle.js";
 
-export const createBow = (player) => {
-  const arrowConfig = () => ([
-    k.sprite("weapon_arrow", { noArea: true }),
-    k.area(k.vec2(-3, -3), k.vec2(3, 3)),
+export const createCleaver = (player) => {
+  const cleaverConfig = () => ([
+    k.sprite("weapon_cleaver", { noArea: true }),
+    k.area(k.vec2(-4, -4), k.vec2(4, 4)),
     k.rotate(0),
     k.origin("center"),
     k.layer("game"),
@@ -37,24 +37,24 @@ export const createBow = (player) => {
         cancelMonsterCollides = a.collides("monster", (m) => {
           hitMonster(m);
         });
-        // check if the arrow is overlapping a monster immediately
+        // check if the cleaver is overlapping a monster immediately
         for (const m of k.get("monster")) {
           if (!a.isOverlapped(m)) continue;
           hitMonster(m);
-          break; // arrows only hitMonster one monster at a time
+          break; // cleavers only hitMonster one monster at a time
         }
         // watch for wall collisions
         cancelBoundaryCollides = a.collides("boundary", (b) => {
           hitBoundary(b);
         });
-        // check if the arrow is overlapping a boundary immediately
+        // check if the cleaver is overlapping a boundary immediately
         for (const b of k.get("boundary")) {
           // TODO - make this use boundaryMap
           if (!a.isOverlapped(b)) continue;
           hitBoundary();
           break;
         }
-        // destroy the arrow no matter what if too much time has passed
+        // destroy the cleaver no matter what if too much time has passed
         k.wait(1, () => {
           cancelCollides();
           a.destroy();
@@ -62,20 +62,21 @@ export const createBow = (player) => {
       },
       onUpdate: (a) => {
         a.move(a.dir.unit().scale(a.speed));
+        a.angle += 0.5 * (a.dir.x >= 0 ? -1 : 1);
       },
     }),
     "weapon",
     {
       dir: k.vec2(0, 0),
       speed: 333,
-      damage: 2,
+      damage: 3,
     }
   ]);
 
-  const delayBetweenShots = 0.5;
+  const delayBetweenShots = 0.75;
 
   const weapon = k.add([
-    k.sprite("weapon_bow", { noArea: true }),
+    k.sprite("weapon_cleaver", { noArea: true }),
     k.origin("center"),
     k.layer("game"),
     "weapon",
@@ -85,34 +86,36 @@ export const createBow = (player) => {
         if (weapon.attacking) return;
         weapon.attacking = true;
 
-        k.play("bow-release-2", {
-          loop: false,
-          volume: 0.33,
-          detune: -200,
-        });
         k.play("whoosh-flutter", {
           loop: false,
           volume: 0.27,
           detune: 300,
         });
 
-        // spawn arrow
-        const arrow = k.add([
-          ...arrowConfig(),
+        // spawn cleaver
+        const cleaver = k.add([
+          ...cleaverConfig(),
           k.pos(weapon.pos),
         ]);
-        arrow.dir = player.dirAttack.clone();
-        arrow.angle = Math.atan2(arrow.dir.x, arrow.dir.y) + Math.PI;
-        arrow.flipX(player.xFlipped);
+        cleaver.dir = player.dirAttack.clone();
+        cleaver.angle = Math.atan2(cleaver.dir.x, cleaver.dir.y) + Math.PI;
+        cleaver.flipX(player.xFlipped);
+
+        // hide cleaver on player
+        // weapon.color.a = 0;
+        weapon.hidden = true;
 
         // allow next attack
-        k.wait(delayBetweenShots, () => weapon.attacking = false);
+        k.wait(delayBetweenShots, () => {
+          weapon.hidden = false;
+          weapon.attacking = false
+        });
       },
       // To be called in the same place where player positioning is updated.
       // It cannot be called in its own action() function, since it will be janky.
       updatePosition: () => {
         const flip = player.xFlipped ? -1 : 1
-        weapon.pos = player.pos.add(flip * 6, 5);
+        weapon.pos = player.pos.add(flip * -6, 5);
         const dir = player.dirAttack;
         weapon.angle = flip * Math.PI / 8;
         weapon.flipX(player.xFlipped);

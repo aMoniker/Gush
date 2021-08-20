@@ -107,6 +107,7 @@ export const loadAssets = () => {
   promises.push(loadBasicSprite("weapon_bow"));
   promises.push(loadBasicSprite("weapon_arrow"));
   promises.push(loadBasicSprite("weapon_spear"));
+  promises.push(loadBasicSprite("weapon_cleaver"));
 
 
   // monsters

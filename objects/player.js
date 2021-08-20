@@ -4,6 +4,7 @@ import { uiUpdateHealth, uiUpdateBurps, uiUpdateCoins } from "/ui.js";
 import { createBow } from "/objects/weapons/bow.js";
 import { createSword } from "/objects/weapons/sword.js";
 import { createSpear } from "/objects/weapons/spear.js";
+import { createCleaver } from "/objects/weapons/cleaver.js";
 import { fadeToScene, tween, easing, rng } from "/utils.js";
 import { coordsInBbox, getRenderedMapBbox } from "/levels/spatial.js";
 import state from "/state.js";
@@ -38,6 +39,14 @@ const playerType = {
     holdToAttack: false,
     hurtSound: "male-grunt-5",
   },
+  lizard_f: {
+    hp: 6,
+    createWeapon: createCleaver,
+    flipDuringAttack: true,
+    attackWithStick: true,
+    holdToAttack: true,
+    hurtSound: "female-grunt-7",
+  }
 };
 
 /**
