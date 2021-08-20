@@ -21,8 +21,8 @@ const types = [
     name: "Shootie Pie",
     description: "Bow & Arrows?",
     hearts: 2,
-    difficulty: "Very Hard",
-    difficultyColor: [1, 0, 0],
+    difficulty: "Hard",
+    difficultyColor: [1, 0.3, 0.3],
     cost: 323,
   },
   {
@@ -30,8 +30,8 @@ const types = [
     name: "Pokey Elf",
     description: "Spear Thrust!",
     hearts: 2,
-    difficulty: "Hard",
-    difficultyColor: [1, 0.3, 0.3],
+    difficulty: "Very Hard",
+    difficultyColor: [1, 0, 0],
     cost: 300,
   },
   {
@@ -57,8 +57,8 @@ const types = [
     name: "Burny Mage",
     description: "No Refunds.",
     hearts: 2,
-    difficulty: "Hard",
-    difficultyColor: [1, 0.3, 0.3],
+    difficulty: "Medium (Rare)",
+    difficultyColor: [0.95, 0.77, 0.1],
     cost: 333,
   },
   {

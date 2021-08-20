@@ -106,6 +106,7 @@ export const loadAssets = () => {
   promises.push(loadBasicSprite("weapon_knight_sword"));
   promises.push(loadBasicSprite("weapon_bow"));
   promises.push(loadBasicSprite("weapon_arrow"));
+  promises.push(loadBasicSprite("weapon_spear"));
 
 
   // monsters
@@ -220,13 +221,14 @@ export const loadAssets = () => {
   promises.push(loadBasicSprite("vfx-slash", 5, {
     main: [0, 4],
   }));
-  
   promises.push(loadBasicSprite("vfx-healing", { x: 10, y: 10 }, {
     main: [0, 90],
   }));
-
   promises.push(loadBasicSprite("explosion-vertical-small", { x: 10, y: 7 }, {
     main: [0, 64]
+  }));
+  promises.push(loadBasicSprite("vfx-thrust", 5, {
+    main: [0, 4],
   }));
 
 

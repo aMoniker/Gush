@@ -3,6 +3,7 @@ import { config } from "/config.js";
 import { uiUpdateHealth, uiUpdateBurps, uiUpdateCoins } from "/ui.js";
 import { createBow } from "/objects/weapons/bow.js";
 import { createSword } from "/objects/weapons/sword.js";
+import { createSpear } from "/objects/weapons/spear.js";
 import { fadeToScene, tween, easing, rng } from "/utils.js";
 import { coordsInBbox, getRenderedMapBbox } from "/levels/spatial.js";
 import state from "/state.js";
@@ -28,7 +29,15 @@ const playerType = {
     attackWithStick: true,
     holdToAttack: true,
     hurtSound: "female-grunt-7",
-  }
+  },
+  elf_m: {
+    hp: 4,
+    createWeapon: createSpear,
+    flipDuringAttack: false,
+    attackWithStick: false,
+    holdToAttack: false,
+    hurtSound: "male-grunt-5",
+  },
 };
 
 /**

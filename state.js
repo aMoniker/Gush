@@ -2,7 +2,7 @@ import { k } from "/kaboom.js";
 
 const defaultSavedState = {
   coins: 0,
-  musicVolume: 1,
+  musicVolume: 0,
   unlocked_knight: true,
   unlocked_elf_f: false,
   unlocked_elf_m: false,
@@ -25,7 +25,8 @@ const defaultSavedState = {
 export default {
   level: 0, // current level index
   player: null, // reference to player object for quick lookup
-  playerType: "knight", // TODO - select from menu screen
+  // playerType: "knight",
+  playerType: "elf_m",
   get: (key) => {
     const data = k.getData(key) ?? defaultSavedState[key] ?? undefined;
     // localStorage can only store strings

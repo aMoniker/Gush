@@ -16,6 +16,10 @@ class Music {
   currentTrack = null
   currentTrackName = null;
 
+  globalVolume() {
+    return state.get("musicVolume");
+  }
+
   play(trackName, audioConfig) {
     this.currentTrackName = trackName;
     const trackConfig = {
@@ -24,7 +28,7 @@ class Music {
       ...(audioConfig ?? {}),
     };
     if (typeof trackConfig.volume !== "number") trackConfig.volume = 1;
-    trackConfig.volume *= state.get("musicVolume");
+    trackConfig.volume *= this.globalVolume();
     this.currentTrack = k.play(trackName, trackConfig);
   }
 
@@ -56,7 +60,7 @@ class Music {
   crossFade(trackName, audioConfig) {
     audioConfig = audioConfig ?? {};
     const prevTrack = this.currentTrack;
-    const curTrackVolume = audioConfig.volume ?? 1;
+    const curTrackVolume = (audioConfig.volume ?? 1) * this.globalVolume();
     const prevTrackVolume = prevTrack ? prevTrack.volume() : 0;
     if (audioConfig.volume) delete audioConfig.volume;
 

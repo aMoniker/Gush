@@ -1,5 +1,6 @@
-import { k } from "/kaboom.js"
-import { rng } from "/utils.js"
+import { k } from "/kaboom.js";
+import { rng } from "/utils.js";
+import { config } from "/config.js";
 
 /**
  * Misc game objects:
@@ -43,10 +44,14 @@ export const floorLadderDown = () => ([
   "ladder_down",
 ]);
 
+const hw = config.tileWidth / 2;
+const hh = config.tileHeight / 2;
 export const floorTrap = () => ([
-  k.sprite("floor", { frame: 15 }),
+  k.sprite("floor", { frame: 15, noArea: true }),
   k.layer("game"),
   k.origin("center"),
+  // k.area(config.tileWidth * 0.75, config.tileHeight * 0.75),
+  k.area(k.vec2(-hw * 0.75, -hh * 0.75), k.vec2(hw * 0.75, hh * 0.75)),
   "static",
   "floor_trap",
   {
