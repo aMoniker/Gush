@@ -5,6 +5,7 @@ import { createBow } from "/objects/weapons/bow.js";
 import { createSword } from "/objects/weapons/sword.js";
 import { createSpear } from "/objects/weapons/spear.js";
 import { createCleaver } from "/objects/weapons/cleaver.js";
+import { createHammer } from "/objects/weapons/hammer.js";
 import { fadeToScene, tween, easing, rng } from "/utils.js";
 import { coordsInBbox, getRenderedMapBbox } from "/levels/spatial.js";
 import state from "/state.js";
@@ -46,7 +47,15 @@ const playerType = {
     attackWithStick: true,
     holdToAttack: true,
     hurtSound: "female-grunt-7",
-  }
+  },
+  lizard_m: {
+    hp: 8,
+    createWeapon: createHammer,
+    flipDuringAttack: false,
+    attackWithStick: false,
+    holdToAttack: false,
+    hurtSound: "male-grunt-5",
+  },
 };
 
 /**
@@ -61,6 +70,7 @@ export const createPlayer = (typeName, attrs) => {
     k.sprite(typeName, { animSpeed: 0.3, noArea: true }),
     k.area(k.vec2(-5, 0), k.vec2(5, 12)),
     k.layer("game"),
+    k.scale(1),
     "player",
     "killable",
     {
@@ -71,6 +81,7 @@ export const createPlayer = (typeName, attrs) => {
       moving: false,       // when true, move player in dir by speed
       forcedMoving: false, // when true, ignore input and move player in dir
       hit: false,          // animation for hit & temporary loss of control
+      hitFake: false,      // same animation, but no side-effects
       invulnerable: false, // player is temporarily invulnerable after being hit
     },
     hp({ 
@@ -166,7 +177,7 @@ export const createPlayer = (typeName, attrs) => {
       return;
     }
     const anim = player.curAnim();
-    if (player.hit || player.burping) {
+    if (player.hit || player.hitFake || player.burping) {
       if (anim !== "hit") {
         const hitTime = 0.5;
         player.play("hit");
@@ -190,7 +201,7 @@ export const createPlayer = (typeName, attrs) => {
   const handleMoving = () => {
     if (player.dead) return;
     if (!player.moving && !player.forcedMoving) return;
-    if (!player.forcedMoving) {
+    if (!player.forcedMoving && !(weapon.attacking && !type.flipDuringAttack)) {
       if (player.dirAttack.x !== 0) {
         player.xFlipped = player.dirAttack.x < 0;
       }

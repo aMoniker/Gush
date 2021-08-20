@@ -26,7 +26,7 @@ export default {
   level: 0, // current level index
   player: null, // reference to player object for quick lookup
   // playerType: "knight",
-  playerType: "knight",
+  playerType: "lizard_m",
   get: (key) => {
     const data = k.getData(key) ?? defaultSavedState[key] ?? undefined;
     // localStorage can only store strings

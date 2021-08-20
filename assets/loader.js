@@ -108,6 +108,7 @@ export const loadAssets = () => {
   promises.push(loadBasicSprite("weapon_arrow"));
   promises.push(loadBasicSprite("weapon_spear"));
   promises.push(loadBasicSprite("weapon_cleaver"));
+  promises.push(loadBasicSprite("weapon_hammer"));
 
 
   // monsters
@@ -263,6 +264,8 @@ export const loadAssets = () => {
   promises.push(loadBasicSound("glyph-forcefield"));
   promises.push(loadBasicSound("arcane-beacon"));
   promises.push(loadBasicSound("punch-squelch-heavy"));
+  promises.push(loadBasicSound("punch-squelch-heavy-1"));
+  promises.push(loadBasicSound("punch-designed-heavy"));
   promises.push(loadBasicSound("punch-intense-heavy"));
   promises.push(loadBasicSound("implode"));
   promises.push(loadBasicSound("drinking-gulp"));
@@ -282,6 +285,9 @@ export const loadAssets = () => {
   promises.push(loadBasicSound("alarm-2"));
   promises.push(loadBasicSound("spell-7"));
   promises.push(loadBasicSound("coin-5"));
+  promises.push(loadBasicSound("punch-2"));
+  promises.push(loadBasicSound("punch-5"));
+  promises.push(loadBasicSound("punch-7"));
 
 
   // music

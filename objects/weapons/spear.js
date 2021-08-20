@@ -108,12 +108,12 @@ export const createSpear = (player) => {
         player.dir = player.dirAttack.unit();
         player.speed = origSpeed * 3;
         player.forcedMoving = true;
-        player.hit = true;
+        player.hitFake = true;
         player.invulnerable = true;
         k.wait(thrustTime, () => {
           player.speed = origSpeed;
           player.forcedMoving = false;
-          player.hit = false;
+          player.hitFake = false;
           player.invulnerable = false;
         });
 
