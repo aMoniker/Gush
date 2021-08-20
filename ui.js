@@ -200,3 +200,28 @@ window.addEventListener("keypress", function(e) {
     if (document.exitFullscreen) document.exitFullscreen();
   }
 }, false);
+
+
+// hide cursor after no mouse movement for two seconds; show after movement
+let cursorHidden = false;
+let hideCursorTimeoutId = null;
+const hideCursor = n => n.style.setProperty("cursor", "none", "important");
+const showCursor = n => n.style.setProperty("cursor", "default");
+const hideCursorNodes = [
+  document.body,
+  document.getElementById("game"),
+  document.getElementById("minimap"),
+];
+window.addEventListener("mousemove", function(e) {
+  if (hideCursorTimeoutId) clearTimeout(hideCursorTimeoutId);
+  if (cursorHidden) {
+    hideCursorNodes.forEach(n => showCursor(n));
+    cursorHidden = false;
+  }
+  hideCursorTimeoutId = setTimeout(() => {
+    console.log('hiding');
+    if (cursorHidden) return;
+    hideCursorNodes.forEach(n => hideCursor(n));
+    cursorHidden = true;
+  }, 2000);
+});

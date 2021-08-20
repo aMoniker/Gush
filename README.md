@@ -44,7 +44,7 @@ Gush is a dungeon brawler game built with [Kaboom.js](https://kaboomjs.com/) on 
 - [x] Blue flask gives a shield on top of HP
 - [x] Green flask gives charges of Power Belch, burp kills enemies around player, small one charge, large 3 charges
 - [x] Chests can contain flasks or coins
- - [x] Show coint count on UI
+ - [x] Show coin count on UI
 - [x] Multiple characters with different health & weapons
   - [x] Coins can be collected through multiple game runs to unlock more characters
 - [x] Current level can be reset when player dies.
@@ -70,8 +70,8 @@ Gush is a dungeon brawler game built with [Kaboom.js](https://kaboomjs.com/) on 
 - [x] Shootie Pie - decent bow, decent hp
 - [x] Pokey Elf - killer spear, dash attack in one direction, mediocre hp
 - [x] Smashy Dino - slow, powerful attack with big hammer, great hp
-- [x] Butcher Lizard - throws short-range meat cleavers, slow & powerful
-- [ ] Burny Mage - cast fireballs, heavy dmg, low hp
+- [x] Lizzy Butch - throws meat cleavers, slow & powerful
+- [x] Burny Mage - cast fireballs, heavy dmg, low hp
 - [ ] LAZER WIZARD - laser attack fires through enemies, good dmg, low hp
 
 #### Monster AI
