@@ -17,6 +17,7 @@ export default (options) => {
     hurt(x, hurtBy) {
       if (this.dead) return;
       if (this.is("monster") && !this.solid) return;
+      if (this.invulnerable) return;
 
       let amt = x ?? 1;
       if (currentShields) {
