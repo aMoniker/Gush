@@ -313,6 +313,10 @@ export const loadAssets = () => {
   promises.push(loadBasicSound("heartbeat-slow-2"));
   promises.push(loadBasicSound("spell-20"));
   promises.push(loadBasicSound("bone-hit-1"));
+  promises.push(loadBasicSound("monster-4"));
+  promises.push(loadBasicSound("monster-14"));
+  promises.push(loadBasicSound("monster-16"));
+  promises.push(loadBasicSound("wood-4"));
 
 
   // music

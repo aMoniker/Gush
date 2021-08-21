@@ -6,6 +6,7 @@ import lifecycle from "/components/lifecycle.js";
 import monsterAISimple from "/components/monster-ai-simple.js";
 import monsterAINecro from "/components/monster-ai-necro.js";
 import monsterAIShaman from "/components/monster-ai-shaman.js";
+import monsterAIMimic from "/components/monster-ai-mimic.js";
 import { rng } from "/utils.js"
 
 const buildMonster = (spriteName, area, extraAttrs) => ([
@@ -150,13 +151,21 @@ export const randomZombie = () => {
   return k.choose([zombieIce, zombieTiny, zombiePlain])();
 }
 
-// TODO - prevent mimic damage to player until opened
 export const mimic = () => ([
   k.sprite("chest", { noArea: true, frame: 6 }),
   k.solid(),
   k.area(k.vec2(-8, -5), k.vec2(8, 8)),
   hp({ current: 3, max: 3 }),
   // when player gets a couple tiles away, mimic roars to life, runs at player
+  monsterAIMimic(),
+  lifecycle({
+    onAdd: (m) => {
+      m.on("death", () => k.play("wood-4", {
+        speed: 0.1,
+        detune: 2000,
+      }))
+    }
+  }),
   "monster",
   "killable",
 ]);

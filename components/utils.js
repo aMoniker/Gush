@@ -2,7 +2,9 @@ import { k } from "/kaboom.js";
 import { config } from "/config.js";
 import state from "/state.js";
 
-export const aiPlayerInRange = (monster) => {
+export const aiPlayerInRange = (monster, options = {}) => {
+  const defaults = { runAnim: "run", idleAnim: "idle" };
+  const opts = { ...defaults, ...options }
   const { player } = state;
   if (!player || player.hit || player.dead) return false;
 
@@ -16,23 +18,23 @@ export const aiPlayerInRange = (monster) => {
     // which we depend on for hitbox checking elsewhere
     if (monster.aiWasDisabled) {
       k.readd(monster);
-      if (monster.curAnim() !== "run") monster.play("run");
+      if (monster.curAnim() !== opts.runAnim) monster.play(opts.runAnim);
     }
     monster.aiWasDisabled = false;
   } else {
     monster.aiWasDisabled = true;
-    if (monster.curAnim() !== "idle") monster.play("idle");
+    if (monster.curAnim() !== opts.idleAnim) monster.play(opts.idleAnim);
   }
 
   return inRange;
 }
 
-export const aiBasicMoveAttack = (monster) => {
+export const aiBasicMoveAttack = (monster, options = {}) => {
   if (monster.hidden || monster.dead || !monster.aiEnabled) {
     monster.aiWasDisabled = true;
     return;
   }
-  if (aiPlayerInRange(monster)) {
+  if (aiPlayerInRange(monster, options)) {
     monster.dir = state.player.pos.sub(monster.pos).unit(),
     monster.move(monster.dir.scale(monster.speed));
   }
