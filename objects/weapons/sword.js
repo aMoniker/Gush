@@ -33,6 +33,7 @@ export const createSword = (player) => {
     k.sprite("weapon_knight_sword", { noArea: true }),
     k.origin("bot"),
     k.layer("game"),
+    k.color(1, 1, 1, 1),
     "weapon",
     {
       damage: 1,

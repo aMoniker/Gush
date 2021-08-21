@@ -7,7 +7,7 @@ import lifecycle from "/components/lifecycle.js";
 export default (options = {}) => {
   const minSpellDist = config.tileWidth * 3; // can't cast spells if player too close
   const timeBetweenSpells = 3;
-  let spellTimer = timeBetweenSpells;
+  let spellTimer = timeBetweenSpells / 2;
 
   const projectileSpell = () => ([
     k.sprite("vfx-vortex", { noArea: true, animSpeed: 0.01 }),
@@ -35,7 +35,7 @@ export default (options = {}) => {
           p.destroy();
         });
         p.overlaps("boundary", (b) => {
-          if (!b.is("crevasse")) p.destroy();
+          if (b && !b.is("crevasse")) p.destroy();
         });
 
         // after X seconds no matter what, destroy

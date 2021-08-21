@@ -37,6 +37,8 @@ export default (options = {}) => {
           this.aiEnabled = false;
           this.stop();
 
+          orcToHeal.heal(healAmt);
+
           const magicBubbles = k.add([
             k.sprite("magic-bubbles", { noArea: true, animSpeed: 0.01 }),
             k.pos(this.pos.clone()),
@@ -48,8 +50,7 @@ export default (options = {}) => {
           magicBubbles.play("main");
 
           // heal the orc
-          tween(magicBubbles, 1.5, { "color.a": 1 }, easing.easeInQuart)
-            .then(() => orcToHeal.heal(healAmt))
+          tween(magicBubbles, 0.5, { "color.a": 1 }, easing.easeInQuart)
             .then(() => tween(magicBubbles, 1.5, { "color.a": 0 }, easing.easeOutQuart))
             .then(() => {
               this.aiEnabled = true;

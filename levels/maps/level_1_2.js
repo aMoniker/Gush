@@ -1,25 +1,26 @@
 import { k } from "/kaboom.js";
 import { announce } from "/utils.js";
 import state from "/state.js";
+import * as powerups from "/objects/powerups.js";
 import * as monster from "/objects/monster.js";
-import { monsterWave, coinReward, crateWall, spawnObject } from "/levels/maps/utils.js";
+import { monsterWave, monsterWaveCircle, coinReward, coinRewardCircle, crateWall, crateWallHorizontal, crateWallVertical, spawnObject } from "/levels/maps/utils.js";
 import music from "/music.js";
 import input from "/input.js";
 
 const map = [
   "┌──────────────────────!┐===================┌!───────────────────────┐",
   "│·······················/                   /·················8······│",
-  "│······················┌┘=┌──────!_!──────┐=└┐················8······│",
+  "│······················┌┘=┌──────!_!──────┐=└┐················8·@····│",
   "│·····················┌┘ ┌┘···············└┐ └┐···············8······│",
   "│····················┌┘ ┌┘········>········└┐ └┐··············8┌─┐···│",
   "│···················┌┘ ┌┘6·┌─────────────┐·7└┐ └┐··············│ │···│",
   "│··················┌┘ ┌┘·6┌┘             └┐7·└┐ └┐·············│ │···│",
   "│·················┌┘ ┌┘··┌┘ ┌───────────┐ └┐··└┐ └┐············│ │···│",
   "│················┌┘ ┌┘··┌┘ ┌┘$$$?$?$?$$$└┐ └┐··└┐ └┐···········│ │···│",
-  "│···············┌┘ ┌┘··┌┘ ┌┘4···········4└┐ └┐··└┐ └┐··········│ │···│",
-  "│··············┌┘ ┌┘··┌┘ ┌┘·4···········4·└┐ └┐··└┐ └┐·········│ │···│",
-  "│·············┌┘ ┌┘·t┌┘ ┌┘··4···········4··└┐ └┐t·└┐ └┐········│ │···│",
-  "│············┌┘ ┌┘··┌┘ ┌┘···4┌─────────┐4···└┐ └┐··└┐ └┐·······│ │···│",
+  "│···············┌┘ ┌┘··┌┘ ┌┘···4······4··└┐ └┐··└┐ └┐··········│ │···│",
+  "│··············┌┘ ┌┘··┌┘ ┌┘····4······4···└┐ └┐··└┐ └┐·········│ │···│",
+  "│·············┌┘ ┌┘·t┌┘ ┌┘·····4······4····└┐ └┐t·└┐ └┐········│ │···│",
+  "│············┌┘ ┌┘··┌┘ ┌┘····┌─────────┐····└┐ └┐··└┐ └┐·······│ │···│",
   "│···········┌┘ ┌┘··┌┘ ┌┘····┌┘         └┐····└┐ └┐··└┐ └┐······│ │···│",
   "│··········┌┘ ┌┘··┌┘ ┌┘·t··┌┘ ┌───────┐ └┐··s·└┐ └┐·t└┐ └┐·····│ │···│",
   "│·········┌┘ ┌┘··┌┘ ┌┘····┌┘ ┌┘w··w··w└┐ └┐····└┐ └┐··└┐ └┐····│ │···│",
@@ -36,11 +37,11 @@ const map = [
   "│····│ │··│ │··┌┘ ┌┘···┌┘ ┌┘·············└┐ └┐···└┐ └┐····└──────┘···│",
   "│····│ │··│ │·┌┘ ┌┘···┌┘ ┌┘···············└┐ └┐···└┐ └┐··············│",
   "│····│ │··│ │·│ ┌┘···┌┘ ┌┘·················└┐ └┐···└┐ │··············│",
-  "│p··p└!┘··│ │·└─┘···┌┘ ┌┘···················└┐ └┐···└─┘··············│",
-  "│·········│ │·······│ ┌┘·········333·········└┐ │·g···········┌─┐····│",
-  "│·········│ └───┐···/ /··········3m3··········/ /·····O·······│ │····│",
-  "│·tt·┌_┐··│     │···│ └┐·········333·········┌┘ │·············│ │····│",
-  "│····│ │··└─────┘···└┐ └┐···················┌┘ ┌┘·············│ │····│",
+  "│p··p└!┘··│ │·└─┘···┌┘ ┌┘·······33333·······└┐ └┐···└─┘··············│",
+  "│·········│ │·······│ ┌┘········3···3········└┐ │·g···········┌─┐····│",
+  "│·········│ └───┐···/ /·········3·m·3·········/ /·····O·······│ │····│",
+  "│·tt·┌_┐··│     │···│ └┐········3···3········┌┘ │·············│ │····│",
+  "│····│ │··└─────┘···└┐ └┐·······33333·······┌┘ ┌┘·············│ │····│",
   "│p··p│ │·············└┐ └┐·················┌┘ ┌┘···········O··│ │····│",
   "│····│ │···d··········└┐ └┐···············┌┘ ┌┘····o··········│ │····│",
   "│····│ │·i···i·········└┐ └┐·············┌┘ ┌┘g···············│ │····│",
@@ -51,9 +52,9 @@ const map = [
   "│····│ └────────┐··┌─┐······└┐ └┐···┌┘ ┌┘············o········│ │$·S$│",
   "│····│ = ==     │··│ │·······└┐ └┐·┌┘ ┌┘······················│ │$M·$│",
   "│····│ =  =  == │··│ │···i·i··└┐ │·│ ┌┘·················g·····│ │$$$$│",
-  "└┐··┌┘ = ==  =  │·s│ │·········│ │·│ │····┌───────────────────┘=└────┘",
-  " │··│  =    === │··│ │·d·····d·│ │·│ │····│$$$$$$$$$9                 ",
-  " │·s│ == == =?= │··│ │·········│ │·│ │····└────────────────────!────_┐",
+  "└┐··┌┘ = ==  =  │·s│ │·········│ │·│ │····┌───────────────────┘ └────┘",
+  " │··│  =    === │··│ │·d·····d·│ │·│ │····│                           ",
+  " │·s│ == == =?= │··│ │·········│ │·│ │····└──────────────────────────┐",
   " │··│ =  =  = = │··│ └─────────┘ │·│ │·······························│",
   " │··│   == ==   │··│             │·│ │·······························│",
   " │··└───────────┘··└─────────────┘·└─┘···············┌───────────┐···│",
@@ -74,155 +75,158 @@ const map = [
   "│·········│=====│··│             =     =                              ",
   "│·········└─────┘··└────────────┐= =┌────────────────────────────────┐",
   "│··············s············s···│= =│···s········?·········?········m│",
-  "│·@·················s·····┌────_┘= =└_────┐···········?·········?····│",
+  "│···················s·····┌────_┘= =└_────┐····s······?·········?····│",
   "│·········┌───────────────┘   =       =   └──────────────────────────┘",
   "└─────────┘                   =========                               ",
 ];
 
 
 
-// let showTutorial = true;
-// const tutorialKey = "level-1-1-tutorials";
+const bgMusic = "cave-3";
 
-// const bgMusic = "stark-nuances";
+map.onStart = () => {
+  music.play(bgMusic);
+}
 
-// map.onStart = () => {
-//   showTutorial = state.get(tutorialKey) ?? true;
-//   if (showTutorial) {
-//     announce(input.gamepadConnected ? "ANALOG STICK to move" : "WASD to move");
-//   }
-//   music.play(bgMusic);
-// }
+map.triggers = {
+  0: () => {
+    monsterWave(() => ([
+      spawnObject(monster.zombieTiny(), 67, 53),
+      spawnObject(monster.zombieTiny(), 66, 53),
+      spawnObject(monster.zombieTiny(), 68, 53),
+      spawnObject(monster.zombieTiny(), 67, 51),
+      spawnObject(monster.zombieTiny(), 66, 51),
+      spawnObject(monster.zombieTiny(), 68, 51),
+      spawnObject(monster.zombieTiny(), 67, 49),
+      spawnObject(monster.zombieTiny(), 66, 49),
+      spawnObject(monster.zombieTiny(), 68, 49),
+    ]));
+  },
+  1: async () => {
+    const crates = crateWall([25, 52], [26, 52]);
+    await monsterWave(() => ([
+      spawnObject(monster.zombieTiny(), 22, 57),
+      spawnObject(monster.zombieTiny(), 22, 58),
+      spawnObject(monster.zombieTiny(), 22, 59),
+      spawnObject(monster.zombieTiny(), 22, 60),
+      spawnObject(monster.zombieTiny(), 29, 57),
+      spawnObject(monster.zombieTiny(), 29, 58),
+      spawnObject(monster.zombieTiny(), 29, 59),
+      spawnObject(monster.zombieTiny(), 29, 60),
+      spawnObject(monster.zombieBig(), 25, 61),
+    ]));
+    crates.forEach(c => c.destroy());
+  },
+  2: async () => {
+    const crates = crateWall([56, 62]);
+    await monsterWave(() => ([
+      spawnObject(monster.zombiePlain(), 46, 57),
+      spawnObject(monster.zombiePlain(), 47, 57),
+      spawnObject(monster.zombiePlain(), 48, 57),
+      spawnObject(monster.zombiePlain(), 49, 57),
+    ]));
+    await monsterWave(() => ([
+      spawnObject(monster.zombiePlain(), 46, 62),
+      spawnObject(monster.zombiePlain(), 47, 62),
+      spawnObject(monster.zombiePlain(), 48, 62),
+      spawnObject(monster.zombiePlain(), 49, 62),
+    ]));
+    await monsterWave(() => ([
+      spawnObject(monster.zombieBig(), 46, 56),
+      spawnObject(monster.zombieBig(), 48, 56),
+    ]));
+    crates.forEach(c => c.destroy());
+  },
+  3: async () => {
+    let seek = 0;
+    if (music.name() === bgMusic) seek = music.time();
+    music.crossFade("battle-8");
+    const crates = crateWall([34, 42], [23, 31], [34, 20], [45, 31]);
+    const center = [34, 31];
+    spawnObject(powerups.flask("big", "blue"), ...center);
+    await monsterWaveCircle(monster.zombieTiny, 10, center, 5);
+    await monsterWaveCircle(monster.zombiePlain, 8, center, 6);
+    await Promise.all([
+      monsterWaveCircle(monster.zombieBig, 5, center, 7),
+      monsterWaveCircle(monster.skeleton, 12, center, 6),
+    ]);
+    spawnObject(powerups.flask("small", "red"));
+    await Promise.all([
+      monsterWaveCircle(monster.imp, 13, center, 7),
+      monsterWaveCircle(monster.wogol, 7, center, 6),
+    ]);
+    spawnObject(powerups.flask("small", "green"), ...center);
+    await monsterWaveCircle(monster.demonSmall, 7, center, 6);
+    await monsterWaveCircle(monster.necromancer, 5, center, 7);
+    coinRewardCircle(15, center, 4);
+    coinRewardCircle(16, center, 5);
+    coinRewardCircle(17, center, 6);
+    spawnObject(powerups.flask("big", "red"), ...center);
+    crates.forEach(c => c.destroy());
+    music.crossFade(bgMusic, { seek });
+  },
+  4: async () => {
+    const center = [34, 10];
+    spawnObject(powerups.flask("small", "red"), ...center);
+    await monsterWaveCircle(monster.zombiePlain, 6, center, 1);
+  },
+  5: async () => {
+    let seek = 0;
+    if (music.name() === bgMusic) seek = music.time();
+    music.crossFade("battle-3");
+    const center = [8, 6];
+    const crates = [...crateWallHorizontal([1, 21], 4), ...crateWall([23, 1])];
+    spawnObject(powerups.flask("small", "blue"), ...center);
+    await monsterWaveCircle(monster.goblin, 7, center, 5);
+    await monsterWaveCircle(monster.randomOrc, 9, center, 6);
+    await Promise.all([
+      monsterWaveCircle(monster.goblin, 9, center, 6),
+      monsterWaveCircle(monster.ogre, 4, center, 5),
+      monsterWaveCircle(monster.orcShaman, 3, center, 4),
+    ]);
+    crates.forEach(c => c.destroy());
+    coinRewardCircle(3, center, 2);
+    coinRewardCircle(7, center, 3);
+    coinRewardCircle(9, center, 4);
+    spawnObject(powerups.flask("small", "red"), ...center);
+    music.crossFade(bgMusic, { seek });
+  },
+  6: () => {
+    crateWallVertical([27, 3], 2);
+    k.play("alarm-2", { volume: 0.5, detune: -300 });
+  },
+  7: async () => {
+    crateWallVertical([41, 3], 2);
+    k.play("alarm-2", { volume: 0.5, detune: -300 });
+  },
+  8: async () => {
+    let seek = 0;
+    if (music.name() === bgMusic) seek = music.time();
+    music.crossFade("battle-8");
+    const center = [56, 5];
+    const crates = crateWallVertical([64, 1], 3);
+    spawnObject(powerups.flask("small", "blue"), ...center);
+    await Promise.all([
+      monsterWaveCircle(monster.muddy, 4, center, 3),
+      monsterWaveCircle(monster.swampy, 3, center, 3),
+    ]);
+    spawnObject(powerups.flask("small", "red"), ...center);
+    await Promise.all([
+      monsterWaveCircle(monster.demonSmall, 3, center, 4),
+      monsterWaveCircle(monster.imp, 7, center, 4),
+    ]);
+    spawnObject(powerups.flask("small", "green"), ...center);
+    await Promise.all([
+      monsterWaveCircle(monster.skeleton, 13, center, 5),
+      monsterWaveCircle(monster.necromancer, 4, center, 6),
+    ]);
+    coinRewardCircle(5, center, 1);
+    coinRewardCircle(7, center, 2);
+    coinRewardCircle(9, center, 3);
 
-// const triggered = {};
-
-// map.triggers = {
-//   0: () => {
-//     state.set(tutorialKey, false);
-//   },
-//   1: () => {
-//     if (showTutorial) {
-//       announce(input.gamepadConnected ? "MAIN BUTTON to attack" : "SPACE to attack");
-//     }
-//   },
-//   2: () => {
-//     if (showTutorial) {
-//       announce("GREEN potions charge BURP meter");
-//       announce(
-//         input.gamepadConnected ? "SECONDARY BUTTON to BURP" : "Press B to BURP"
-//       );
-//     }
-//   },
-//   3: () => {
-//     if (showTutorial) announce("BLUE potions charge SHIELDS");
-//   },
-//   4: () => {
-//     monsterWave(() => ([
-//       spawnObject(monster.imp(), 46, 25),
-//       spawnObject(monster.imp(), 49, 24),
-//       spawnObject(monster.imp(), 49, 32),
-//       spawnObject(monster.imp(), 55, 28),
-//     ]));
-//   },
-//   5: async () => {
-//     let seek = 0;
-//     if (music.name() === bgMusic) seek = music.time();
-
-//     music.crossFade("battle-3");
-//     const crates = crateWall([35, 55], [35, 56], [12, 43], [12, 44]);
-    
-//     await monsterWave(() => ([
-//       spawnObject(monster.imp(), 23, 44),
-//       spawnObject(monster.imp(), 23, 54),
-//       spawnObject(monster.imp(), 18, 49),
-//       spawnObject(monster.imp(), 28, 49),
-//       spawnObject(monster.imp(), 26, 46),
-//       spawnObject(monster.imp(), 26, 52),
-//       spawnObject(monster.imp(), 20, 46),
-//       spawnObject(monster.imp(), 20, 52),
-//     ]));
-
-//     await monsterWave(() => ([
-//       spawnObject(monster.goblin(), 23, 44),
-//       spawnObject(monster.goblin(), 23, 54),
-//       spawnObject(monster.goblin(), 18, 49),
-//       spawnObject(monster.goblin(), 28, 49),
-//       spawnObject(monster.goblin(), 26, 46),
-//       spawnObject(monster.goblin(), 26, 52),
-//       spawnObject(monster.goblin(), 20, 46),
-//       spawnObject(monster.goblin(), 20, 52),
-//     ]));
-
-//     await monsterWave(() => ([
-//       spawnObject(monster.wogol(), 23, 44),
-//       spawnObject(monster.wogol(), 23, 54),
-//       spawnObject(monster.wogol(), 18, 49),
-//       spawnObject(monster.wogol(), 28, 49),
-//       spawnObject(monster.wogol(), 26, 46),
-//       spawnObject(monster.wogol(), 26, 52),
-//       spawnObject(monster.wogol(), 20, 46),
-//       spawnObject(monster.wogol(), 20, 52),
-//     ]));
-
-//     coinReward(
-//       [23, 44], [23, 54], [18, 49], [28, 49],
-//       [26, 46], [26, 52], [20, 46], [20, 52]
-//     );
-
-//     crates.forEach(c => c.destroy());
-//     music.crossFade(bgMusic, { seek });
-//   },
-//   6: () => {
-//     monsterWave(() => ([
-//       spawnObject(monster.imp(), 22, 67),
-//       spawnObject(monster.imp(), 22, 68),
-//       spawnObject(monster.imp(), 23, 67),
-//       spawnObject(monster.imp(), 23, 68),
-//       spawnObject(monster.imp(), 29, 67),
-//       spawnObject(monster.imp(), 29, 68),
-//       spawnObject(monster.imp(), 30, 67),
-//       spawnObject(monster.imp(), 30, 68),
-//     ]));
-//   },
-//   8: async () => {
-//     let seek = 0;
-//     if (music.name() === bgMusic) seek = music.time();
-//     music.crossFade("battle-3");
-
-//     // block off exit with crates
-//     const crates = crateWall([26, 24], [26, 25], [26, 26]);
-
-//     // wave 1
-//     await monsterWave(() => ([
-//       spawnObject(monster.wogol(), 18, 22),
-//       spawnObject(monster.wogol(), 18, 28),
-//     ]));
-
-//     // wave 2
-//     await monsterWave(() => ([
-//       spawnObject(monster.imp(), 18, 22),
-//       spawnObject(monster.imp(), 18, 28),
-//       spawnObject(monster.imp(), 24, 22),
-//       spawnObject(monster.imp(), 24, 28),
-//     ]));
-
-//     // wave 3
-//     await monsterWave(() => ([
-//       spawnObject(monster.demonSmall(), 16, 21),
-//       spawnObject(monster.demonSmall(), 16, 29),
-//     ]));
-
-//     // reward
-//     coinReward(
-//       [16, 21], [16, 25], [16, 29], [18, 22], [18, 25], [18, 28],
-//       [20, 23], [21, 23], [20, 27], [21, 27],
-//       [25, 21], [25, 25], [25, 29], [23, 22], [23, 25], [23, 28],
-//     );
-
-//     // remove wall of crates
-//     crates.forEach(c => c.destroy());
-//     music.crossFade(bgMusic, { seek });
-//   }
-// };
+    crates.forEach(c => c.destroy());
+    music.crossFade(bgMusic, { seek });
+  }
+};
 
 export default map;

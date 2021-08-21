@@ -21,6 +21,7 @@ export const createHammer = (player) => {
     k.origin("bot"),
     k.layer("game"),
     k.scale(1),
+    k.color(1, 1, 1, 1),
     "weapon",
     {
       damage: 4,

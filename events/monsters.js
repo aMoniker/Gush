@@ -1,5 +1,5 @@
 import { k } from "/kaboom.js";
-import { tween, easing, rng } from "/utils.js";
+import { flashColor, tween, easing, rng } from "/utils.js";
 import { config } from "/config.js";
 import { boundaryMap, translateWorldToMapCoords } from "/levels/spatial.js";
 
@@ -10,8 +10,7 @@ const handleMonsterCollision = (player, monster) => {
 
 const handleMonsterHurt = (monster, amt, hurtBy) => {
   // flash the monster red
-  if (!monster.color) monster.use(k.color(1, 0, 0, 1));
-  k.wait(0.1, () => monster.color = undefined);
+  flashColor(monster, [1, 0, 0, 1], 0.2);
 
   // slap the monster away
   monster.hit = true;
@@ -38,13 +37,16 @@ const handleMonsterDeath = (monster, killedBy) => {
   monster.isDestroying = true;
   monster.aiEnabled = false;
   monster.solid = false;
-  monster.color ?? monster.use(k.color(1, 0, 0, 1));
+  monster.color ?? monster.use(k.color(1, 1, 1, 1));
   monster.angle ?? monster.use(k.rotate(0));
   monster.scale ?? monster.use(k.scale(1));
   const flip = killedBy.pos.x - monster.pos.x >= 0 ? 1 : -1;
 
   // death effects; bye bye monster
   tween(monster, 2, {
+    "color.r": 1,
+    "color.g": 0,
+    "color.b": 0,
     "color.a": 0,
     "angle": monster.angle + (Math.PI / 2 * flip),
     "pos.y": monster.pos.y - config.tileHeight / 2,

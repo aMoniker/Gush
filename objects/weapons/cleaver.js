@@ -28,7 +28,7 @@ export const createCleaver = (player) => {
         };
         const hitBoundary = (b) => {
           // TODO - bounce off wall
-          if (b.is("crevasse")) return;
+          if (b && b.is("crevasse")) return;
           cancelCollides();
           struck = true;
           a.destroy();
@@ -80,6 +80,7 @@ export const createCleaver = (player) => {
     k.sprite("weapon_cleaver", { noArea: true }),
     k.origin("center"),
     k.layer("game"),
+    k.color(1, 1, 1, 1),
     "weapon",
     {
       attacking: false,

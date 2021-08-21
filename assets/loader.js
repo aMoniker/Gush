@@ -188,6 +188,8 @@ export const loadAssets = () => {
   promises.push(loadBasicSprite("gush-logo"));
   promises.push(loadBasicSprite("gush-logo-outlined"));
   promises.push(loadBasicSprite("skull"));
+  promises.push(loadBasicSprite("finger-pointer"));
+  
 
 
   // ui
@@ -317,6 +319,8 @@ export const loadAssets = () => {
   promises.push(loadBasicSound("laser-beam-plasma-loop"));
   promises.push(loadBasicSound("heartbeat-slow-2"));
   promises.push(loadBasicSound("spell-20"));
+  promises.push(loadBasicSound("spell-1"));
+  promises.push(loadBasicSound("spell-14"));
   promises.push(loadBasicSound("bone-hit-1"));
   promises.push(loadBasicSound("monster-4"));
   promises.push(loadBasicSound("monster-14"));

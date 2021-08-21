@@ -39,7 +39,7 @@ const types = [
     name: "Lizzy Butch",
     description: "Meat Cleavers!",
     hearts: 3,
-    difficulty: "so cute",
+    difficulty: "cute & deadly",
     difficultyColor: [0.87, 0.5, 0.83],
     cost: 223,
   },
@@ -100,13 +100,13 @@ k.scene("character-select", (args = {}) => {
   // (wasd or arrows)
   const instructionOneText = k.add([
     ...basicAttributes(),
-    k.text("WASD or ANALOG STICK to view", 16),
+    k.text("WASD (or ANALOG STICK) to view", 16),
   ]);
 
   // (space to select/unlock)
   const instructionTwoText = k.add([
     ...basicAttributes(),
-    k.text("ATTACK to choose (or unlock)", 16),
+    k.text("SPACE (or BOTTOM BUTTON) to choose", 16),
   ]);
 
   // <    sprite    >
@@ -177,11 +177,17 @@ k.scene("character-select", (args = {}) => {
 
     instructionOneText.pos.y = (dy += 40);
     instructionOneText.pos.x = hw;
-    instructionOneText.color.a = 0.9;
+    instructionOneText.color.r = 0.6875;
+    instructionOneText.color.g = 0.765625;
+    instructionOneText.color.b = 0.8671875;
+    instructionOneText.color.a = 1;
 
     instructionTwoText.pos.y = (dy += 30);
     instructionTwoText.pos.x = hw;
-    instructionTwoText.color.a = 0.9;
+    instructionTwoText.color.r = 0.6875;
+    instructionTwoText.color.g = 0.765625;
+    instructionTwoText.color.b = 0.8671875;
+    instructionTwoText.color.a = 1;
 
     characterSprite.changeSprite(curType.key);
     characterSprite.pos.y = (dy += 80);
@@ -230,7 +236,10 @@ k.scene("character-select", (args = {}) => {
     descText.text = curType.description;
     descText.pos.y = (dy += 53);
     descText.pos.x = hw;
-    descText.color.a = 0.8;
+    descText.color.r = 0.6875;
+    descText.color.g = 0.765625;
+    descText.color.b = 0.8671875;
+    descText.color.a = 1;
 
     difficultyText.text = curType.difficulty;
     difficultyText.pos.y = (dy += 47);
@@ -317,6 +326,7 @@ k.scene("character-select", (args = {}) => {
     const unlocked = state.get(`unlocked_${curType.key}`);
     if (unlocked) {
       state.playerType = curType.key;
+      k.play("spell-1", { volume: 0.77, detune: -666 });
       fadeToScene("main");
     } else {
       const curCoins = Number.parseInt(state.get("coins"));

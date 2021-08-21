@@ -71,13 +71,6 @@ export const regenerateBoundaryMap = (goMap) => {
   }
 }
 
-// map coords to world coords
-export const getWorldPos = (mx, my) => {
-  const x = (mx * config.tileWidth) + config.mapOrigin.x;
-  const y = (my * config.tileHeight) + config.mapOrigin.y;
-  return k.pos(x, y);
-}
-
 // get world coordinates visibility bbox based on center point wx/wy
 export const getRenderedWorldBbox = (wx, wy) => {
   const hw = config.renderedWidth / 2;
@@ -107,6 +100,22 @@ export const translateWorldToMapBbox = (worldBbox) => {
   const se = translateWorldToMapCoords(worldBbox[2], worldBbox[3]);
   return [nw.x, nw.y, se.x, se.y];
 };
+
+// translate map to world coords
+export const translateMapToWorldCoords = (mx, my) => {
+  const x = (mx * config.tileWidth) + config.mapOrigin.x;
+  const y = (my * config.tileHeight) + config.mapOrigin.y;
+  return {x, y};
+};
+
+// map coords to world coords
+export const getWorldPos = (mx, my) => {
+  // const x = (mx * config.tileWidth) + config.mapOrigin.x;
+  // const y = (my * config.tileHeight) + config.mapOrigin.y;
+  // return k.pos(x, y);
+  const {x, y} = translateMapToWorldCoords(mx, my);
+  return k.pos(x, y);
+}
 
 // check if the given coordinates are in the given bbox
 export const coordsInBbox = (x, y, bbox) => {

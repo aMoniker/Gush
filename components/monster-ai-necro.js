@@ -8,9 +8,9 @@ import { monsterWave, spawnObject } from "/levels/maps/utils.js";
 import { aiPlayerInRange } from "/components/utils.js"
 
 export default (options = {}) => {
-  const minSpellDist = config.tileWidth * 2; // can't cast spells if player too close
-  const timeBetweenSpells = 1;
-  let spellTimer = timeBetweenSpells;
+  const minSpellDist = config.tileWidth * 2.5; // can't cast spells if player too close
+  const timeBetweenSpells = 1.33;
+  let spellTimer = timeBetweenSpells / 2;
 
   let skellies = [];
   const maxSkellies = 4;
@@ -57,7 +57,7 @@ export default (options = {}) => {
           p.destroy();
         });
         p.overlaps("boundary", (b) => {
-          if (!b.is("crevasse")) p.destroy();
+          if (b && !b.is("crevasse")) p.destroy();
         });
 
         // after X seconds no matter what, destroy
@@ -127,7 +127,7 @@ export default (options = {}) => {
       }
     },
     destroy() {
-      skellies.forEach(s => s.destroy());
+      skellies.forEach(s => s && s.destroy());
       skellies = [];
     },
   };

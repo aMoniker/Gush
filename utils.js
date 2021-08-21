@@ -86,6 +86,18 @@ export const tween = (obj, time, changes, ease, cb) => {
   });
 };
 
+export const flashColor = (obj, rgba, time) => {
+  if (!obj.color) return;
+  const {r,g,b,a} = obj.color;
+  obj.color.r = rgba[0];
+  obj.color.g = rgba[1];
+  obj.color.b = rgba[2];
+  obj.color.a = rgba[3];
+  return k.wait(time, () => {
+    obj.color = { ...obj.color, ...{r,g,b,a} };
+  });
+};
+
 let cachedPromise = Promise.resolve();
 export const announce = (announcement) => {
   cachedPromise = cachedPromise.then(() => {

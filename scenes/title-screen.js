@@ -170,7 +170,7 @@ const animateCharacters = () => {
 const showInputText = () => {
   const py = config.gameHeight * 0.77;
   const textObj = k.add([
-    k.text("Press SPACE to Select Character", 16),
+    k.text("Press SPACE to Begin", 16),
     k.origin("center"),
     k.pos(hw, py),
   ]);
@@ -185,16 +185,14 @@ let gameStarting = false;
 const startGame = () => {
   if (gameStarting) return;
   gameStarting = true;
-  window.removeEventListener("keydown", startGame);
+  k.play("spell-14", { detune: -200 });
   fadeToScene("character-select");
 }
 
 const enableStartGame = () => {
-  window.addEventListener("keydown", startGame);
   k.action(() => {
     if (input.attack || input.burp) startGame();
   });
-  k.mouseClick(startGame);
 };
 
 k.scene("title-screen", () => {

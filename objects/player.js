@@ -8,7 +8,7 @@ import { createCleaver } from "/objects/weapons/cleaver.js";
 import { createHammer } from "/objects/weapons/hammer.js";
 import { createFireStaff } from "/objects/weapons/fire-staff.js";
 import { createLaserStaff } from "/objects/weapons/laser-staff.js";
-import { fadeToScene, tween, easing, rng } from "/utils.js";
+import { fadeToScene, flashColor, tween, easing, rng } from "/utils.js";
 import { coordsInBbox, getRenderedMapBbox } from "/levels/spatial.js";
 import state from "/state.js";
 import music from "/music.js";
@@ -89,6 +89,7 @@ export const createPlayer = (typeName, attrs) => {
     k.area(k.vec2(-5, 0), k.vec2(5, 12)),
     k.layer("game"),
     k.scale(1),
+    k.color(1, 1, 1, 1),
     "player",
     "killable",
     {
@@ -294,8 +295,8 @@ export const createPlayer = (typeName, attrs) => {
     player.invulnerable = true;
 
     // paint the player & weapon red if any dmg was taken
-    if (!player.color) player.use(k.color(1, 0, 0, 1));
-    if (!weapon.color) weapon.use(k.color(1, 0, 0, 1));
+    flashColor(player, [1, 0, 0, 1], hitReactionTime);
+    flashColor(weapon, [1, 0, 0, 1], hitReactionTime);
 
     // oof
     k.play("punch-squelch-heavy", {
@@ -317,8 +318,6 @@ export const createPlayer = (typeName, attrs) => {
       player.forcedMoving = false;
       player.dir.x = 0;
       player.dir.y = 0;
-      player.color = undefined;
-      weapon.color = undefined;
     });
 
     k.wait(invulnerbilityTime, () => {

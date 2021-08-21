@@ -51,6 +51,7 @@ export const createLaserStaff = (player) => {
     k.origin("center"),
     k.pos(0, 0),
     k.layer("game"),
+    k.color(1, 1, 1, 1),
     "weapon",
     lifecycle({
       onUpdate: (w) => {

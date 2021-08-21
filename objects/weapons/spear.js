@@ -37,6 +37,7 @@ export const createSpear = (player) => {
     k.sprite("weapon_spear", { noArea: true }),
     k.origin("center"),
     k.layer("game"),
+    k.color(1, 1, 1, 1),
     "weapon",
     {
       damage: 3,

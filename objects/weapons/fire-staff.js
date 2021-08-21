@@ -92,12 +92,12 @@ export const createFireStaff = (player) => {
         }
         // watch for wall collisions
         cancelBoundaryCollides = a.collides("boundary", (b) => {
-          if (!b.is("crevasse")) hitSomething("boundary");
+          if (b && !b.is("crevasse")) hitSomething("boundary");
         });
         // check if the fireball is overlapping a boundary immediately
         for (const b of k.get("boundary")) {
           // TODO - make this use boundaryMap
-          if (a.isOverlapped(b) && !b.is("crevasse")) {
+          if (b && a.isOverlapped(b) && !b.is("crevasse")) {
             hitSomething("boundary");
             break;
           }
@@ -127,6 +127,7 @@ export const createFireStaff = (player) => {
     k.origin("center"),
     k.pos(0, 0),
     k.layer("game"),
+    k.color(1, 1, 1, 1),
     "weapon",
     {
       attacking: false,

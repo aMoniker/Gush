@@ -93,8 +93,6 @@ map.onStart = () => {
   music.play(bgMusic);
 }
 
-const triggered = {};
-
 map.triggers = {
   0: () => {
     state.set(tutorialKey, false);

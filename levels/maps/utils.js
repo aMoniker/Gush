@@ -2,7 +2,7 @@ import { k } from "/kaboom.js";
 import { tween } from "/utils.js";
 import * as misc from "/objects/misc.js";
 import * as powerups from "/objects/powerups.js";
-import { getWorldPos } from "/levels/spatial.js";
+import { getWorldPos, translateMapToWorldCoords } from "/levels/spatial.js";
 
 // helper for spawning objects at map coordinates
 export const spawnObject = (conf, x, y) => {
@@ -24,7 +24,10 @@ export const monsterWave = (spawner) => {
     wave.forEach(m => {
       m.spawning = true;
       m.aiEnabled = false;
-      if (!m.color) m.use(k.color(1, 1, 1, 0));
+      m.color.r = 1;
+      m.color.g = 1;
+      m.color.b = 1;
+      m.color.a = 0;
       tween(m, gracePeriod, { "color.a": 0.5 }).then(() => {
         m.color.a = 1;
         m.spawning = false;
@@ -52,6 +55,42 @@ export const monsterWave = (spawner) => {
   });
 };
 
+const circleSpawner = (objFn, count, center, radius) => () => {
+  const [cx, cy] = center;
+  const slice = (Math.PI * 2) / count;
+  const objs = [];
+  for (let i = 0; i < count; i++) {
+    const angle = slice * i;
+    const x = cx + (radius * Math.sin(angle));
+    const y = cy + (radius * Math.cos(angle));
+    objs.push(spawnObject(objFn(), x, y));
+  }
+  return objs;
+};
+
+// expects center coordinates and radius in map units
+export const monsterWaveCircle = (monsterFn, count, center, radius) => {
+  // const [cx, cy] = center;
+  // const slice = (Math.PI * 2) / count;
+
+  // const spawner = () => {
+  //   const monsters = [];
+  //   for (let i = 0; i < count; i++) {
+  //     const angle = slice * i;
+  //     const x = cx + (radius * Math.sin(angle));
+  //     const y = cy + (radius * Math.cos(angle));
+  //     monsters.push(spawnObject(monsterFn(), x, y));
+  //   }
+  //   return monsters;
+  // };
+
+  return monsterWave(circleSpawner(monsterFn, count, center, radius));
+};
+
+export const coinRewardCircle = (count, center, radius) => {
+  return circleSpawner(powerups.coin, count, center, radius)();
+}
+
 export const coinReward = (...locations) => {
   return locations.map(loc => spawnObject(powerups.coin(), ...loc));
 };
@@ -59,6 +98,16 @@ export const coinReward = (...locations) => {
 export const crateWall = (...locations) => {
   return locations.map(loc => spawnObject(misc.crate(), ...loc));
 }
+
+export const crateWallHorizontal = (leftCratePoint, length) => {
+  const [x, y] = leftCratePoint;
+  return Array.from({ length }).map((_, i) => spawnObject(misc.crate(), x + i, y));
+};
+
+export const crateWallVertical = (topCratePoint, length) => {
+  const [x, y] = topCratePoint;
+  return Array.from({ length }).map((_, i) => spawnObject(misc.crate(), x, y + i));
+};
 
 export const nullMap = [
   "@",
