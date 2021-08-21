@@ -67,7 +67,7 @@ Gush is a dungeon brawler game built with [Kaboom.js](https://kaboomjs.com/) on 
   - [ ] 3 full maps (designed for each char)
   - [ ] 2 random treasure rooms between them
   - [ ] 1 boss fight (probably same one)
-  - [ ] golden flask treasure room
+  - [ ] golden flask treasure room for end game
 
 #### Character classes:
 - [x] Swordy Boi - starting char, all other are unlocks. decent sword, decent hp
@@ -90,8 +90,8 @@ Gush is a dungeon brawler game built with [Kaboom.js](https://kaboomjs.com/) on 
 - [x] Controller support
 - [x] Minimap
 - [x] Interim treasure levels
-- [ ] Main menu screen
-  - [ ] Logo intro animation
+- [x] Main menu screen
+  - [x] Logo intro animation
   - [ ] sound/music adjust
   - [ ] control remapping (maybe not worth it)
 - [ ] Win screen & credits

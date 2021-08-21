@@ -89,7 +89,7 @@ k.scene("character-select", (args = {}) => {
     enableInputListeners();
   }, 500);
 
-  music.play("peek-a-boo-2");
+  music.crossFade("peek-a-boo-2", { fadeTime: 1 });
 
   // CHARACTER SELECT
   const charSelectText = k.add([

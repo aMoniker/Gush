@@ -185,6 +185,8 @@ export const loadAssets = () => {
 
 
   // misc
+  promises.push(loadBasicSprite("gush-logo"));
+  promises.push(loadBasicSprite("gush-logo-outlined"));
   promises.push(loadBasicSprite("skull"));
 
 

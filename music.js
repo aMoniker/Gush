@@ -64,13 +64,14 @@ class Music {
     const prevTrackVolume = prevTrack ? prevTrack.volume() : 0;
     if (audioConfig.volume) delete audioConfig.volume;
 
+    let { fadeTime, ...conf } = audioConfig;
     this.play(trackName, {
       loop: true,
       volume: 0,
-      ...audioConfig,
+      ...conf,
     });
     
-    const fadeTime = 3;
+    fadeTime = fadeTime ?? 3;
     let spent = 0;
     const cancelCrossFade = k.action(() => {
       spent += k.dt();

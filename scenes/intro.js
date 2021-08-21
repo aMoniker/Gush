@@ -11,7 +11,7 @@ k.scene("intro", () => {
   enableInputListeners();
 
   k.add([
-    k.text("Click to start", 34),
+    k.text("Click to Start", 34),
     k.origin("center"),
     k.pos(config.gameWidth / 2, config.gameHeight / 2),
     k.layer("ui"),
@@ -22,7 +22,7 @@ k.scene("intro", () => {
     if (gameStarting) return;
     gameStarting = true;
     window.removeEventListener("keydown", startGame);
-    fadeToScene("character-select");
+    fadeToScene("title-screen");
   }
 
   window.addEventListener("keydown", startGame);
