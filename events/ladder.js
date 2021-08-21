@@ -5,7 +5,7 @@ import { loadNextLevel } from "/levels/maps/index.js";
 import input from "/input.js";
 
 let canAnnounce = true;
-let cancelListener = null;
+let cancelDescentListener = null;
 let cancelLeaveListener = null;
 const handleLadderDown = (player, ladder) => {
   if (canAnnounce) {
@@ -15,18 +15,20 @@ const handleLadderDown = (player, ladder) => {
     );
   }
 
-  if (cancelListener) cancelListener();
-  cancelListener = k.action(() => {
+  if (cancelDescentListener) cancelDescentListener();
+  cancelDescentListener = k.action(() => {
     if (input.attack) {
-      cancelListener();
+      cancelDescentListener();
       loadNextLevel();
     }
   });
 
   if (cancelLeaveListener) cancelLeaveListener();
   cancelLeaveListener = player.action(() => {
-    if (player.isOverlapped(ladder)) return;
-    if (cancelLeaveListener) cancelLeaveListener();
+    if (!player.isOverlapped(ladder)) {
+      if (cancelDescentListener) cancelDescentListener();
+      if (cancelLeaveListener) cancelLeaveListener();
+    }
   });
 };
 

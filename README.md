@@ -62,7 +62,7 @@ Gush is a dungeon brawler game built with [Kaboom.js](https://kaboomjs.com/) on 
 - [x] Music for each level (simple music manager w/ crossfade)
 - [x] Select/unlock character screen
 - [x] Game over/reset level screen (YOU DIED)
-- [ ] All characters added with different weapons
+- [x] All characters added with different weapons
 - [ ] Full map rotation for each character
 
 #### Character classes:
@@ -72,7 +72,7 @@ Gush is a dungeon brawler game built with [Kaboom.js](https://kaboomjs.com/) on 
 - [x] Smashy Dino - slow, powerful attack with big hammer, great hp
 - [x] Lizzy Butch - throws meat cleavers, slow & powerful
 - [x] Burny Mage - cast fireballs, heavy dmg, low hp
-- [ ] LAZER WIZARD - laser attack fires through enemies, good dmg, low hp
+- [x] LAZER WIZARD - laser attack fires through enemies, good dmg, low hp
 
 #### Monster AI
 - [x] Basic monster movement AI
@@ -86,6 +86,7 @@ Gush is a dungeon brawler game built with [Kaboom.js](https://kaboomjs.com/) on 
 - [ ] Minimap
 - [ ] Interim treasure levels
 - [ ] Main menu screen
+  - [ ] Logo intro animation
   - [ ] sound/music adjust
   - [ ] control remapping (maybe not worth it)
 - [ ] Win screen & credits
