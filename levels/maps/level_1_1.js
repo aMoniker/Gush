@@ -1,9 +1,8 @@
 import { k } from "/kaboom.js";
 import { announce } from "/utils.js";
 import state from "/state.js";
-import { spawnObject } from "/levels/spatial.js";
 import * as monster from "/objects/monster.js";
-import { monsterWave, coinReward, crateWall } from "/levels/maps/utils.js";
+import { monsterWave, coinReward, crateWall, spawnObject } from "/levels/maps/utils.js";
 import music from "/music.js";
 import input from "/input.js";
 

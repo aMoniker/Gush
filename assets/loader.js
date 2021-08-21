@@ -239,7 +239,10 @@ export const loadAssets = () => {
   }));
   promises.push(loadBasicSprite("fireball", { x: 8, y: 8 }, {
     main: [0, 60],
-  }))
+  }));
+  promises.push(loadBasicSprite("necro-spell", 30, {
+    main: [0, 29],
+  }));
 
 
   // maybe re-do these as filmstrips
@@ -305,6 +308,8 @@ export const loadAssets = () => {
   promises.push(loadBasicSound("alien-weapon-6"));
   promises.push(loadBasicSound("laser-beam-plasma-loop"));
   promises.push(loadBasicSound("heartbeat-slow-2"));
+  promises.push(loadBasicSound("spell-20"));
+  promises.push(loadBasicSound("bone-hit-1"));
 
 
   // music

@@ -1,13 +1,17 @@
 import { k } from "/kaboom.js";
 import hp from "/components/hp.js";
 import gusher from "/components/gusher.js";
+import skullDropper from "/components/skull-dropper.js";
 import lifecycle from "/components/lifecycle.js";
 import monsterAISimple from "/components/monster-ai-simple.js";
+import monsterAINecro from "/components/monster-ai-necro.js";
+import { rng } from "/utils.js"
 
 const buildMonster = (spriteName, area, extraAttrs) => ([
   k.sprite(spriteName, { noArea: true }),
   k.solid(),
   k.area(k.vec2(area[0], area[1]), k.vec2(area[2], area[3])),
+  skullDropper(),
   "monster",
   "killable",
   {
@@ -25,12 +29,28 @@ export const demonSmall = () => buildMonster("demon_small", [-4, -2, 4, 12], [
   hp({ current: 3, max: 3 }),
   gusher({ size: "small" }),
   monsterAISimple({ speed: 66.6 }),
+  // runs at player, occasionally fires single fireballs
 ]);
 
 export const demonBig = () => buildMonster("demon_big", [-9, -8, 9, 16], [
   hp({ current: 10, max: 10 }),
   gusher({ size: "large" }),
   // monsterAIBigDemon(),
+  // big boss, fires bullet hell projectile waves
+]);
+
+export const imp = () => buildMonster("imp", [-4, -2, 4, 7], [
+  hp({ current: 1, max: 1 }),
+  gusher({ size: "small" }),
+  monsterAISimple({ speed: 54 }),
+]);
+
+export const ogre = () => buildMonster("ogre", [-8, -5, 8, 16], [
+  hp({ current: 10, max: 10 }),
+  gusher({ size: "large" }),
+  monsterAISimple({ speed: 33 }),
+  // flashes color then charges at player
+  { dmg: 2 },
 ]);
 
 export const goblin = () => buildMonster("goblin", [-4, 0, 4, 7], [
@@ -39,44 +59,45 @@ export const goblin = () => buildMonster("goblin", [-4, 0, 4, 7], [
   monsterAISimple({ speed: 50 }),
 ]);
 
-export const imp = () => buildMonster("imp", [-4, -2, 4, 7], [
-  hp({ current: 1, max: 1 }),
-  gusher({ size: "small" }),
-  monsterAISimple({ speed: 54 }),
-]);
-export const ogre = () => buildMonster("ogre", [-8, -5, 8, 16], [
-  hp({ current: 10, max: 10 }),
-  gusher({ size: "large" }),
-  monsterAISimple({ speed: 27 }),
-  { dmg: 2 },
-]);
-
 export const muddy = () => buildMonster("muddy", [-5, -6, 5, 8], [
   hp({ current: 4, max: 4 }),
   gusher({ size: "medium" }),
   monsterAISimple({ speed: 7 }),
   { dmg: 2 },
+  // spits mud
 ]);
 export const swampy = () => buildMonster("swampy", [-5, -6, 5, 8], [
   hp({ current: 5, max: 5 }),
   gusher({ size: "medium" }),
   monsterAISimple({ speed: 5 }),
+  // spits slime
   { dmg: 3 },
 ]);
 
 export const wogol = () => buildMonster("wogol", [-4, -2, 4, 9], [
   hp({ current: 3, max: 3 }),
   gusher({ size: "small" }),
-  monsterAISimple({ speed: 38 }),
+  monsterAISimple({ speed: 42 }),
 ]);
 
 export const necromancer = () => buildMonster("necromancer", [-5, -5, 5, 9], [
   hp({ current: 4, max: 4 }),
   gusher({ size: "medium" }),
-  // monsterAINecromancer(), // spawns skellies
+  monsterAINecro(),
 ]);
 export const skeleton = () => buildMonster("skeleton", [-4, -4, 4, 8], [
   hp({ current: 1, max: 1 }),
+  lifecycle({
+    onAdd: (s) => {
+      s.on("death", () => {
+        k.play("bone-hit-1", {
+          volume: 0.77,
+          speed: 0.8,
+          detune: k.map(rng.gen(), 0, 1, -700, -200),
+        });
+      });
+    }
+  }),
   monsterAISimple({ speed: 33 }),
 ]);
 
@@ -108,6 +129,7 @@ export const zombieBig = () => buildMonster("zombie_big", [-8, -7, 8, 16], [
 export const zombieIce = () => buildMonster("zombie_ice", [-4, -5, 4, 7], [
   hp({ current: 5, max: 5 }),
   monsterAISimple({ speed: 1 }),
+  // breaks like ice, splits into two smaller ice zombie shards
   { dmg: 2 },
 ]);
 export const zombieTiny = () => buildMonster("zombie_tiny", [-3, 0, 3, 7], [
@@ -130,6 +152,7 @@ export const mimic = () => ([
   k.solid(),
   k.area(k.vec2(-8, -5), k.vec2(8, 8)),
   hp({ current: 3, max: 3 }),
+  // when player gets a couple tiles away, mimic roars to life, runs at player
   "monster",
   "killable",
 ]);

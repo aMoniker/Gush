@@ -2,7 +2,16 @@ import { k } from "/kaboom.js";
 import { tween } from "/utils.js";
 import * as misc from "/objects/misc.js";
 import * as powerups from "/objects/powerups.js";
-import { spawnObject } from "/levels/spatial.js";
+import { getWorldPos } from "/levels/spatial.js";
+
+// helper for spawning objects at map coordinates
+export const spawnObject = (conf, x, y) => {
+  return k.add([
+    ...conf,
+    k.origin("center"),
+    getWorldPos(x, y),
+  ]);
+}
 
 export const monsterWave = (spawner) => {
   return new Promise((resolve) => {
@@ -53,6 +62,21 @@ export const crateWall = (...locations) => {
 
 export const nullMap = [
   "@",
+];
+
+export const monsterTestMap = [
+  "┌──────────┐",
+  "│··········│",
+  "│········N·│",
+  "│··········│",
+  "│··········│",
+  "│··········│",
+  "│··········│",
+  "···········│",
+  "···········│",
+  "··@········│",
+  "···········│",
+  "···········┘",
 ];
 
 export const testSecretsMap = [

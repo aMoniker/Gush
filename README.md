@@ -19,6 +19,7 @@ Gush is a dungeon brawler game built with [Kaboom.js](https://kaboomjs.com/) on 
 - [Pixel Effects Pack](https://codemanu.itch.io/pixelart-effect-pack)
 - [Kenney.nl Pixel UI Pack](https://kenney.nl/assets/pixel-ui-pack)
 - [Will's Pixel Explosions](https://untiedgames.itch.io/five-free-pixel-explosions)
+- [Free Pixel Effects Pack #12 - Mini Magick Shoots 3](https://xyezawr.itch.io/gif-free-pixel-effects-pack-12-mini-magick-shoots-3)
 
 ## Sound
 - [Shapeforms Audio Free Sounds](https://shapeforms.itch.io/shapeforms-audio-free-sfx)
@@ -29,7 +30,6 @@ Gush is a dungeon brawler game built with [Kaboom.js](https://kaboomjs.com/) on 
 
 ## Maybe will use (not implemented yet)
 - [Magical Animation Effects](https://pimen.itch.io/magical-animation-effects)
-- [Free Pixel Effects Pack #12 - Mini Magick Shoots 3](https://xyezawr.itch.io/gif-free-pixel-effects-pack-12-mini-magick-shoots-3)
 - [GIF Free Pixel Effects Pack #6 - forks of flame](https://xyezawr.itch.io/gif-free-pixel-effects-pack-6-forks-of-flame)
 
 ## Lots more cool assets (not implemented in this game)
@@ -76,12 +76,13 @@ Gush is a dungeon brawler game built with [Kaboom.js](https://kaboomjs.com/) on 
 
 #### Monster AI
 - [x] Basic monster movement AI
-- [ ] Necromancers raise armies of 1 hit skeletons
+- [x] Necromancers raise armies of 1 hit skeletons
 - [ ] Orc Shaman can heal their friends
 - [ ] Mimics lie in wait, then bump you back and chase you
 - [ ] Demons cast fireballs at you
 
 ### Nice to have
+- [ ] Better monster spawn/despawn (save position to objConfigs)
 - [x] Controller support
 - [x] Minimap
 - [x] Interim treasure levels

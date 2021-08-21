@@ -16,7 +16,6 @@ const bloodSpriteConfigs = {
 export default (options) => {
   options = options ?? {};
   const size = options.size ?? "medium";
-  const skull = options.skull ?? true;
 
   const spritesBySize = {
     small: [4, 6, 7],
@@ -38,23 +37,7 @@ export default (options) => {
     add() { // called on component activation
       this.on("death", (killedBy) => {
         this.handleDeathGush(killedBy);
-        if (skull) this.handleSkullDrop(killedBy);
       });
-    },
-    handleSkullDrop(killedBy) {
-      let flipX = killedBy.pos.x - this.pos.x >= 0;
-      const theSkull = k.add([
-        k.sprite("skull", { noArea: true }),
-        k.origin("center"),
-        k.layer("game"),
-        k.color(1,1,1,1),
-        k.pos(this.pos.x, this.pos.y - (this.height / 2) + 5),
-      ]);
-      tween(theSkull, 0.66, { "pos.y": this.pos.y + (this.height / 2) - 5 }, easing.easeInBack)
-        .then(() => k.wait(5))
-        .then(() => tween(theSkull, 3, { "color.a": 0 }))
-        .then(() => theSkull.destroy())
-        ;
     },
     handleDeathGush(killedBy) {
       const bloodSpriteName = `vfx-blood-${k.choose(enabledBloodSprites)}`;

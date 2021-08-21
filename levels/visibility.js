@@ -25,8 +25,6 @@ export const minimapSeen = new GameObjectsMap();
 
 let minimapCanvas = null;
 let minimapQueue = [];
-let cachedPlayer = null;
-
 let minimapPrevPlayer = null;
 const minimapFloorTags = ["floor", "floor_trap", "ladder_down"];
 const minimapWallTags = ["wall_tile"];
@@ -75,11 +73,11 @@ const drawMinimap = () => {
   }
 
   // draw the player on the minimap
-  if (cachedPlayer) {
+  if (state.player) {
     const { x, y } = translateWorldToMapCoords(
-      cachedPlayer.pos.x, cachedPlayer.pos.y
+      state.player.pos.x, state.player.pos.y
     );
-    drawMinimapObject(x, y, cachedPlayer);
+    drawMinimapObject(x, y, state.player);
     minimapPrevPlayer = { x, y };
   }
 };
@@ -91,12 +89,10 @@ export const initializeMinimap = (map, player) => {
   context.clearRect(0, 0, minimapCanvas.width, minimapCanvas.height);
   minimapQueue = [];
   minimapSeen.clear();
-
   state.mapWidth = getMapWidth(map);
   state.mapHeight = map.length;
   minimapCanvas.width = state.mapWidth * 100;
   minimapCanvas.height = state.mapHeight * 100;
-  cachedPlayer = player;
 }
 
 // pre-generate all the configs for objects in the given map,

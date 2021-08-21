@@ -113,15 +113,6 @@ export const coordsInBbox = (x, y, bbox) => {
   return x >= bbox[0] && x <= bbox[2] && y >= bbox[1] && y <= bbox[3];
 }
 
-// helper for spawning objects at map coordinates
-export const spawnObject = (conf, x, y) => {
-  return k.add([
-    ...conf,
-    k.origin("center"),
-    getWorldPos(x, y),
-  ]);
-}
-
 /**
  * Get all map grid cells between the two given map coords.
  * Copied from http://playtechs.blogspot.com/2007/03/raytracing-on-grid.html
