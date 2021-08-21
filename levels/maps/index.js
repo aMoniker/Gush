@@ -1,12 +1,13 @@
 import { k } from "/kaboom.js";
 import level_1_1 from "/levels/maps/level_1_1.js";
 import level_1_2 from "/levels/maps/level_1_2.js";
+import level_treasure_1 from "/levels/maps/level_treasure_1.js";
 import { testSecretsMap, smallTestMap } from "/levels/maps/utils.js";
 import state from "/state.js";
 import { fadeToScene } from "/utils.js";
 
 const mapOrders = {
-  knight: [level_1_1, level_1_2],
+  knight: [level_1_1, level_treasure_1, level_1_2],
   elf_f: [level_1_1],
   elf_m: [level_1_1],
   lizard_f: [level_1_1],
