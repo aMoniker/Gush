@@ -110,6 +110,7 @@ export const loadAssets = () => {
   promises.push(loadBasicSprite("weapon_cleaver"));
   promises.push(loadBasicSprite("weapon_hammer"));
   promises.push(loadBasicSprite("weapon_red_magic_staff"));
+  promises.push(loadBasicSprite("weapon_green_magic_staff"));
 
 
   // monsters
@@ -301,7 +302,8 @@ export const loadAssets = () => {
   promises.push(loadBasicSound("explosion-9"));
   promises.push(loadBasicSound("fire-big-lit-1"));
   promises.push(loadBasicSound("fire-big-lit-2"));
-  
+  promises.push(loadBasicSound("alien-weapon-6"));
+  promises.push(loadBasicSound("laser-beam-plasma-loop"));
 
 
   // music

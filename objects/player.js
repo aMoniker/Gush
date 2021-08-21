@@ -7,6 +7,7 @@ import { createSpear } from "/objects/weapons/spear.js";
 import { createCleaver } from "/objects/weapons/cleaver.js";
 import { createHammer } from "/objects/weapons/hammer.js";
 import { createFireStaff } from "/objects/weapons/fire-staff.js";
+import { createLaserStaff } from "/objects/weapons/laser-staff.js";
 import { fadeToScene, tween, easing, rng } from "/utils.js";
 import { coordsInBbox, getRenderedMapBbox } from "/levels/spatial.js";
 import state from "/state.js";
@@ -64,6 +65,14 @@ const playerType = {
     attackWithStick: true,
     holdToAttack: true,
     hurtSound: "female-grunt-7",
+  },
+  wizard_m: {
+    hp: 2,
+    createWeapon: createLaserStaff,
+    flipDuringAttack: true,
+    attackWithStick: true,
+    holdToAttack: true,
+    hurtSound: "male-grunt-5",
   }
 };
 

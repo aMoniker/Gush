@@ -27,7 +27,6 @@ const handleLadderDown = (player, ladder) => {
   cancelLeaveListener = player.action(() => {
     if (player.isOverlapped(ladder)) return;
     if (cancelLeaveListener) cancelLeaveListener();
-    if (cancelKeypress) cancelKeypress();
   });
 };
 

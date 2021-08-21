@@ -16,7 +16,6 @@ export default (options) => {
     speed: options.speed ?? 47,
     update() { // called every frame
       if (this.hidden || !this.aiEnabled) {
-        console.log('monster not enabled');
         wasDisabled = true;
         return;
       }
@@ -39,7 +38,6 @@ export default (options) => {
         this.dir = player.pos.sub(this.pos).unit(),
         this.move(this.dir.scale(this.speed));
       } else {
-        console.log('monster idling');
         wasDisabled = true;
         if (this.curAnim() !== "idle") this.play("idle");
       }

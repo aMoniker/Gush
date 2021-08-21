@@ -212,16 +212,17 @@ const hideCursorNodes = [
   document.getElementById("game"),
   document.getElementById("minimap"),
 ];
-window.addEventListener("mousemove", function(e) {
+const handleCursorHide = () => {
   if (hideCursorTimeoutId) clearTimeout(hideCursorTimeoutId);
   if (cursorHidden) {
     hideCursorNodes.forEach(n => showCursor(n));
     cursorHidden = false;
   }
   hideCursorTimeoutId = setTimeout(() => {
-    console.log('hiding');
     if (cursorHidden) return;
     hideCursorNodes.forEach(n => hideCursor(n));
     cursorHidden = true;
   }, 2000);
-});
+};
+window.addEventListener("mousemove", handleCursorHide);
+handleCursorHide();
