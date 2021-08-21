@@ -5,6 +5,7 @@ import skullDropper from "/components/skull-dropper.js";
 import lifecycle from "/components/lifecycle.js";
 import monsterAISimple from "/components/monster-ai-simple.js";
 import monsterAINecro from "/components/monster-ai-necro.js";
+import monsterAIShaman from "/components/monster-ai-shaman.js";
 import { rng } from "/utils.js"
 
 const buildMonster = (spriteName, area, extraAttrs) => ([
@@ -105,15 +106,18 @@ export const orcMasked = () => buildMonster("orc_masked", [-4.5, -4, 4.5, 8], [
   hp({ current: 5, max: 5 }),
   gusher({ size: "medium" }),
   monsterAISimple({ speed: 33 }),
+  "monster_orc",
 ]);
 export const orcShaman = () => buildMonster("orc_shaman", [-4.5, -4, 4.5, 8], [
   hp({ current: 3, max: 3 }),
   gusher({ size: "medium" }),
-  // monsterAIOrcShaman(), // heals friends
+  "monster_orc",
+  monsterAIShaman(),
 ]);
 export const orcWarrior = () => buildMonster("orc_warrior", [-4.5, -4, 4.5, 8], [
   hp({ current: 4, max: 4 }),
   gusher({ size: "medium" }),
+  "monster_orc",
   monsterAISimple({ speed: 33 }),
 ]);
 export const randomOrc = () => {

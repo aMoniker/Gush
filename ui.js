@@ -228,4 +228,4 @@ const handleCursorHide = () => {
   }, 2000);
 };
 window.addEventListener("mousemove", handleCursorHide);
-handleCursorHide();
+setTimeout(handleCursorHide, 2000);

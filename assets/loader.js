@@ -243,6 +243,9 @@ export const loadAssets = () => {
   promises.push(loadBasicSprite("necro-spell", 30, {
     main: [0, 29],
   }));
+  promises.push(loadBasicSprite("magic-bubbles", { x: 8, y: 8 }, {
+    main: [0, 60],
+  }));
 
 
   // maybe re-do these as filmstrips

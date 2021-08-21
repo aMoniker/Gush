@@ -155,6 +155,9 @@ const trigger = (ctx) => ([
  * n necromancer
  * s skeleton
  * o random orc
+ * w orc warrior
+ * j orc masked
+ * n orc shaman
  * M muddy
  * S swampy
  * w wogol
