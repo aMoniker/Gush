@@ -63,7 +63,7 @@ export default (options) => {
           k.sprite("vfx-healing", { noArea: true }),
           k.origin("center"),
           k.color(1, 1, 1, 0),
-          k.scale(0.42),
+          k.scale(0.22),
           k.rotate(0),
           k.pos(this.pos),
           k.layer("fx"),

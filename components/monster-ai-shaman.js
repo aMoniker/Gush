@@ -26,6 +26,7 @@ export default (options = {}) => {
         let orcToHeal = null;
         const orcs = k.get("monster_orc");
         for (const orc of orcs) {
+          if (orc.dead) continue;
           if (orc._id === this._id) continue; // can't heal self
           if (orc.pos.dist(this.pos) > maxHealDist) continue;
           if (orc.hp() >= orc.maxHp()) continue;

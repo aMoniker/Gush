@@ -34,7 +34,9 @@ export default (options = {}) => {
           player.hurt(p.damage, p);
           p.destroy();
         });
-        p.overlaps("boundary", (b) => p.destroy());
+        p.overlaps("boundary", (b) => {
+          if (!b.is("crevasse")) p.destroy();
+        });
 
         // after X seconds no matter what, destroy
         k.wait(5, () => p.destroy());
@@ -65,6 +67,7 @@ export default (options = {}) => {
       spellTimer += k.dt();
       if (spellTimer >= timeBetweenSpells
       && this.pos.dist(state.player.pos) >= minSpellDist
+      && this.playerLOS
       ) {
         this.aiEnabled = false;
         k.wait(1, () => this.aiEnabled = true);

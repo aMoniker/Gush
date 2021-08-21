@@ -64,6 +64,10 @@ Gush is a dungeon brawler game built with [Kaboom.js](https://kaboomjs.com/) on 
 - [x] Game over/reset level screen (YOU DIED)
 - [x] All characters added with different weapons
 - [ ] Full map rotation for each character
+  - [ ] 3 full maps (designed for each char)
+  - [ ] 2 random treasure rooms between them
+  - [ ] 1 boss fight (probably same one)
+  - [ ] golden flask treasure room
 
 #### Character classes:
 - [x] Swordy Boi - starting char, all other are unlocks. decent sword, decent hp
@@ -79,7 +83,7 @@ Gush is a dungeon brawler game built with [Kaboom.js](https://kaboomjs.com/) on 
 - [x] Necromancers raise armies of 1 hit skeletons
 - [x] Orc Shaman can heal their friends
 - [x] Mimics lie in wait, then bump you back and chase you
-- [ ] Demons cast fireballs at you
+- [x] Demons cast fireballs at you
 
 ### Nice to have
 - [ ] Better monster spawn/despawn (save position to objConfigs)
@@ -91,6 +95,7 @@ Gush is a dungeon brawler game built with [Kaboom.js](https://kaboomjs.com/) on 
   - [ ] sound/music adjust
   - [ ] control remapping (maybe not worth it)
 - [ ] Win screen & credits
+  - [ ] Show gold collected, flasks collected, monsters killed, damage taken/healed etc.
 - [x] Simple tutorial messages on game start (only show once, turn off in localStorage)
 - [x] Store player's last attack dir so attacking while stationary feels right
 - [ ] More sound effects
@@ -100,6 +105,4 @@ Gush is a dungeon brawler game built with [Kaboom.js](https://kaboomjs.com/) on 
   - [ ] arrows bounce off walls
   - [x] heartbeat when health is low
 - [x] Some enemies drop a skull as a visual effect (non-interactive).
-- [ ] Column tiles
-- [ ] Yellow flask gives charges of resurrect, allowing player to come back to life
 - [ ] Pause menu with options

@@ -101,14 +101,14 @@ map.triggers = {
   },
   1: () => {
     if (showTutorial) {
-      announce(input.gamepadConnected ? "MAIN BUTTON to attack" : "SPACE to attack");
+      announce(input.gamepadConnected ? "BOTTOM BUTTON to attack" : "SPACE to attack");
     }
   },
   2: () => {
     if (showTutorial) {
       announce("GREEN potions charge BURP meter");
       announce(
-        input.gamepadConnected ? "SECONDARY BUTTON to BURP" : "Press B to BURP"
+        input.gamepadConnected ? "RIGHT BUTTON for DEADLY BURP" : "Press B for DEADLY BURP"
       );
     }
   },
