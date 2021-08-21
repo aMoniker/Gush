@@ -7,6 +7,7 @@ import monsterAISimple from "/components/monster-ai-simple.js";
 import monsterAINecro from "/components/monster-ai-necro.js";
 import monsterAIShaman from "/components/monster-ai-shaman.js";
 import monsterAIMimic from "/components/monster-ai-mimic.js";
+import monsterAIDemonSmall from "/components/monster-ai-demon-small.js";
 import { rng } from "/utils.js"
 
 const buildMonster = (spriteName, area, extraAttrs) => ([
@@ -27,11 +28,10 @@ const buildMonster = (spriteName, area, extraAttrs) => ([
   ...(extraAttrs ?? []),
 ]);
 
-export const demonSmall = () => buildMonster("demon_small", [-4, -2, 4, 12], [
+export const demonSmall = () => buildMonster("demon_small", [-4, -4, 4, 10], [
   hp({ current: 3, max: 3 }),
   gusher({ size: "small" }),
-  monsterAISimple({ speed: 66.6 }),
-  // runs at player, occasionally fires single fireballs
+  monsterAIDemonSmall({ speed: 66.6 }),
 ]);
 
 export const demonBig = () => buildMonster("demon_big", [-9, -8, 9, 16], [

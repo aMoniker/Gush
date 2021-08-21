@@ -78,7 +78,7 @@ Gush is a dungeon brawler game built with [Kaboom.js](https://kaboomjs.com/) on 
 - [x] Basic monster movement AI
 - [x] Necromancers raise armies of 1 hit skeletons
 - [x] Orc Shaman can heal their friends
-- [ ] Mimics lie in wait, then bump you back and chase you
+- [x] Mimics lie in wait, then bump you back and chase you
 - [ ] Demons cast fireballs at you
 
 ### Nice to have

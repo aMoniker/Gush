@@ -246,6 +246,9 @@ export const loadAssets = () => {
   promises.push(loadBasicSprite("magic-bubbles", { x: 8, y: 8 }, {
     main: [0, 60],
   }));
+  promises.push(loadBasicSprite("vfx-vortex", { x: 8, y: 8 }, {
+    main: [0, 60],
+  }));
 
 
   // maybe re-do these as filmstrips
@@ -317,6 +320,7 @@ export const loadAssets = () => {
   promises.push(loadBasicSound("monster-14"));
   promises.push(loadBasicSound("monster-16"));
   promises.push(loadBasicSound("wood-4"));
+  promises.push(loadBasicSound("fire-1"));
 
 
   // music
