@@ -84,7 +84,7 @@ Gush is a dungeon brawler game built with [Kaboom.js](https://kaboomjs.com/) on 
 ### Nice to have
 - [x] Controller support
 - [x] Minimap
-- [ ] Interim treasure levels
+- [x] Interim treasure levels
 - [ ] Main menu screen
   - [ ] Logo intro animation
   - [ ] sound/music adjust

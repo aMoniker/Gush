@@ -4,7 +4,7 @@ import { config } from "/config.js";
 import { boundaryMap, translateWorldToMapCoords } from "/levels/spatial.js";
 
 const handleMonsterCollision = (player, monster) => {
-  if (monster.dead) return;
+  if (monster.dead || monster.spawning) return;
   player.hurt(monster.dmg, monster);
 };
 

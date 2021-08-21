@@ -30,7 +30,7 @@ const types = [
     name: "Pokey Elf",
     description: "Spear Thrust!",
     hearts: 2,
-    difficulty: "yolo",
+    difficulty: "yolo lol",
     difficultyColor: [1, 0.2, 0.2],
     cost: 300,
   },
@@ -39,7 +39,7 @@ const types = [
     name: "Lizzy Butch",
     description: "Meat Cleavers!",
     hearts: 3,
-    difficulty: "sorta tricky",
+    difficulty: "so cute",
     difficultyColor: [0.87, 0.5, 0.83],
     cost: 223,
   },
@@ -57,16 +57,16 @@ const types = [
     name: "Burny Mage",
     description: "No Refunds.",
     hearts: 2,
-    difficulty: "Medium Rare",
+    difficulty: "medium rare",
     difficultyColor: [0.54, 0.285, 0.18],
     cost: 333,
   },
   {
     key: "wizard_m",
     name: "LAZER WIZARD",
-    description: "What?!",
+    description: "Wait, what?!",
     hearts: 1,
-    difficulty: "Is this a joke?",
+    difficulty: "is this a joke?",
     difficultyColor: [0.746, 0.25, 0.746],
     cost: 1337,
   },
@@ -230,7 +230,7 @@ k.scene("character-select", (args = {}) => {
     descText.text = curType.description;
     descText.pos.y = (dy += 53);
     descText.pos.x = hw;
-    descText.color.a = 0.9;
+    descText.color.a = 0.8;
 
     difficultyText.text = curType.difficulty;
     difficultyText.pos.y = (dy += 47);

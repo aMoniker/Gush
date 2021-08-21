@@ -16,6 +16,7 @@ const buildMonster = (spriteName, area, extraAttrs) => ([
     isDestroying: false,
     playerLOS: false,
     aiEnabled: true,
+    spawning: false,
   },
   ...(extraAttrs ?? []),
 ]);

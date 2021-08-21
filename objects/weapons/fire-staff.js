@@ -82,13 +82,13 @@ export const createFireStaff = (player) => {
 
         // watch for monster collisions
         cancelMonsterCollides = a.collides("monster", (m) => {
-          hitSomething("monster");
+          if (!m.dead) hitSomething("monster");
         });
         // check if the fireball is overlapping a monster immediately
         let immediateHit = false;
         for (const m of k.get("monster")) {
           if (!a.isOverlapped(m)) continue;
-          hitSomething("monster");
+          if (!m.dead) hitSomething("monster");
         }
         // watch for wall collisions
         cancelBoundaryCollides = a.collides("boundary", (b) => {

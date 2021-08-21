@@ -70,7 +70,7 @@ export const createLaserStaff = (player) => {
       },
     }),
     {
-      damage: 0.25,
+      damage: 0.3334,
       attacking: false,
       attack: () => {
         if (weapon.attacking) {
