@@ -6,8 +6,7 @@ import state from "/state.js";
 import { fadeToScene } from "/utils.js";
 
 const mapOrders = {
-  // knight: [level_1_1, level_1_2],
-  knight: [level_1_2],
+  knight: [level_1_1, level_1_2],
   elf_f: [level_1_1],
   elf_m: [level_1_1],
   lizard_f: [level_1_1],

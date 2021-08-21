@@ -4,7 +4,8 @@ import lifecycle from "/components/lifecycle.js";
 
 const wallAttributes = (frame, attrs) => ([
   k.sprite("walls", { frame, noArea: true, ...(attrs ?? {}) }),
-  "static"
+  "static",
+  "wall_tile",
 ]);
 
 // generate an invisible wall for collision detection

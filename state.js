@@ -26,6 +26,8 @@ export default {
   level: 0, // current level index
   player: null, // reference to player object for quick lookup
   playerType: "knight",
+  mapWidth: 70, // used to recalculate minimap on window resize
+  mapHeight: 70,
   get: (key) => {
     const data = k.getData(key) ?? defaultSavedState[key] ?? undefined;
     // localStorage can only store strings

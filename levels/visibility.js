@@ -12,6 +12,7 @@ import {
   translateWorldToMapCoords,
 } from "/levels/spatial.js";
 import { getObjectConfigsForSymbol } from "/levels/legend.js";
+import state from "/state.js";
 
 // store references to all object configs on the map
 export const objectConfigs = new GameObjectsMap();
@@ -22,49 +23,81 @@ export const extantObjects = new GameObjectsMap();
 // store which floor tiles have been seen to generate minimap
 export const minimapSeen = new GameObjectsMap();
 
-const addToMinimap = (x, y, obj) => {
-  if (obj.is("floor")) minimapSeen.set(x, y, true);
-};
-
-let gameCanvas = null;
 let minimapCanvas = null;
+let minimapQueue = [];
+let cachedPlayer = null;
 
-const mmPctSize = 0.25; // mm should take up this much of screen width
-const drawMinimap = (mapW, mapH, player) => {
-  const mmTileWidth = minimapCanvas.width / mapW;
-  const mmTileHeight = minimapCanvas.height / mapH;
-  const mmContext = minimapCanvas.getContext("2d");
+let minimapPrevPlayer = null;
+const minimapFloorTags = ["floor", "floor_trap", "ladder_down"];
+const minimapWallTags = ["wall_tile"];
 
-  // draw floor tiles on minimap
-  mmContext.fillStyle = "silver";
-  for (const [key, val] of minimapSeen.map) {
-    let { x, y } = minimapSeen.coords(key);
-    const cx = x * mmTileWidth;
-    const cy = y * mmTileHeight;
-    mmContext.fillRect(cx, cy, mmTileWidth, mmTileHeight);
+// draw a single object on the minimap, or pass null to clear a square
+const drawMinimapObject = (x, y, obj) => {
+  const tileWidth = minimapCanvas.width / state.mapWidth;
+  const tileHeight = minimapCanvas.height / state.mapHeight;
+  const context = minimapCanvas.getContext("2d");
+  const tx = x * tileWidth;
+  const ty = y * tileHeight;
+
+  let color = null;
+  if (obj === null) {
+    context.clearRect(tx, ty, tileWidth, tileHeight);
+  } else if (obj.is("player")) {
+    color = "#00FF7F";
+  } else if (minimapWallTags.some(t => obj.is(t))) {
+    color = "#DADADA";
+  } else if (minimapFloorTags.some(t => obj.is(t))) {
+    color = "#696969";
   }
 
-  // show player on minimap
-  const { x, y } = translateWorldToMapCoords(player.pos.x, player.pos.y);
-  const screenX = x * mmTileWidth;
-  const screenY = y * mmTileHeight;
-  mmContext.fillStyle = "green";
-  mmContext.fillRect(screenX, screenY, mmTileWidth, mmTileHeight);
+  if (color) {
+    context.fillStyle = color;
+    context.fillRect(tx, ty, tileWidth, tileHeight);
+  }
 };
 
-export const startMinimapDrawLoop = (map, player) => {
-  if (!gameCanvas) {
-    gameCanvas = document.getElementById("game");
+// draw all minimap tiles waiting in minimapQueue, and update the player location
+const drawMinimap = () => {
+  // draw new tiles on minimap
+  for (const { x, y, obj } of minimapQueue) {
+    drawMinimapObject(x, y, obj);
   }
+  minimapQueue = [];
+
+  // fill in the player's previous position on the minimap
+  if (minimapPrevPlayer) {
+    const objs = extantObjects.get(minimapPrevPlayer.x, minimapPrevPlayer.y);
+    // if there were no objects, pass null so the tile is cleared
+    // this is useful for when the player is going into a secret area
+    for (const obj of (objs ?? [null])) {
+      drawMinimapObject(minimapPrevPlayer.x, minimapPrevPlayer.y, obj);
+    }
+  }
+
+  // draw the player on the minimap
+  if (cachedPlayer) {
+    const { x, y } = translateWorldToMapCoords(
+      cachedPlayer.pos.x, cachedPlayer.pos.y
+    );
+    drawMinimapObject(x, y, cachedPlayer);
+    minimapPrevPlayer = { x, y };
+  }
+};
+
+// clear the minimap and reset params for a new level
+export const initializeMinimap = (map, player) => {
   if (!minimapCanvas) minimapCanvas = document.getElementById("minimap");
-  const mapW = getMapWidth(map);
-  const mapH = map.length;
-  return k.loop(0.1, () => {
-    drawMinimap(mapW, mapW, player);
-  });
-};
+  const context = minimapCanvas.getContext('2d');
+  context.clearRect(0, 0, minimapCanvas.width, minimapCanvas.height);
+  minimapQueue = [];
+  minimapSeen.clear();
 
-
+  state.mapWidth = getMapWidth(map);
+  state.mapHeight = map.length;
+  minimapCanvas.width = state.mapWidth * 100;
+  minimapCanvas.height = state.mapHeight * 100;
+  cachedPlayer = player;
+}
 
 // pre-generate all the configs for objects in the given map,
 // so they can be rendered/destroyed on the fly by drawVisibleObjects
@@ -114,7 +147,8 @@ export const drawVisibleObjects = (pwx, pwy) => {
 
         const obj = k.add(objConfig);
 
-        // if (!minimapSeen.has(x, y)) addToMinimap(x, y, obj);
+        // if this is a newly seen tile, add to the queue for minimap rendering
+        if (!minimapSeen.has(x, y)) minimapQueue.push({ x, y, obj });
 
         // cache the object's id on the objConfig & the object,
         // so it can be matched against when removeed, in case the 
@@ -127,6 +161,9 @@ export const drawVisibleObjects = (pwx, pwy) => {
         // add the object to the map of existing objects
         extantObjects.add(x, y, obj);
       }
+
+      // mark this map coordinate as having been seen
+      minimapSeen.set(x, y, true);
     }
   }
 
@@ -211,6 +248,9 @@ export const drawVisibleObjects = (pwx, pwy) => {
       }
     }
   }
+
+  // draw any newly seen tiles to the minimap
+  drawMinimap();
 
   // store the current bbox to be checked against next time
   prevMapBbox = nextMapBbox;

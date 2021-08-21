@@ -27,5 +27,6 @@ export const config = {
   viewableHeight,
   renderedWidth,
   renderedHeight,
+  minimapSize: 0.15, // minimap size as percent of game width
   mapOrigin: { x: 0, y: 0 },
 };

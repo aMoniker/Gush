@@ -1,5 +1,6 @@
 import { k } from "/kaboom.js";
 import { config } from "/config.js";
+import state from "/state.js";
 
 // heart objects for displaying the player's health
 let heartScale = 2;
@@ -151,44 +152,46 @@ export const uiUpdateCoins = (numCoins) => {
 
 // on window resize, scale the canvas while maintaining the aspect ratio.
 let windowResizeTimeout = 0;
-const handleResize = (canvas) => {
+const handleResize = (container, gameCanvas, minimapCanvas) => {
   const { innerWidth,innerHeight } = window;
   const windowAspectRatio = innerWidth / innerHeight;
   const { gameAspectRatio } = config;
   if (windowAspectRatio > gameAspectRatio) {
     // if it got wider, then the height is the limiter
-    canvas.style.width = `${gameAspectRatio * innerHeight}px`;
-    canvas.style.height = `${innerHeight}px`;
+    container.style.width = `${gameAspectRatio * innerHeight}px`;
+    container.style.height = `${innerHeight}px`;
   } else {
     // if it got taller, then the width is the limiter
-    canvas.style.width = `${innerWidth}px`;
-    canvas.style.height = `${innerWidth / gameAspectRatio}px`;
+    container.style.width = `${innerWidth}px`;
+    container.style.height = `${innerWidth / gameAspectRatio}px`;
   }
+
+  // update the minimap height/width
+  const rect = gameCanvas.getBoundingClientRect();
+  const minimapWidth = rect.width * config.minimapSize;
+  const mapAspectRatio = state.mapWidth / state.mapHeight;
+  minimapCanvas.style.width = `${minimapWidth}px`;
+  minimapCanvas.style.height = `${minimapWidth / mapAspectRatio}px`;
+
   // finally, update the UI so it renders in the proper spot
   uiUpdatePositions();
 }
 
 export const watchWindowResizing = () => {
-  const c = document.getElementsByTagName("canvas");
-  if (c && c.length && c[0]) {
-    const canvas = c[0];
+  const container = document.getElementById("container");
+  const gameCanvas = document.getElementById("game")
+  const minimapCanvas = document.getElementById("minimap");
 
-    // keep the canvas centered in its container
-    canvas.parentNode.style.display = "flex";
-    canvas.parentNode.style.alignItems = "center";
-    canvas.parentNode.style.justifyContent = "center";
+  // debounced resize
+  window.addEventListener("resize", () => {
+    window.clearTimeout(windowResizeTimeout);
+    windowResizeTimeout = window.setTimeout(() => {
+      handleResize(container, gameCanvas, minimapCanvas);
+    }, 200);
+  });
 
-    // debounced resize
-    window.addEventListener("resize", () => {
-      window.clearTimeout(windowResizeTimeout);
-      windowResizeTimeout = window.setTimeout(() => {
-        handleResize(canvas);
-      }, 200);
-    });
-
-    // initial resize
-    handleResize(canvas);
-  }
+  // initial resize
+  handleResize(container, gameCanvas, minimapCanvas);
 };
 
 // allow going fullscreen with F key

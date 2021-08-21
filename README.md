@@ -83,7 +83,7 @@ Gush is a dungeon brawler game built with [Kaboom.js](https://kaboomjs.com/) on 
 
 ### Nice to have
 - [x] Controller support
-- [ ] Minimap
+- [x] Minimap
 - [ ] Interim treasure levels
 - [ ] Main menu screen
   - [ ] Logo intro animation
@@ -97,7 +97,7 @@ Gush is a dungeon brawler game built with [Kaboom.js](https://kaboomjs.com/) on 
   - [x] more sword swings
   - [ ] monster noises on attack engaged
   - [ ] arrows bounce off walls
-  - [ ] heartbeat when health is low
+  - [x] heartbeat when health is low
 - [x] Some enemies drop a skull as a visual effect (non-interactive).
 - [ ] Column tiles
 - [ ] Yellow flask gives charges of resurrect, allowing player to come back to life

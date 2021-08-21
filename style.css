@@ -8,17 +8,28 @@ body {
   overflow: hidden;
   background-color: black;
 }
+body {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+#container {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
 canvas#game {
   display: block;
   position: relative;
   z-index: 100;
+  width: 100%;
+  height: 100%;
 }
 canvas#minimap {
   position: absolute;
-  top: 100px;
-  left: 100px;
-  width: 250px;
-  height: 250px;
+  top: 18px;
+  right: 18px;
   z-index: 101;
+  opacity: 0.5;
   pointer-events: none;
 }

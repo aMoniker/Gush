@@ -1,7 +1,7 @@
 import { k } from "/kaboom.js";
 import { generateMap } from "/levels/maps/index.js";
 import { getWorldPos, regenerateBoundaryMap } from "/levels/spatial.js";
-import { extantObjects, drawVisibleObjects, resetDrawLoop, objectConfigs, regenerateObjectConfigs, startMinimapDrawLoop, startMonsterLOSLoop } from "/levels/visibility.js";
+import { extantObjects, drawVisibleObjects, resetDrawLoop, objectConfigs, regenerateObjectConfigs, initializeMinimap, startMonsterLOSLoop } from "/levels/visibility.js";
 import { createPlayer } from "/objects/player.js";
 import { getMapWidth } from "/levels/utils.js";
 import state from "/state.js";
@@ -70,13 +70,18 @@ export const generateLevel = () => {
   // there were some intermittent freezing issues when calling this
   // synchronously that I wasn't able to track down, so use setTimeout.
   setTimeout(() => {
+    // reinitialize the minimap
+    initializeMinimap(map, player);
+
+    // draw only the visible objects around the player for performance
     cancelDrawLoop = k.action(() => {
-      // draw only the visible objects around the player for performance
       drawVisibleObjects(player.pos.x, player.pos.y);
     });
 
-    // cancelMinimapLoop = startMinimapDrawLoop(map, player);
+    // calculate LOS for monsters
     cancelMonsterLOSLoop = startMonsterLOSLoop(player);
+
+    // listen for any triggers on the map
     enableTriggers(map);
   }, 0);
 

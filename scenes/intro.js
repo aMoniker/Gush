@@ -11,7 +11,7 @@ k.scene("intro", () => {
   enableInputListeners();
 
   k.add([
-    k.text("Press any key to Play", 34),
+    k.text("Click to start", 34),
     k.origin("center"),
     k.pos(config.gameWidth / 2, config.gameHeight / 2),
     k.layer("ui"),
@@ -27,12 +27,7 @@ k.scene("intro", () => {
 
   window.addEventListener("keydown", startGame);
   k.action(() => {
-    if (
-      input.x || input.y || input.x2 || input.y2 ||
-      input.attack || input.burp
-    ) {
-      startGame();
-    }
+    if (input.attack || input.burp) startGame();
   });
   k.mouseClick(startGame);
 });
