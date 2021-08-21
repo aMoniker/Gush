@@ -105,6 +105,7 @@ export const createPlayer = (typeName, attrs) => {
     hp({ 
       max: type.hp,
       current: type.hp,
+      heartbeat: true,
     }),
     burp({ current: 0 }),
     ...(attrs ?? []),

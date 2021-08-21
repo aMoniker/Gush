@@ -304,6 +304,7 @@ export const loadAssets = () => {
   promises.push(loadBasicSound("fire-big-lit-2"));
   promises.push(loadBasicSound("alien-weapon-6"));
   promises.push(loadBasicSound("laser-beam-plasma-loop"));
+  promises.push(loadBasicSound("heartbeat-slow-2"));
 
 
   // music

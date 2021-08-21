@@ -8,6 +8,23 @@ export default (options) => {
   const maxShields = 3;
   let currentShields = Math.max(0, Math.min(maxShields, options.currentShield ?? 0));
 
+  // play a heartbeat sound when player health is low
+  let heartbeatSound = null;
+  const manageHeartbeat = (obj) => {
+    const lowHealth = currentHp + currentShields <= 1;
+    if (!lowHealth || obj.dead) {
+      if (heartbeatSound) {
+        heartbeatSound.stop();
+        heartbeatSound = null;
+      }
+    } else if (!heartbeatSound) {
+      heartbeatSound = k.play("heartbeat-slow-2", {
+        loop: true,
+        volume: 0.47,
+      });
+    }
+  };
+
   return {
     id: "hp",
     require: ["killable", "pos"],
@@ -32,6 +49,8 @@ export default (options) => {
       } else {
         this.trigger("hurt", amt, hurtBy);
       }
+
+      if (options.heartbeat) manageHeartbeat(this);
     },
 
     heal(x, healedBy) {
@@ -71,11 +90,13 @@ export default (options) => {
       }
 
       this.trigger("heal", amt, healedBy);
+      if (options.heartbeat) manageHeartbeat(this);
     },
 
     addShields(shieldAmt) {
       currentShields = Math.max(0, Math.min(maxShields, currentShields + shieldAmt));
       this.trigger("shielded", shieldAmt);
+      if (options.heartbeat) manageHeartbeat(this);
     },
 
     hp() { return currentHp; },
