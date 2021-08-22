@@ -3,7 +3,7 @@ import { tween, easing } from "/utils.js";
 
 export const createSpear = (player) => {
   const hitBox = k.add([
-    k.rect(20, 10),
+    k.rect(20, 20),
     k.origin("center"),
     k.pos(0, 0),
     k.rotate(0),

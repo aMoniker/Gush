@@ -75,17 +75,15 @@ export const tween = (obj, time, changes, ease, cb) => {
   });
 };
 
+// assumes the original color is 1,1,1,1
 export const flashColor = (obj, rgba, time) => {
   if (!obj.color) return;
-  const {r,g,b,a} = obj.color;
   obj.color.r = rgba[0];
   obj.color.g = rgba[1];
   obj.color.b = rgba[2];
   obj.color.a = rgba[3];
   return k.wait(time, () => {
-    // reset to the old color, but force alpha to 1
-    // since this can mess up with freshly spawned mobs
-    obj.color = { ...obj.color, ...{r,g,b, a: 1} };
+    obj.color = { ...obj.color, r:1, g:1, b:1, a:1 };
   });
 };
 
