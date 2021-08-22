@@ -5,7 +5,7 @@ import { config } from "/config.js";
 
 export const createCleaver = (player) => {
 
-  const cleaverThrowTime = 1;
+  const cleaverThrowTime = 0.77;
   const cleaverThrowDist = config.tileWidth * 7.77;
   const minTimeBetweenThrows = 0.25; // in case it's picked up mid throw
 

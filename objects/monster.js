@@ -136,7 +136,7 @@ export const zombiePlain = () => buildMonster("zombie", [-4, -5, 4, 7], [
 export const zombieIce = () => buildMonster("zombie_ice", [-4, -5, 4, 7], [
   hp({ current: 5, max: 5 }),
   monsterAISimple({ speed: 1 }),
-  // breaks like ice, splits into two smaller ice zombie shards
+  // TODO - breaks like ice, splits into two smaller ice zombie shards
   { dmg: 2 },
 ]);
 export const zombieBig = () => buildMonster("zombie_big", [-8, -7, 8, 16], [
@@ -146,7 +146,8 @@ export const zombieBig = () => buildMonster("zombie_big", [-8, -7, 8, 16], [
   { dmg: 3 },
 ]);
 export const randomZombie = () => {
-  return k.choose([zombieIce, zombieTiny, zombiePlain])();
+  // return k.choose([zombieIce, zombieTiny, zombiePlain])();
+  return k.choose([zombieTiny, zombiePlain, zombieBig])();
 }
 
 export const mimic = () => ([

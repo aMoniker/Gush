@@ -63,8 +63,8 @@ Gush is a dungeon brawler game built with [Kaboom.js](https://kaboomjs.com/) on 
 - [x] Game over/reset level screen (YOU DIED)
 - [x] All characters added with different weapons
 - [ ] Full map rotation for each character
-  - [ ] 3 full maps (designed for each char)
-    - [ ] sniper gallery with crevasses for shootie pie
+  - [ ] 2 full maps (designed for each char)
+    - [x] sniper gallery with crevasses for shootie pie
     - [ ] narrow hallways and big open areas to dash around for Pokey
     - [ ] mix of the above two for lizzy's cleaverang
     - [ ] huge waves of monsters to smash with crushy hammer
@@ -91,7 +91,7 @@ Gush is a dungeon brawler game built with [Kaboom.js](https://kaboomjs.com/) on 
 - [x] Demons cast fireballs at you
 
 ### Nice to have
-- [ ] Meat Cleaverang for Lizzy
+- [x] Meat Cleaverang for Lizzy
 - [x] Force 1.5 aspect ratio no matter screens size
 - [ ] Better monster spawn/despawn (save position to objConfigs, improve framerate maybe)
 - [x] Controller support

@@ -129,6 +129,7 @@ export default (options = {}) => {
     destroy() {
       skellies.forEach(s => {
         if (!s || s.dead) return;
+        s.dead = true;
         s.trigger("death", this);
       });
       skellies = [];
