@@ -71,7 +71,7 @@ Gush is a dungeon brawler game built with [Kaboom.js](https://kaboomjs.com/) on 
     - [ ] big concentrated waves to explode with fireballs (floating platforms with lots of projectile enemies?)
     - [ ] lines of enemies for lazer wizard, narrow passages, maybe chase areas that close behind and let you run ahead of chasing enemies
   - [x] 2 random treasure rooms between them (3-5 small rooms like this are good, some with a mimic, some with flasks, interesting layouts)
-  - [ ] 1 boss fight (probably same one for every char - big demon, waves of enemies, bullet hell, need 3 big burps to win, announce to tell player what to do)
+  - [x] 1 boss fight (probably same one for every char - big demon, waves of enemies, bullet hell, need 3 big burps to win, announce to tell player what to do)
   - [ ] golden flask treasure room for end game (with some announce flavor text, congrats etc)
 
 #### Character classes:

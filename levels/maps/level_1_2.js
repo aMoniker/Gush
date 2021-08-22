@@ -85,7 +85,7 @@ const map = [
 const bgMusic = "cave-3";
 
 map.onStart = () => {
-  music.play(bgMusic);
+  music.crossFade(bgMusic);
 }
 
 map.triggers = {

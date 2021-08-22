@@ -120,9 +120,10 @@ const addFade = () => {
   ]);
 }
 
-export const fadeToScene = (sceneName) => {
+export const fadeToScene = (sceneName, options = {}) => {
+  const time = options.time ?? 1;
   const fade = addFade();
-  tween(fade, 1, { "color.a": 1 }, easing.easeOutQuart)
+  tween(fade, time, { "color.a": 1 }, easing.easeOutQuart)
     .then(() => { k.go(sceneName) });
 };
 

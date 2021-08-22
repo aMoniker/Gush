@@ -198,7 +198,7 @@ const enableStartGame = () => {
 };
 
 k.scene("title-screen", () => {
-  music.play("neon-synth");
+  music.crossFade("neon-synth");
   k.wait(logoTimer, animateLogos);
   animateCharacters();
   setTimeout(() => {

@@ -1,17 +1,28 @@
 import { k } from "/kaboom.js";
-import { announce } from "/utils.js";
+import { announce, easing, fadeToScene } from "/utils.js";
 import state from "/state.js";
 import * as powerups from "/objects/powerups.js";
 import * as monster from "/objects/monster.js";
 import { monsterWave, monsterWaveCircle, monsterWaveLineVertical, monsterWaveLineHorizontal, coinReward, coinRewardCircle, crateWall, crateWallHorizontal, crateWallVertical, spawnObject } from "/levels/maps/utils.js";
 import music from "/music.js";
 import input, { vibrateGamepad } from "/input.js";
+import { config } from "/config.js";
 
 const map = [
-  "        ┌─┐        ",
-  "        │>│        ",
+  "   ┌{%){)%){)%{┐   ",
+  "   │···········│   ",
+  "   └┐·········┌┘   ",
+  "    └┐·······┌┘    ",
+  "     └┐·····┌┘     ",
+  "      └┐···┌┘      ",
+  "       └┐·┌┘       ",
   "        │·│        ",
   "        │·│        ",
+  "        │·│        ",
+  "        │·│        ",
+  "        │·│        ",
+  "        │2│        ",
+  "        │@│        ",
   "┌─&──&──┘·└──&──&─┐",
   "│·················│",
   "│·················│",
@@ -44,7 +55,7 @@ const map = [
   "       │···│       ",
   "┌─(─(─(┘···└(─(─(─┐",
   "│·················│",
-  "│···@·········E···│",
+  "│·············E···│",
   "│·················│",
   "└──(─(─(─)─(─(─(──┘",
 ];
@@ -54,7 +65,7 @@ export default map;
 const bgMusic = "party-on-1";
 
 map.onStart = () => {
-  music.play(bgMusic);
+  music.crossFade(bgMusic);
 };
 
 const center = [9, 12];
@@ -129,8 +140,7 @@ map.triggers = {
     });
 
     boss.on("death", () => {
-      music.stop();
-      music.play("peek-a-boo-2");
+      music.crossFade("peek-a-boo-2");
       k.play("spell-4");
       announce("UNBELIEVABLE TRIUMPH");
       vibrateGamepad(1000, 0, 1);
@@ -169,4 +179,47 @@ map.triggers = {
       }, 3333);
     });
   },
+  2: async () => {
+    announce("BEHOLD the GOLDEN FLASK of YENDOR");
+    const winFlask = spawnObject(powerups.flask("big", "yellow"), 9, 2);
+    winFlask.on("picked-up", () => {
+      state.player.forcedMoving = true;
+      state.player.dir = k.vec2(0, 0);
+      let hit = true;
+      k.loop(0.77, () => {
+        state.player.hit = hit;
+        hit = !hit;
+      });
+      announce("The GOLDEN FLASK is YOURS")
+        .then(() => announce("A WINNER is YOU!"))
+        .then(() => announce("Thanks for playing!"))
+        .then(() => announce("Remember to UNLOCK more characters!"))
+        .then(() => {
+          state.forcedCam = true;
+          const startScale = k.width() / config.viewableWidth;
+          const endScale = startScale * 3.33;
+          const startRot = 0;
+          const endRot = Math.PI * 4;
+          let time = 0;
+          const effectTime = 3.33;
+          setTimeout(() => {
+            fadeToScene("title-screen", { time: effectTime });
+          }, (effectTime / 2) * 1000);
+          const cancelEffect = k.action(() => {
+            time += k.dt();
+            const pct = Math.min(1, time / effectTime);
+            const scaleDiff = endScale - startScale;
+            const rotDiff = endRot - startRot;
+            k.camScale(
+              startScale + (scaleDiff * easing.easeInQuart(pct))
+            );
+            k.camRot(startRot + (rotDiff * easing.easeInQuart(pct)));
+            if (pct >= 1) {
+              cancelEffect();
+              state.forcedCam = false;
+            }
+          });
+        })
+    });
+  }
 }

@@ -244,9 +244,11 @@ export const createPlayer = (typeName, attrs) => {
   };
 
   const handleCamera = () => {
-    const scale = k.width() / config.viewableWidth;
-    k.camScale(scale);
-    k.camPos(player.pos);
+    if (!state.forcedCam) {
+      const scale = k.width() / config.viewableWidth;
+      k.camScale(scale);
+      k.camPos(player.pos);
+    }
     // readd the player each frame, so it's always on top
     k.readd(player);
     k.readd(weapon);

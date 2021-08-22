@@ -18,8 +18,7 @@ const processGreenFlaskEffects = (player, flask) => {
 };
 
 const processYellowFlaskEffects = (player, flask) => {
-  // temp attack dmg boost (maybe scale player size?)
-  // dont want to use color for everything or it will interfere with each other...
+  // yellow flask is currently used as end game prize
 };
 
 /**
@@ -32,6 +31,8 @@ const processYellowFlaskEffects = (player, flask) => {
 export const handleFlaskPickup = (player, flask) => {
   if (flask.pickedUp) return;
   flask.pickedUp = true;
+
+  flask.trigger("picked-up");
 
   if (flask.is("flask_color_red")) {
     processRedFlaskEffects(player, flask);

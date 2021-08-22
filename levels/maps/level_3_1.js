@@ -89,7 +89,7 @@ const map = [
 const bgMusic = "stark-nuances";
 
 map.onStart = () => {
-  music.play(bgMusic);
+  music.crossFade(bgMusic);
 }
 
 map.triggers = {

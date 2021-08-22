@@ -90,7 +90,7 @@ map.onStart = () => {
   if (showTutorial) {
     announce(input.gamepadConnected ? "ANALOG STICK to move" : "WASD to move");
   }
-  music.play(bgMusic);
+  music.crossFade(bgMusic);
 }
 
 map.triggers = {

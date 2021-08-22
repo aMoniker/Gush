@@ -90,7 +90,7 @@ const map = [
 const bgMusic = "sunset-alleyway";
 
 map.onStart = () => {
-  music.play(bgMusic);
+  music.crossFade(bgMusic);
 }
 
 map.triggers = {
