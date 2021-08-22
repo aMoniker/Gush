@@ -4,6 +4,7 @@ import level_1_2 from "/levels/maps/level_1_2.js";
 import level_2_1 from "/levels/maps/level_2_1.js";
 import level_3_1 from "/levels/maps/level_3_1.js";
 import level_4_1 from "/levels/maps/level_4_1.js";
+import level_boss from "/levels/maps/level_boss.js";
 import level_treasure_1 from "/levels/maps/level_treasure_1.js";
 import level_treasure_2 from "/levels/maps/level_treasure_2.js";
 import level_treasure_3 from "/levels/maps/level_treasure_3.js";
@@ -22,7 +23,7 @@ const randomTreasure = () => k.choose([
 ]);
 
 const mapOrders = {
-  knight: [level_1_1, randomTreasure, level_1_2, randomTreasure],
+  knight: [level_1_1, randomTreasure, level_1_2, randomTreasure, level_boss],
   elf_f: [level_2_1, randomTreasure],
   elf_m: [level_3_1, randomTreasure],
   lizard_f: [level_4_1, randomTreasure],

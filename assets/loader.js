@@ -253,6 +253,7 @@ export const loadAssets = () => {
   promises.push(loadBasicSprite("vfx-vortex", { x: 8, y: 8 }, {
     main: [0, 60],
   }));
+  promises.push(loadBasicSprite("tank_explosion3"));
 
 
   // maybe re-do these as filmstrips
@@ -320,13 +321,17 @@ export const loadAssets = () => {
   promises.push(loadBasicSound("heartbeat-slow-2"));
   promises.push(loadBasicSound("spell-20"));
   promises.push(loadBasicSound("spell-1"));
+  promises.push(loadBasicSound("spell-4"));
   promises.push(loadBasicSound("spell-14"));
   promises.push(loadBasicSound("bone-hit-1"));
   promises.push(loadBasicSound("monster-4"));
   promises.push(loadBasicSound("monster-14"));
+  promises.push(loadBasicSound("monster-12"));
   promises.push(loadBasicSound("monster-16"));
   promises.push(loadBasicSound("wood-4"));
   promises.push(loadBasicSound("fire-1"));
+  promises.push(loadBasicSound("laser-plasma-rifle-fire"));
+  promises.push(loadBasicSound("arcane-wind-chimes"));
 
 
   // music

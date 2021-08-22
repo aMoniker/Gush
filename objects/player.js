@@ -328,8 +328,14 @@ export const createPlayer = (typeName, attrs) => {
 
   // womp womp
   player.on("death", (killedBy) => {
-    const playerSlapDir = player.pos.sub(killedBy.pos).unit();
-    const weaponSlapDir = weapon.pos.sub(killedBy.pos).unit();
+    let slapFromPos = null;
+    if (killedBy && killedBy.pos) {
+      slapFromPos = killedBy.pos
+    } else {
+      slapFromPos = player.pos.clone();
+    }
+    const playerSlapDir = player.pos.sub(slapFromPos).unit();
+    const weaponSlapDir = weapon.pos.sub(slapFromPos).unit();
 
     k.play("punch-intense-heavy", { volume: 0.86 });
     k.wait(0.8, () => k.play("implode"));

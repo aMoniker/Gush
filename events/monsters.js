@@ -13,18 +13,20 @@ const handleMonsterHurt = (monster, amt, hurtBy) => {
   flashColor(monster, [1, 0, 0, 1], 0.2);
 
   // slap the monster away
-  monster.hit = true;
-  const slapDir = monster.pos.sub(hurtBy.pos).unit();
-  const slapTime = 0.3;
-  const slapDist = config.tileWidth * 0.5;
-  tween(monster, slapTime, {
-    "pos.x": monster.pos.x + slapDir.x * slapDist,
-    "pos.y": monster.pos.y + slapDir.y * slapDist,
-  }, easing.linear, () => {
-    monster.pushOutAll();
-  }).then(() => {
-    monster.hit = false;
-  });
+  if (!monster.noSlap) {
+    monster.hit = true;
+    const slapDir = monster.pos.sub(hurtBy.pos).unit();
+    const slapTime = 0.3;
+    const slapDist = config.tileWidth * 0.5;
+    tween(monster, slapTime, {
+      "pos.x": monster.pos.x + slapDir.x * slapDist,
+      "pos.y": monster.pos.y + slapDir.y * slapDist,
+    }, easing.linear, () => {
+      monster.pushOutAll();
+    }).then(() => {
+      monster.hit = false;
+    });
+  }
 
   k.play("punch-clean-heavy", {
     loop: false,

@@ -8,6 +8,7 @@ import monsterAINecro from "/components/monster-ai-necro.js";
 import monsterAIShaman from "/components/monster-ai-shaman.js";
 import monsterAIMimic from "/components/monster-ai-mimic.js";
 import monsterAIDemonSmall from "/components/monster-ai-demon-small.js";
+import monsterAIDemonBoss from "/components/monster-ai-demon-boss.js";
 import { rng } from "/utils.js"
 
 const buildMonster = (spriteName, area, extraAttrs) => ([
@@ -45,10 +46,13 @@ export const demonSmall = () => buildMonster("demon_small", [-4, -4, 4, 10], [
   monsterAIDemonSmall({ speed: 47.7 }),
 ]);
 export const demonBig = () => buildMonster("demon_big", [-9, -8, 9, 16], [
-  hp({ current: 10, max: 10 }),
+  hp({ current: 1998, max: 1998 }),
   gusher({ size: "large" }),
-  // monsterAIBigDemon(),
-  // big boss, fires bullet hell projectile waves
+  "demon_boss",
+  monsterAIDemonBoss(),
+  {
+    noSlap: true,
+  }
 ]);
 
 export const muddy = () => buildMonster("muddy", [-5, -6, 5, 8], [

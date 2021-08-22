@@ -3,7 +3,7 @@ import { k } from "/kaboom.js";
 const defaultSavedState = {
   coins: 0,
   // musicVolume: 0.1,
-  musicVolume: 0.1,
+  musicVolume: 0.77,
   unlocked_knight: true,
   unlocked_elf_f: false,
   unlocked_elf_m: false,
