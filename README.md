@@ -115,4 +115,4 @@ Gush is a dungeon brawler game built with [Kaboom.js](https://kaboomjs.com/) on 
 - [ ] Pause menu with options
 - [x] hp bars on damaged enemies
 - [ ] restart from last "checkpoint"? (last trigger point)
-- [ ] mouse aiming and click to fire
+- [x] mouse aiming and click to fire

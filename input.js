@@ -17,15 +17,18 @@ const input = {
 };
 export default input;
 
-let gamepadIndex = null;
-window.addEventListener("gamepadconnected", (e) => {
+const handleGamepadConnected = (e) => {
   input.gamepadConnected = true;
   gamepadIndex = e.gamepad.index;
-});
-window.addEventListener("gamepaddisconnected", (e) => {
+};
+const handleGamepadDisconnected = (e) => {
   input.gamepadConnected = false;
   gamepadIndex = null;
-});
+};
+
+let gamepadIndex = null;
+window.addEventListener("gamepadconnected", handleGamepadConnected);
+window.addEventListener("gamepaddisconnected", handleGamepadDisconnected);
 
 const getGamepad = () => {
   if (!input.gamepadConnected || gamepadIndex === null) return null;
@@ -107,6 +110,19 @@ const handleGamepad = () => {
   }
 };
 
+const handleMouseDown = () => input.attack = true;
+const handleMouseUp = () => input.attack = false;
+const handleMouseMove = (e) => {
+  const center = k.vec2(document.body.offsetWidth / 2, document.body.offsetHeight / 2);
+  const mouse = k.vec2(e.clientX, e.clientY);
+  const aim = mouse.sub(center).unit();
+  input.x2 = aim.x;
+  input.y2 = aim.y;
+};
+
+window.addEventListener("mousedown", handleMouseDown);
+window.addEventListener("mouseup", handleMouseUp);
+window.addEventListener("mousemove", handleMouseMove);
 
 let listenerCancelers = [];
 export const enableInputListeners = () => {
@@ -155,4 +171,14 @@ export const enableInputListeners = () => {
 
   // gamepad
   listenerCancelers.push(k.action(handleGamepad));
+
+  // cancel function
+  return () => {
+    listenerCancelers.forEach(fn => fn());
+    window.removeEventListener("gamepadconnected", handleGamepadConnected);
+    window.removeEventListener("gamepaddisconnected", handleGamepadDisconnected);
+    window.removeEventListener("mousedown", handleMouseDown);
+    window.removeEventListener("mouseup", handleMouseUp);
+    window.removeEventListener("mousemove", handleMouseMove);
+  }
 };
