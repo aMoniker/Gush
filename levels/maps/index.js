@@ -5,15 +5,27 @@ import level_2_1 from "/levels/maps/level_2_1.js";
 import level_3_1 from "/levels/maps/level_3_1.js";
 import level_4_1 from "/levels/maps/level_4_1.js";
 import level_treasure_1 from "/levels/maps/level_treasure_1.js";
+import level_treasure_2 from "/levels/maps/level_treasure_2.js";
+import level_treasure_3 from "/levels/maps/level_treasure_3.js";
+import level_treasure_4 from "/levels/maps/level_treasure_4.js";
+import level_treasure_5 from "/levels/maps/level_treasure_5.js";
 import { monsterTestMap } from "/levels/maps/utils.js";
 import state from "/state.js";
 import { fadeToScene } from "/utils.js";
 
+const randomTreasure = () => k.choose([
+  level_treasure_1,
+  level_treasure_2,
+  level_treasure_3,
+  level_treasure_4,
+  level_treasure_5,
+]);
+
 const mapOrders = {
-  knight: [level_1_1, level_treasure_1, level_1_2],
-  elf_f: [level_2_1],
-  elf_m: [level_3_1],
-  lizard_f: [level_4_1],
+  knight: [level_1_1, randomTreasure, level_1_2, randomTreasure],
+  elf_f: [level_2_1, randomTreasure],
+  elf_m: [level_3_1, randomTreasure],
+  lizard_f: [level_4_1, randomTreasure],
   lizard_m: [level_1_1],
   wizard_f: [level_1_1],
   wizard_m: [level_1_1],
@@ -34,5 +46,7 @@ export const loadNextLevel = () => {
 }
 
 export const generateMap = () => {
-  return mapOrders[state.playerType][state.level];
+  const level = mapOrders[state.playerType][state.level];
+  if (typeof level === "function") return level();
+  return level;
 };

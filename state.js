@@ -42,8 +42,8 @@ try {
 export default {
   level: 0, // current level index
   player: null, // reference to player object for quick lookup
-  // playerType: "knight",
-  playerType: "lizard_f",
+  playerType: "knight",
+  // playerType: "lizard_f",
   mapWidth: 70, // used to recalculate minimap on window resize
   mapHeight: 70,
   get: (key) => {
