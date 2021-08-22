@@ -19,6 +19,13 @@ const defaultSavedState = {
   keyRight: "d",
 };
 
+// running this repl in the replit.com iframe can result in
+// errors when trying to access localStorage, since that can be
+// blocked when cross-domain. So, if setData/getData throws an error,
+// we use this object instead, which means you'll lose all your data
+// when you refresh. Play the game in a new tab to avoid all this!
+const fakeLocalStorage = {};
+
 // basic state variables
 // - changing properties is ephemeral and only saved while the game is running
 // - using get/set saves data to localStorage & persists between games
@@ -29,11 +36,23 @@ export default {
   mapWidth: 70, // used to recalculate minimap on window resize
   mapHeight: 70,
   get: (key) => {
-    const data = k.getData(key) ?? defaultSavedState[key] ?? undefined;
-    // localStorage can only store strings
-    if (data === "true") return true;
-    if (data === "false") return false;
+    let data = null;
+    try {
+      data = k.getData(key);
+      // localStorage can only store strings
+      if (data === "true") return true;
+      if (data === "false") return false;
+    } catch (e) {
+      data = fakeLocalStorage[key];
+    }
+    data = data ?? defaultSavedState[key] ?? undefined;
     return data;
   },
-  set: (key, val) => k.setData(key, val),
+  set: (key, val) => {
+    try {
+      k.setData(key, val);
+    } catch (e) {
+      fakeLocalStorage[key] = val;
+    }
+  }
 };
