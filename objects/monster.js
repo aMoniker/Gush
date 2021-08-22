@@ -42,7 +42,7 @@ export const wogol = () => buildMonster("wogol", [-4, -2, 4, 9], [
 export const demonSmall = () => buildMonster("demon_small", [-4, -4, 4, 10], [
   hp({ current: 3, max: 3 }),
   gusher({ size: "small" }),
-  monsterAIDemonSmall({ speed: 66.6 }),
+  monsterAIDemonSmall({ speed: 47.7 }),
 ]);
 export const demonBig = () => buildMonster("demon_big", [-9, -8, 9, 16], [
   hp({ current: 10, max: 10 }),

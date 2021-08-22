@@ -19,7 +19,7 @@ import burp from "/components/burp.js";
 
 const playerType = {
   knight: {
-    hp: 6,
+    hp: 8,
     createWeapon: createSword,
     flipDuringAttack: false,
     attackWithStick: false,
@@ -27,7 +27,7 @@ const playerType = {
     hurtSound: "male-grunt-5",
   },
   elf_f: {
-    hp: 4,
+    hp: 6,
     createWeapon: createBow,
     flipDuringAttack: true,
     attackWithStick: true,
@@ -35,7 +35,7 @@ const playerType = {
     hurtSound: "female-grunt-7",
   },
   elf_m: {
-    hp: 4,
+    hp: 6,
     createWeapon: createSpear,
     flipDuringAttack: false,
     attackWithStick: false,
@@ -246,8 +246,6 @@ export const createPlayer = (typeName, attrs) => {
   const handleCamera = () => {
     const scale = k.width() / config.viewableWidth;
     k.camScale(scale);
-    // k.camScale(1);
-
     k.camPos(player.pos);
     // readd the player each frame, so it's always on top
     k.readd(player);

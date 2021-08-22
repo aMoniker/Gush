@@ -76,9 +76,12 @@ const handleBoundaries = (monster) => {
     }
 };
 
+const pushOutAllMonsters = () => k.every("monster", (m) => m.pushOutAll());
+
 export default () => {
   k.collides("player", "monster", handleMonsterCollision);
   k.on("hurt", "monster", handleMonsterHurt);
   k.on("death", "monster", handleMonsterDeath);
   k.action("monster", handleBoundaries);
+  k.loop(1, pushOutAllMonsters); // push out all monsters every second
 };

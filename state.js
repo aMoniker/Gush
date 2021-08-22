@@ -2,7 +2,8 @@ import { k } from "/kaboom.js";
 
 const defaultSavedState = {
   coins: 0,
-  musicVolume: 0.1,
+  // musicVolume: 0.1,
+  musicVolume: 0,
   unlocked_knight: true,
   unlocked_elf_f: false,
   unlocked_elf_m: false,
@@ -41,7 +42,8 @@ try {
 export default {
   level: 0, // current level index
   player: null, // reference to player object for quick lookup
-  playerType: "knight",
+  // playerType: "knight",
+  playerType: "elf_f",
   mapWidth: 70, // used to recalculate minimap on window resize
   mapHeight: 70,
   get: (key) => {

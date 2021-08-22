@@ -60,10 +60,12 @@ export const regenerateBoundaryMap = (goMap) => {
     coordsLoop:
     for (const obj of objs) {
       if (!obj) continue;
+      const isCrevasse = obj.some(p => p === "crevasse");
       for (const p of obj) {
         if (p === "boundary") {
           const coords = goMap.coords(key);
-          boundaryMap.set(coords.x, coords.y, true);
+          // crevasses are marked as false, which is useful for finding LOS
+          boundaryMap.set(coords.x, coords.y, !isCrevasse);
           break coordsLoop;
         }
       }

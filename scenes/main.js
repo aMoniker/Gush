@@ -4,7 +4,8 @@ import { addLayers } from "/layers.js";
 import { generateLevel } from "/levels/index.js";
 import { initializeUi } from "/ui.js";
 import { enableInputListeners } from "/input.js";
-import { showFps, fadeIn } from "/utils.js"
+import { fadeIn } from "/utils.js"
+import { enableDebugDisplay } from "/debug.js";
 
 k.scene("main", (args = {}) => {
   addLayers();
@@ -15,5 +16,5 @@ k.scene("main", (args = {}) => {
   setTimeout(() => {
     enableInputListeners();
   }, 200);
-  if (kaboomOptions.debug) showFps();
+  if (kaboomOptions.debug) enableDebugDisplay();
 });

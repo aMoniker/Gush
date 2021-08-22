@@ -13,7 +13,7 @@ export default (options = {}) => {
   let spellTimer = timeBetweenSpells / 2;
 
   let skellies = [];
-  const maxSkellies = 4;
+  const maxSkellies = 3;
   const timeBetweenSpawns = 1;
   let skellyTimer = timeBetweenSpawns;
 
@@ -127,7 +127,10 @@ export default (options = {}) => {
       }
     },
     destroy() {
-      skellies.forEach(s => s && s.destroy());
+      skellies.forEach(s => {
+        if (!s || s.dead) return;
+        s.trigger("death", this);
+      });
       skellies = [];
     },
   };

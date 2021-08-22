@@ -114,9 +114,10 @@ export const createBow = (player) => {
       // It cannot be called in its own action() function, since it will be janky.
       updatePosition: () => {
         const flip = player.xFlipped ? -1 : 1
-        weapon.pos = player.pos.add(flip * 6, 5);
-        const dir = player.dirAttack;
-        weapon.angle = flip * Math.PI / 8;
+        const dir = player.dirAttack.unit();
+        const scale = 7.77;
+        weapon.pos = player.pos.add(k.vec2(dir.x * scale, dir.y * scale + 5));
+        weapon.angle = Math.atan2(dir.x, dir.y) - flip * Math.PI / 2;
         weapon.flipX(player.xFlipped);
       },
     }
