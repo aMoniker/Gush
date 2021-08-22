@@ -55,7 +55,9 @@ const animateLogos = () => {
   Promise.all(promises).then(() => {
     let t = 0;
     const endVal = 17.7;
-    const timeToEndVal = 17.77;
+    // const timeToEndVal = 17.77;
+    // const timeToEndVal = 13.37;
+    const timeToEndVal = 1.337;
     k.action(() => {
       t += k.dt();
       const pct = Math.min(1, t / timeToEndVal);

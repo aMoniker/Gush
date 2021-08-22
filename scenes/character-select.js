@@ -12,7 +12,7 @@ const types = [
     name: "Swordy Boi",
     description: "Hack & Slash!",
     hearts: 3,
-    difficulty: "ez pz",
+    difficulty: "ez pz?",
     difficultyColor: [0.4, 1, 0.4],
     cost: 0,
   },

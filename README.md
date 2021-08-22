@@ -48,7 +48,6 @@ Gush is a dungeon brawler game built with [Kaboom.js](https://kaboomjs.com/) on 
 - [x] Multiple characters with different health & weapons
   - [x] Coins can be collected through multiple game runs to unlock more characters
 - [x] Current level can be reset when player dies.
-- [x] Force 1.5 aspect ratio no matter screens size
 
 ### Essential features
 - [x] Different levels
@@ -86,6 +85,7 @@ Gush is a dungeon brawler game built with [Kaboom.js](https://kaboomjs.com/) on 
 - [x] Demons cast fireballs at you
 
 ### Nice to have
+- [x] Force 1.5 aspect ratio no matter screens size
 - [ ] Better monster spawn/despawn (save position to objConfigs)
 - [x] Controller support
 - [x] Minimap
@@ -106,5 +106,5 @@ Gush is a dungeon brawler game built with [Kaboom.js](https://kaboomjs.com/) on 
   - [x] heartbeat when health is low
 - [x] Some enemies drop a skull as a visual effect (non-interactive).
 - [ ] Pause menu with options
-- [ ] hp bars on damaged enemies
+- [x] hp bars on damaged enemies
 - [ ] restart from last "checkpoint"? (last trigger point)
