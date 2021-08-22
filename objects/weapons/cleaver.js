@@ -1,8 +1,22 @@
 import { k } from "/kaboom.js";
 import { tween, easing } from "/utils.js";
 import lifecycle from "/components/lifecycle.js";
+import { config } from "/config.js";
 
 export const createCleaver = (player) => {
+
+  const cleaverThrowTime = 1;
+  const cleaverThrowDist = config.tileWidth * 7.77;
+  const minTimeBetweenThrows = 0.25; // in case it's picked up mid throw
+
+  const cleaverReturn = (c) => {
+    if (c.returning) return;
+    c.time = 0;
+    c.returning = true;
+    c.startPos = c.pos.clone();
+    c.targetPos = player.pos;
+  };
+
   const cleaverConfig = () => ([
     k.sprite("weapon_cleaver", { noArea: true }),
     k.area(k.vec2(-4, -4), k.vec2(4, 4)),
@@ -11,70 +25,72 @@ export const createCleaver = (player) => {
     k.layer("game"),
     lifecycle({
       onAdd: (a) => {
-        let struck = false;
-        let cancelMonsterCollides = null;
-        let cancelBoundaryCollides = null;
-        const cancelCollides = () => {
-          if (cancelMonsterCollides) cancelMonsterCollides();
-          if (cancelBoundaryCollides) cancelBoundaryCollides();
-        };
+        a.startPos = a.pos.clone();
         const hitMonster = (m) => {
-          // TODO - stick in monster
-          if (m.hidden || m.dead || struck) return;
-          cancelCollides();
-          struck = true;
+          if (m.hidden || m.dead) return;
           m.hurt(a.damage, player);
-          a.destroy();
-        };
-        const hitBoundary = (b) => {
-          // TODO - bounce off wall
-          if (b && b.is("crevasse")) return;
-          cancelCollides();
-          struck = true;
-          a.destroy();
         };
         // watch for monster collisions
-        cancelMonsterCollides = a.collides("monster", (m) => {
+        a.collides("monster", (m) => {
           hitMonster(m);
         });
         // check if the cleaver is overlapping a monster immediately
         for (const m of k.get("monster")) {
           if (!a.isOverlapped(m)) continue;
           hitMonster(m);
-          break; // cleavers only hitMonster one monster at a time
         }
-        // watch for wall collisions
-        cancelBoundaryCollides = a.collides("boundary", (b) => {
-          hitBoundary(b);
-        });
-        // check if the cleaver is overlapping a boundary immediately
-        for (const b of k.get("boundary")) {
-          // TODO - make this use boundaryMap
-          if (!a.isOverlapped(b)) continue;
-          hitBoundary();
-          break;
-        }
-        // destroy the cleaver no matter what if too much time has passed
-        k.wait(1, () => {
-          cancelCollides();
+        // allow player to pick up cleaver early after return has begun
+        const cancelPlayerCollides = a.collides("player", (p) => {
+          if (!a.returning) return;
+          if (cancelPlayerCollides) cancelPlayerCollides();
+          a.trigger("returned");
           a.destroy();
         });
+        // return early if it hits a boundary
+        const cancelBoundaryCollides = a.collides("boundary", (b) => {
+          if (b && !b.is("crevasse")) {
+            cleaverReturn(a);
+            if (cancelBoundaryCollides) cancelBoundaryCollides();
+          }
+        });
+        // return if it overlaps a boundary on throw
+        for (const b of k.get("boundary")) {
+          if (b && a.isOverlapped(b) && !b.is("crevasse")) {
+            cleaverReturn(a);
+            if (cancelBoundaryCollides) cancelBoundaryCollides();
+            break;
+          }
+        }
       },
       onUpdate: (a) => {
-        k.readd(a);
-        a.move(a.dir.unit().scale(a.speed));
-        a.angle += 0.5 * (a.dir.x >= 0 ? -1 : 1);
+        a.time += k.dt();
+        if (a.time > cleaverThrowTime) {
+          if (a.returning) {
+            a.trigger("returned");
+            a.destroy();
+          } else {
+            cleaverReturn(a);
+          }
+        }
+        if (a.returning) a.targetPos = player.pos;
+        const ease = a.returning ? easing.easeInSine : easing.easeOutSine;
+        const diff = a.targetPos.sub(a.startPos);
+        const scale = ease(a.time / cleaverThrowTime);
+        a.pos = a.startPos.add(diff.scale(scale));
+        a.angle += 0.5 * (a.dir.x >= 0 ? -1 : 1); // spin
       },
     }),
     "weapon",
     {
-      dir: k.vec2(0, 0),
-      speed: 333,
+      startPos: k.vec2(0, 0),
+      targetPos: k.vec2(0, 0),
       damage: 3,
+      time: 0,
+      returning: false,
     }
   ]);
 
-  const delayBetweenShots = 0.75;
+  let canThrow = true;
 
   const weapon = k.add([
     k.sprite("weapon_cleaver", { noArea: true }),
@@ -85,8 +101,9 @@ export const createCleaver = (player) => {
     {
       attacking: false,
       attack: () => {
-        if (weapon.attacking) return;
+        if (weapon.attacking || !canThrow) return;
         weapon.attacking = true;
+        canThrow = false;
 
         k.play("whoosh-flutter", {
           loop: false,
@@ -100,17 +117,20 @@ export const createCleaver = (player) => {
           k.pos(weapon.pos),
         ]);
         cleaver.dir = player.dirAttack.clone();
-        cleaver.angle = Math.atan2(cleaver.dir.x, cleaver.dir.y) + Math.PI;
         cleaver.flipX(player.xFlipped);
+        cleaver.targetPos = weapon.pos.add(
+          player.dirAttack.unit().scale(cleaverThrowDist)
+        );
 
         // hide cleaver on player
-        // weapon.color.a = 0;
         weapon.hidden = true;
 
-        // allow next attack
-        k.wait(delayBetweenShots, () => {
+        // minimum time between throws to prevent boundary spamming
+        setTimeout(() => canThrow = true, minTimeBetweenThrows * 1000);
+
+        cleaver.on("returned", () => {
           weapon.hidden = false;
-          weapon.attacking = false
+          weapon.attacking = false;
         });
       },
       // To be called in the same place where player positioning is updated.
