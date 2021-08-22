@@ -8,6 +8,26 @@ export default (options) => {
   const maxShields = 3;
   let currentShields = Math.max(0, Math.min(maxShields, options.currentShield ?? 0));
 
+  // show healthbar by default, pass false to disable
+  let healthBar = null;
+  const fullHealthBarWidth = 8;
+  if (options.showHealthBar ?? true) {
+    healthBar = k.add([
+      k.rect(fullHealthBarWidth, fullHealthBarWidth * 0.33, { noArea: true }),
+      k.color(1, 0, 0, 0.88),
+      k.origin("center"),
+      k.pos(0, 0),
+      k.layer("fx"),
+    ]);
+    healthBar.hidden = true;
+  }
+
+  const updateHealthBar = () => {
+    if (!healthBar) return;
+    healthBar.width = Math.min(1, currentHp / maxHp) * fullHealthBarWidth;
+    healthBar.hidden = currentHp === maxHp;
+  };
+
   // play a heartbeat sound when player health is low
   let heartbeatSound = null;
   const manageHeartbeat = (obj) => {
@@ -31,6 +51,13 @@ export default (options) => {
     dead: false,
     healing: false,
 
+    update() {
+      if (healthBar) {
+        healthBar.pos.x = this.pos.x;
+        healthBar.pos.y = this.pos.y + this.height / 2;
+      }
+    },
+
     hurt(x, hurtBy) {
       if (this.dead) return;
       if (this.is("monster") && !this.solid) return;
@@ -45,8 +72,13 @@ export default (options) => {
       }
       if (currentHp <= 0) {
         this.dead = true;
+        if (healthBar) {
+          healthBar.destroy();
+          healthBar = null;
+        }
         this.trigger("death", hurtBy);
       } else {
+        updateHealthBar();
         this.trigger("hurt", amt, hurtBy);
       }
 
@@ -89,6 +121,7 @@ export default (options) => {
         });
       }
 
+      updateHealthBar();
       this.trigger("heal", amt, healedBy);
       if (options.heartbeat) manageHeartbeat(this);
     },

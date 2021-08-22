@@ -94,7 +94,9 @@ export const flashColor = (obj, rgba, time) => {
   obj.color.b = rgba[2];
   obj.color.a = rgba[3];
   return k.wait(time, () => {
-    obj.color = { ...obj.color, ...{r,g,b,a} };
+    // reset to the old color, but force alpha to 1
+    // since this can mess up with freshly spawned mobs
+    obj.color = { ...obj.color, ...{r,g,b, a: 1} };
   });
 };
 

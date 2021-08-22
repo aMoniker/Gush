@@ -2,13 +2,13 @@ import { k } from "/kaboom.js";
 import { rng, randInt, tween, easing } from "/utils.js";
 import { handleCoinPickup } from "/events/coins.js";
 import { handleFlaskPickup } from "/events/flasks.js";
-import { coin, randomFlask } from "/objects/powerups.js";
+import { coin, flask } from "/objects/powerups.js";
 import { config } from "/config.js";
 
 const processChestOpen = (player, chest) => {
   k.play("chest-opening", { volume: 0.8 });
 
-  const isEmpty = rng.gen() < 0.1;
+  const isEmpty = rng.gen() < 0.05;
   chest.play(isEmpty ? "empty_open" : "full_open", false);
 
   if (isEmpty) {
@@ -19,13 +19,19 @@ const processChestOpen = (player, chest) => {
     return;
   }
 
+  // only give player useful flasks
+  const flaskColors = [];
+  if (player.hp() < player.maxHp()) flaskColors.push("red");
+  if (player.shields() < 3) flaskColors.push("blue");
+  if (player.burps() < player.maxBurps()) flaskColors.push("green");
+
   const prizeConfig = () => ([
     k.origin("center"),
     k.pos(chest.pos),
   ]);
   let prize = null;
   const prizeRoll = rng.gen();
-  if (prizeRoll <= 0.777) {
+  if (!flaskColors.length || prizeRoll <= 0.6) {
     prize = k.add([ ...coin(), ...prizeConfig() ]);
     const coinCount = randInt(2, 11);
     handleCoinPickup(player, prize, coinCount);
@@ -40,7 +46,9 @@ const processChestOpen = (player, chest) => {
       .then(() => tween(coinsText, 1, { "color.a": 0 }))
       .then(() => coinsText.destroy());
   } else {
-    prize = k.add([ ...randomFlask(), ...prizeConfig() ]);
+    const color = k.choose(flaskColors);
+    const size = k.choose(["big", "small"]);
+    prize = k.add([ ...flask(size, color), ...prizeConfig() ]);
     handleFlaskPickup(player, prize);
   }
 };
