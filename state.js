@@ -26,6 +26,15 @@ const defaultSavedState = {
 // when you refresh. Play the game in a new tab to avoid all this!
 const fakeLocalStorage = {};
 
+// test for LS error up front; if it fails once, use fake LS
+let localStorageFailed = false;
+try {
+  k.setData("test-localstorage", true);
+  localStorage.removeItem("test-localstorage");
+} catch (e) {
+  localStorageFailed = true;
+}
+
 // basic state variables
 // - changing properties is ephemeral and only saved while the game is running
 // - using get/set saves data to localStorage & persists between games
@@ -37,22 +46,21 @@ export default {
   mapHeight: 70,
   get: (key) => {
     let data = null;
-    try {
+    if (localStorageFailed) {
+      data = fakeLocalStorage[key];
+    } else {
       data = k.getData(key);
       // localStorage can only store strings
       if (data === "true") return true;
       if (data === "false") return false;
-    } catch (e) {
-      data = fakeLocalStorage[key];
     }
-    data = data ?? defaultSavedState[key] ?? undefined;
-    return data;
+    return data ?? defaultSavedState[key] ?? undefined;
   },
   set: (key, val) => {
-    try {
-      k.setData(key, val);
-    } catch (e) {
+    if (localStorageFailed) {
       fakeLocalStorage[key] = val;
+    } else {
+      k.setData(key, val);
     }
   }
 };
