@@ -64,9 +64,15 @@ Gush is a dungeon brawler game built with [Kaboom.js](https://kaboomjs.com/) on 
 - [x] All characters added with different weapons
 - [ ] Full map rotation for each character
   - [ ] 3 full maps (designed for each char)
-  - [ ] 2 random treasure rooms between them
-  - [ ] 1 boss fight (probably same one)
-  - [ ] golden flask treasure room for end game
+    - [ ] sniper gallery with crevasses for shootie pie
+    - [ ] narrow hallways and big open areas to dash around for Pokey
+    - [ ] mix of the above two for lizzy's cleaverang
+    - [ ] huge waves of monsters to smash with crushy hammer
+    - [ ] big concentrated waves to explode with fireballs (floating platforms with lots of projectile enemies?)
+    - [ ] lines of enemies for lazer wizard, narrow passages, maybe chase areas that close behind and let you run ahead of chasing enemies
+  - [ ] 2 random treasure rooms between them (3-5 small rooms like this are good, some with a mimic, some with flasks, interesting layouts)
+  - [ ] 1 boss fight (probably same one for every char - big demon, waves of enemies, bullet hell, need 3 big burps to win, announce to tell player what to do)
+  - [ ] golden flask treasure room for end game (with some announce flavor text, congrats etc)
 
 #### Character classes:
 - [x] Swordy Boi - starting char, all other are unlocks. decent sword, decent hp
@@ -85,8 +91,9 @@ Gush is a dungeon brawler game built with [Kaboom.js](https://kaboomjs.com/) on 
 - [x] Demons cast fireballs at you
 
 ### Nice to have
+- [ ] Meat Cleaverang for Lizzy
 - [x] Force 1.5 aspect ratio no matter screens size
-- [ ] Better monster spawn/despawn (save position to objConfigs)
+- [ ] Better monster spawn/despawn (save position to objConfigs, improve framerate maybe)
 - [x] Controller support
 - [x] Minimap
 - [x] Interim treasure levels
@@ -95,7 +102,7 @@ Gush is a dungeon brawler game built with [Kaboom.js](https://kaboomjs.com/) on 
   - [ ] sound/music adjust
   - [ ] control remapping (maybe not worth it)
 - [ ] Win screen & credits
-  - [ ] Show gold collected, flasks collected, monsters killed, damage taken/healed etc.
+  - [ ] Show stats: gold collected, flasks collected, monsters killed, damage taken/healed etc.
 - [x] Simple tutorial messages on game start (only show once, turn off in localStorage)
 - [x] Store player's last attack dir so attacking while stationary feels right
 - [ ] More sound effects
@@ -108,3 +115,4 @@ Gush is a dungeon brawler game built with [Kaboom.js](https://kaboomjs.com/) on 
 - [ ] Pause menu with options
 - [x] hp bars on damaged enemies
 - [ ] restart from last "checkpoint"? (last trigger point)
+- [ ] mouse aiming and click to fire
