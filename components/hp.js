@@ -1,5 +1,6 @@
 import { k } from "/kaboom.js";
 import { tween } from "/utils.js";
+import { vibrateGamepad } from "/input.js";
 
 export default (options) => {
   let currentHp = options.current;
@@ -30,6 +31,7 @@ export default (options) => {
 
   // play a heartbeat sound when player health is low
   let heartbeatSound = null;
+  let heartbeatRumble = null;
   const manageHeartbeat = (obj) => {
     const lowHealth = currentHp + currentShields <= 1;
     if (!lowHealth || obj.dead) {
@@ -37,11 +39,15 @@ export default (options) => {
         heartbeatSound.stop();
         heartbeatSound = null;
       }
+      if (heartbeatRumble) clearInterval(heartbeatRumble);
     } else if (!heartbeatSound) {
       heartbeatSound = k.play("heartbeat-slow-2", {
         loop: true,
         volume: 0.47,
       });
+      heartbeatRumble = setInterval(() => {
+        vibrateGamepad(77, 0.77, 0);
+      }, 1040);
     }
   };
 

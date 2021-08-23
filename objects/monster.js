@@ -151,7 +151,15 @@ export const zombieBig = () => buildMonster("zombie_big", [-8, -7, 8, 16], [
 ]);
 export const randomZombie = () => {
   // return k.choose([zombieIce, zombieTiny, zombiePlain])();
-  return k.choose([zombieTiny, zombiePlain, zombieBig])();
+
+  const rnd = rng.gen();
+  switch (true) {
+    case (rnd <= 0.1): return zombieBig();
+    case (rnd <= 0.5): return zombiePlain();
+    default: return zombieTiny();
+  }
+
+  // return k.choose([zombieTiny, zombiePlain, zombieBig])();
 }
 
 export const mimic = () => ([
