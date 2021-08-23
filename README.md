@@ -1,6 +1,28 @@
 # Gush
 
-Gush is a dungeon brawler game built with [Kaboom.js](https://kaboomjs.com/) on [Replit.com](https://replit.com/) for a [1729.com](https://1729.com/) [contest](https://1729.com/replit-kaboom).
+**Gush** is a dungeon brawler game built with [Kaboom.js](https://kaboomjs.com/) on [Replit.com](https://replit.com/) for a [1729.com](https://1729.com/) [contest](https://1729.com/replit-kaboom).
+
+You can [play it](https://replit.com/@aMoniker/Gush?v=1) on Replit, or fork the code and make your own version.
+
+## Features
+- Seven playable characters with unique weapons
+- More than a dozen enemy types
+- More than a dozen levels, large and small
+- Scripted challenges within levels
+- A scripted boss level
+- Collectible coins, used to unlock characters
+- Flasks that restore health, give shields or DEADLY BURPS
+- Chests may have coins, flasks, nothing, or something else...
+
+## How to play
+Use a gamepad controller for the best experience.
+
+Or, use keyboard & mouse, or keyboard alone.
+
+Some characters can shoot: aim with right analog stick or mouse.
+
+- *Gamepad:* Left analog stick to move, bottom button to attack, right side button to burp.
+- *Keyboard & mouse:* WASD (or arrows) to move, SPACE to attack (or left click), B to burp (or right click).
 
 ## Tools used
 - [Replit.com](https://replit.com/)
