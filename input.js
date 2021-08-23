@@ -128,16 +128,37 @@ const handleMouseUp = (e) => {
 }
 
 
+let lastMouseX = null;
+let lastMouseY = null;
+
+let cancelMouseAimingTimeout = 0;
+const cancelMouseAiming = () => {
+  if (input.x2 === lastMouseX && input.y2 === lastMouseY) {
+    input.x2 = 0;
+    input.y2 = 0;
+  }
+};
+
 const handleMouseMove = (e) => {
+  clearTimeout(cancelMouseAimingTimeout);
   const center = k.vec2(document.body.offsetWidth / 2, document.body.offsetHeight / 2);
   const mouse = k.vec2(e.clientX, e.clientY);
   const aim = mouse.sub(center).unit();
   input.x2 = aim.x;
   input.y2 = aim.y;
+  lastMouseX = aim.x;
+  lastMouseY = aim.y;
+  // if the mouse hasn't moved in a while, revert to keyboard aiming
+  cancelMouseAimingTimeout = setTimeout(cancelMouseAiming, 3333);
 };
 const handleContextMenu = (e) => {
   e.preventDefault(); // prevent contextmenu so we can use right-click for burp
 }
+const handleMouseLeave = (e) => {
+  // when the mouse leaves the page, revert to keyboard aiming
+  input.x2 = 0;
+  input.y2 = 0;
+};
 
 
 let cancelAll = null;
@@ -197,6 +218,7 @@ export const enableInputListeners = () => {
   window.addEventListener("mouseup", handleMouseUp);
   window.addEventListener("mousemove", handleMouseMove);
   window.addEventListener("contextmenu", handleContextMenu);
+  document.addEventListener("mouseleave", handleMouseLeave);
 
   // cancel function
   cancelAll = () => {
@@ -208,5 +230,6 @@ export const enableInputListeners = () => {
     window.removeEventListener("mouseup", handleMouseUp);
     window.removeEventListener("mousemove", handleMouseMove);
     window.removeEventListener("contextmenu", handleContextMenu);
+    document.removeEventListener("mouseleave", handleMouseLeave);
   };
 };
