@@ -63,7 +63,7 @@ const handleGamepad = () => {
   const gp = getGamepad();
   if (!gp) return;
 
-  
+  // left analog stick for moving
   let stickOneMagnitude = 0;
   if (gp.axes[0] || gp.axes[1]) {
     stickOneMagnitude = Math.sqrt(gp.axes[0]**2 + gp.axes[1]**2);
@@ -78,6 +78,7 @@ const handleGamepad = () => {
     input.y = 0;
   }
 
+  // attack and burp buttons
   if (gp.buttons[0] && gp.buttons[0].pressed) {
     input.attack = true;
     gamepadAttacking = true;
@@ -93,6 +94,7 @@ const handleGamepad = () => {
     gamepadBurping = false;
   }
 
+  // right analog stick for aiming/shooting
   let stickTwoMagnitude = 0;
   if (gp.axes[2] || gp.axes[3]) {
     stickTwoMagnitude = Math.sqrt(gp.axes[2]**2 + gp.axes[3]**2);

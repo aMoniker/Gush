@@ -75,13 +75,13 @@ Some characters can shoot: aim with right analog stick or mouse.
 - [x] Select/unlock character screen
 - [x] Game over/reset level screen (YOU DIED)
 - [x] All characters added with different weapons
-- [ ] Full map rotation for each character
-  - [ ] 2 full maps (designed for each char)
+- [x] Full map rotation for each character
+  - [x] 2 full maps (designed for each char)
     - [x] sniper gallery with crevasses for shootie pie
-    - [ ] narrow hallways and big open areas to dash around for Pokey
-    - [ ] mix of the above two for lizzy's cleaverang
-    - [ ] huge waves of monsters to smash with crushy hammer
-    - [ ] big concentrated waves to explode with fireballs (floating platforms with lots of projectile enemies?)
+    - [x] narrow hallways and big open areas to dash around for Pokey
+    - [x] mix of the above two for lizzy's cleaverang
+    - [x] huge waves of monsters to smash with crushy hammer
+    - [x] big concentrated waves to explode with fireballs (floating platforms with lots of projectile enemies?)
     - [ ] lines of enemies for lazer wizard, narrow passages, maybe chase areas that close behind and let you run ahead of chasing enemies
   - [x] 2 random treasure rooms between them (3-5 small rooms like this are good, some with a mimic, some with flasks, interesting layouts)
   - [x] 1 boss fight (probably same one for every char - big demon, waves of enemies, bullet hell, need 3 big burps to win, announce to tell player what to do)

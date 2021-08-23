@@ -135,7 +135,6 @@ const trigger = (ctx) => ([
  * ) wall banner (yellow)
  * # crevasse
  * 
- * + door (TODO)
  * > ladder down
  * ? chest
  * c crate
@@ -145,7 +144,7 @@ const trigger = (ctx) => ([
  * h/H health flask
  * b/B burp flask
  * e/E shield flask
- * y/Y yellow flask TODO
+ * y/Y yellow flask (only used as endgame trophy)
  * 
  * d small demon
  * D big demon
@@ -267,7 +266,6 @@ const legend = {
   "/": arrayWrap(objectConfig(verticalWallGraphic, [k.color(0.88, 0.88, 0.88, 1)])),
   "_": (ctx) => horizontalWallGraphics(ctx, "ceiling", [k.color(0.88, 0.88, 0.88, 1)]),
   "=": arrayWrap(invisibleWall),
-  // "+": door // TODO - implement door
 
   // powerups
   "$": withFloorConfig(objectConfig(powerups.coin)),

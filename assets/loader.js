@@ -27,7 +27,6 @@ const loadAudio = (dir, name) => {
 const loadBasicSound = curry(loadAudio, "sounds");
 const loadBasicMusic = curry(loadAudio, "music");
 
-// TODO - grep game code for these when finished, remove unused.
 export const loadAssets = () => {
   const promises = [];
 
@@ -39,7 +38,6 @@ export const loadAssets = () => {
   promises.push(loadBasicSprite("hole"));
   promises.push(loadBasicSprite("floor", 16, {
     ladder: [8, 8],
-    // trap_set: [9, 9],
     trap_sprung: [10, 12],
     trap_reset: [13, 15],
   }));
@@ -241,9 +239,6 @@ export const loadAssets = () => {
   promises.push(loadBasicSprite("vfx-thrust", 5, {
     main: [0, 4],
   }));
-  // promises.push(loadBasicSprite("fireball", { x: 8, y: 8 }, {
-  //   main: [0, 60],
-  // }));
   promises.push(loadBasicSprite("fireball-magic", 60, {
     main: [0, 59],
   }));
@@ -253,27 +248,10 @@ export const loadAssets = () => {
   promises.push(loadBasicSprite("magic-bubbles", { x: 8, y: 8 }, {
     main: [0, 60],
   }));
-  promises.push(loadBasicSprite("vfx-vortex", { x: 8, y: 8 }, {
-    main: [0, 60],
-  }));
   promises.push(loadBasicSprite("tank_explosion3"));
 
 
-  // maybe re-do these as filmstrips
-  // after this runs, this error happens:
-  // TypeError: Cannot read property 'scale' of undefined
-  // promises.push(loadBasicSprite("explosion-round-vortex", {x:10,y:9}, {
-  //   main: [0, 91]
-  // }));
-  // promises.push(loadBasicSprite("explosion-vertical", {x:10,y:7}, {
-  //   main: [0, 83]
-  // }));
-  
-
-
   // sound effects
-  // promises.push(k.loadSound("whoosh-swing", "/assets/sounds/whoosh-swing.mp3"));
-  promises.push(loadBasicSound("whoosh-swing"));
   promises.push(loadBasicSound("whoosh-flutter"));
   promises.push(loadBasicSound("slash-1"));
   promises.push(loadBasicSound("slash-2"));
@@ -286,8 +264,6 @@ export const loadAssets = () => {
   promises.push(loadBasicSound("coin-flung"));
   promises.push(loadBasicSound("giblet-splatter"));
   promises.push(loadBasicSound("glyph-activation"));
-  promises.push(loadBasicSound("glyph-forcefield"));
-  promises.push(loadBasicSound("arcane-beacon"));
   promises.push(loadBasicSound("punch-squelch-heavy"));
   promises.push(loadBasicSound("punch-squelch-heavy-1"));
   promises.push(loadBasicSound("punch-designed-heavy"));
@@ -302,7 +278,6 @@ export const loadAssets = () => {
   promises.push(loadBasicSound("bubbles-3"));
   promises.push(loadBasicSound("footstep-armor-1"));
   promises.push(loadBasicSound("footstep-armor-2"));
-  promises.push(loadBasicSound("arrow-impact-1"));
   promises.push(loadBasicSound("bow-release-2"));
   promises.push(loadBasicSound("female-grunt-7"));
   promises.push(loadBasicSound("male-grunt-5"));
@@ -344,7 +319,7 @@ export const loadAssets = () => {
   promises.push(loadBasicMusic("cave-3"));
   promises.push(loadBasicMusic("neon-synth"));
   promises.push(loadBasicMusic("party-on-1"));
-  promises.push(loadBasicMusic("peek-a-boo-1"));
+  // promises.push(loadBasicMusic("peek-a-boo-1"));
   promises.push(loadBasicMusic("peek-a-boo-2"));
   promises.push(loadBasicMusic("sunset-alleyway"));
 
