@@ -13,6 +13,7 @@ import {
 } from "/levels/spatial.js";
 import { getObjectConfigsForSymbol } from "/levels/legend.js";
 import state from "/state.js";
+import { autoResizeMinimap, clearMinimap } from "/ui.js";
 
 // store references to all object configs on the map
 export const objectConfigs = new GameObjectsMap();
@@ -23,7 +24,7 @@ export const extantObjects = new GameObjectsMap();
 // store which floor tiles have been seen to generate minimap
 export const minimapSeen = new GameObjectsMap();
 
-let minimapCanvas = null;
+const minimapCanvas = document.getElementById("minimap");
 let minimapQueue = [];
 let minimapPrevPlayer = null;
 const minimapFloorTags = ["floor", "floor_trap", "ladder_down"];
@@ -84,15 +85,14 @@ const drawMinimap = () => {
 
 // clear the minimap and reset params for a new level
 export const initializeMinimap = (map, player) => {
-  if (!minimapCanvas) minimapCanvas = document.getElementById("minimap");
-  const context = minimapCanvas.getContext('2d');
-  context.clearRect(0, 0, minimapCanvas.width, minimapCanvas.height);
+  clearMinimap();
   minimapQueue = [];
   minimapSeen.clear();
   state.mapWidth = getMapWidth(map);
   state.mapHeight = map.length;
   minimapCanvas.width = state.mapWidth * 100;
   minimapCanvas.height = state.mapHeight * 100;
+  autoResizeMinimap();
 }
 
 // pre-generate all the configs for objects in the given map,

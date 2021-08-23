@@ -150,6 +150,19 @@ export const uiUpdateCoins = (numCoins) => {
   uiUpdatePositions();
 };
 
+const container = document.getElementById("container");
+const gameCanvas = document.getElementById("game")
+const minimapCanvas = document.getElementById("minimap");
+
+// update the minimap height/width based on the map size
+export const autoResizeMinimap = () => {
+  const rect = gameCanvas.getBoundingClientRect();
+  const minimapWidth = rect.width * config.minimapSize;
+  const mapAspectRatio = state.mapWidth / state.mapHeight;
+  minimapCanvas.style.width = `${minimapWidth}px`;
+  minimapCanvas.style.height = `${minimapWidth / mapAspectRatio}px`;
+};
+
 // on window resize, scale the canvas while maintaining the aspect ratio.
 let windowResizeTimeout = 0;
 const handleResize = (container, gameCanvas, minimapCanvas) => {
@@ -166,22 +179,13 @@ const handleResize = (container, gameCanvas, minimapCanvas) => {
     container.style.height = `${innerWidth / gameAspectRatio}px`;
   }
 
-  // update the minimap height/width
-  const rect = gameCanvas.getBoundingClientRect();
-  const minimapWidth = rect.width * config.minimapSize;
-  const mapAspectRatio = state.mapWidth / state.mapHeight;
-  minimapCanvas.style.width = `${minimapWidth}px`;
-  minimapCanvas.style.height = `${minimapWidth / mapAspectRatio}px`;
+  autoResizeMinimap();
 
   // finally, update the UI so it renders in the proper spot
   uiUpdatePositions();
 }
 
 export const watchWindowResizing = () => {
-  const container = document.getElementById("container");
-  const gameCanvas = document.getElementById("game")
-  const minimapCanvas = document.getElementById("minimap");
-
   // debounced resize
   window.addEventListener("resize", () => {
     window.clearTimeout(windowResizeTimeout);
@@ -191,7 +195,9 @@ export const watchWindowResizing = () => {
   });
 
   // initial resize
-  handleResize(container, gameCanvas, minimapCanvas);
+  setTimeout(() => {
+    handleResize(container, gameCanvas, minimapCanvas);
+  }, 100);
 };
 
 // allow going fullscreen with F key
@@ -227,5 +233,12 @@ const handleCursorHide = () => {
     cursorHidden = true;
   }, 2000);
 };
-window.addEventListener("mousemove", handleCursorHide);
-setTimeout(handleCursorHide, 2000);
+// Disabled since mouse cursor is being used to aim now
+// window.addEventListener("mousemove", handleCursorHide);
+// setTimeout(handleCursorHide, 2000);
+
+export const clearMinimap = () => {
+  const canvas = document.getElementById("minimap");
+  const context = canvas.getContext('2d');
+  context.clearRect(0, 0, canvas.width, canvas.height);
+}

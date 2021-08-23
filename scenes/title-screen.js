@@ -10,12 +10,13 @@ const inputTimer = 5;
 
 const topLogoY = 66.6;
 const logoTrails = 47;
-const logos = [];
 
 const hw = config.gameWidth / 2;
 const hh = config.gameHeight / 2;
 
 const animateLogos = () => {
+  const logos = [];
+
   for (let i = 0; i < logoTrails; i++) {
     const percent = (i / logoTrails);
     logos.push(k.add([

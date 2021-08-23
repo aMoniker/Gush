@@ -7,6 +7,7 @@ import { monsterWave, monsterWaveCircle, monsterWaveLineVertical, monsterWaveLin
 import music from "/music.js";
 import input, { vibrateGamepad } from "/input.js";
 import { config } from "/config.js";
+import { clearMinimap } from "/ui.js";
 
 const map = [
   "   ┌{%){)%){)%{┐   ",
@@ -216,6 +217,7 @@ map.triggers = {
             k.camRot(startRot + (rotDiff * easing.easeInQuart(pct)));
             if (pct >= 1) {
               cancelEffect();
+              clearMinimap();
               state.forcedCam = false;
             }
           });
