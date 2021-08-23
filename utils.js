@@ -90,6 +90,11 @@ export const flashColor = (obj, rgba, time) => {
 };
 
 let cachedPromise = Promise.resolve();
+
+export const clearAllAnnouncements = () => {
+  cachedPromise = Promise.resolve();
+};
+
 export const announce = (announcement) => {
   cachedPromise = cachedPromise.then(() => {
     const text = k.add([

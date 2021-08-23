@@ -6,6 +6,7 @@ import { createPlayer } from "/objects/player.js";
 import { getMapWidth } from "/levels/utils.js";
 import state from "/state.js";
 import music from "/music.js";
+import { clearAllAnnouncements } from "/utils.js";
 
 // add the player at the appropriate position on the map
 // this should be done last so the player sprite is above others.
@@ -39,7 +40,8 @@ let cancelMinimapLoop = null;
 let cancelMonsterLOSLoop = null;
 
 const resetLevel = () => {
-  music.stop();   
+  music.stop();
+  clearAllAnnouncements();
   
   // cancel all existing loops started during the last level
   if (cancelDrawLoop) cancelDrawLoop();
