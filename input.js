@@ -149,7 +149,7 @@ const handleMouseMove = (e) => {
   lastMouseX = aim.x;
   lastMouseY = aim.y;
   // if the mouse hasn't moved in a while, revert to keyboard aiming
-  cancelMouseAimingTimeout = setTimeout(cancelMouseAiming, 3333);
+  cancelMouseAimingTimeout = setTimeout(cancelMouseAiming, 5555);
 };
 const handleContextMenu = (e) => {
   e.preventDefault(); // prevent contextmenu so we can use right-click for burp

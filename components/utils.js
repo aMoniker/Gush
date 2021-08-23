@@ -3,8 +3,6 @@ import { config } from "/config.js";
 import state from "/state.js";
 
 export const aiPlayerInRange = (monster, options = {}) => {
-  const defaults = { runAnim: "run", idleAnim: "idle" };
-  const opts = { ...defaults, ...options }
   const { player } = state;
   if (!player || player.hit || player.dead) return false;
 
@@ -13,17 +11,19 @@ export const aiPlayerInRange = (monster, options = {}) => {
     || (monster.playerLOS && dist < monster.aiAttackDistLOS)
 
   if (inRange) {
-    // readd the monster the first time it's enabled
-    // we can't readd every frame since it changes the _id,
-    // which we depend on for hitbox checking elsewhere
     if (monster.aiWasDisabled) {
+      // readd the monster the first time it's enabled
+      // we can't readd every frame since it changes the _id,
+      // which we depend on for hitbox checking elsewhere
       k.readd(monster);
-      if (monster.curAnim() !== opts.runAnim) monster.play(opts.runAnim);
+      const runAnim = options.runAnim ?? "run";
+      if (monster.curAnim() !== runAnim) monster.play(runAnim);
     }
     monster.aiWasDisabled = false;
   } else {
+    const idleAnim = options.idleAnim ?? "idle";
+    if (monster.curAnim() !== idleAnim) monster.play(idleAnim);
     monster.aiWasDisabled = true;
-    if (monster.curAnim() !== opts.idleAnim) monster.play(opts.idleAnim);
   }
 
   return inRange;
