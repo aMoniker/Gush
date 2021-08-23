@@ -204,6 +204,7 @@ map.triggers = {
         })
         .then(() => {
           state.forcedCam = true;
+          state.level = 0;
           const startScale = k.width() / config.viewableWidth;
           const endScale = startScale * 3.33;
           const startRot = 0;

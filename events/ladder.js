@@ -13,6 +13,7 @@ const handleLadderDown = (player, ladder) => {
     announce("Press ATTACK to go to next level").finally(
       () => canAnnounce = true
     );
+    setTimeout(() => canAnnounce = true, 10000); // hacky force
   }
 
   if (cancelDescentListener) cancelDescentListener();
