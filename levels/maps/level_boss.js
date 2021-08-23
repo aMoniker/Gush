@@ -56,7 +56,7 @@ const map = [
   "       │···│       ",
   "┌─(─(─(┘···└(─(─(─┐",
   "│·················│",
-  "│···@·········E···│",
+  "│···@········HE···│",
   "│·················│",
   "└──(─(─(─)─(─(─(──┘",
 ];
@@ -68,6 +68,8 @@ const bgMusic = "party-on-1";
 map.onStart = () => {
   music.crossFade(bgMusic);
 };
+
+map.clearBurps = true;
 
 const center = [9, 22];
 

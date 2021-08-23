@@ -80,7 +80,7 @@ const playerType = {
  * Add a new player to the game. There can only be one at a time.
  * types: elf_f, elf_m, knight, lizard_f, lizard_m, wizard_f, wizard_m
  */
-export const createPlayer = (typeName, attrs) => {
+export const createPlayer = (typeName, attrs, options) => {
   const type = playerType[typeName];
 
   const player = k.add([
@@ -105,11 +105,12 @@ export const createPlayer = (typeName, attrs) => {
     },
     hp({ 
       max: type.hp,
-      current: type.hp,
+      current: options.hp ?? type.hp,
+      currentShield: options.shields ?? 0,
       showHealthBar: false,
       heartbeat: true,
     }),
-    burp({ current: 0 }),
+    burp({ current: options.burps ?? 0 }),
     ...(attrs ?? []),
   ]);
 
@@ -375,6 +376,7 @@ export const createPlayer = (typeName, attrs) => {
         const clearRestart = k.action(() => {
           if (input.attack) {
             clearRestart();
+            state.player = undefined; // don't carry over hp/shields/burps
             fadeToScene("main");
             vibrateGamepad(100, 1, 0);
           }

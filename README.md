@@ -105,7 +105,7 @@ Some characters can shoot: aim with right analog stick or mouse.
 
 ### Nice to have
 - [ ] Scooty Poke leaps backwards if he ends overlapping an enemy
-- [ ] save health/shields/burps between levels (except on boss - empty burps)
+- [x] save health/shields/burps between levels (except on boss - empty burps)
 - [x] Meat Cleaverang for Lizzy
 - [x] Force 1.5 aspect ratio no matter screens size
 - [ ] Better monster spawn/despawn (save position to objConfigs, improve framerate maybe)

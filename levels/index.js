@@ -10,13 +10,13 @@ import { clearAllAnnouncements } from "/utils.js";
 
 // add the player at the appropriate position on the map
 // this should be done last so the player sprite is above others.
-const createPlayerOnMap = (map) => {
+const createPlayerOnMap = (map, options) => {
   let player = null;
   createPlayerLoop:
   for (let y = 0; y < map.length; y++) {
     for (let x = 0; x < getMapWidth(map); x++) {
       if (map[y][x] !== '@') continue;
-      player = createPlayer(state.playerType, [getWorldPos(x, y)]);
+      player = createPlayer(state.playerType, [getWorldPos(x, y)], options);
       break createPlayerLoop;
     }
   }
@@ -42,6 +42,7 @@ let cancelMonsterLOSLoop = null;
 const resetLevel = () => {
   music.stop();
   clearAllAnnouncements();
+  // state.player = undefined;
   
   // cancel all existing loops started during the last level
   if (cancelDrawLoop) cancelDrawLoop();
@@ -56,18 +57,27 @@ const resetLevel = () => {
 
 // main level generation function
 export const generateLevel = () => {
+  // carry over player status from previous level
+  let playerOptions = {};
+  if (state.player) {
+    playerOptions.hp = state.player.hp();
+    playerOptions.burps = state.player.burps();
+    playerOptions.shields = state.player.shields();
+  }
+
   // reset all settings from any previous levels
   resetLevel();
 
   // get the new map for the level
   const map = generateMap();
+  if (map.clearBurps) playerOptions.burps = 0; // boss level clears burps
 
   // regenerate all the objects and boundaries
   regenerateObjectConfigs(map);
   regenerateBoundaryMap(objectConfigs);
 
   // add the player directly since it's more complex than a typical object config
-  const player = createPlayerOnMap(map);
+  const player = createPlayerOnMap(map, playerOptions);
 
   // there were some intermittent freezing issues when calling this
   // synchronously that I wasn't able to track down, so use setTimeout.
