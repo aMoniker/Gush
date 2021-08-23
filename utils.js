@@ -85,7 +85,10 @@ export const flashColor = (obj, rgba, time) => {
   obj.color.b = rgba[2];
   obj.color.a = rgba[3];
   return k.wait(time, () => {
-    obj.color = { ...obj.color, r:1, g:1, b:1, a:1 };
+    obj.color.r = 1;
+    obj.color.g = 1;
+    obj.color.b = 1;
+    obj.color.a = 1;
   });
 };
 

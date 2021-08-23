@@ -1,7 +1,7 @@
 import { k } from "/kaboom.js";
 import { generateMap } from "/levels/maps/index.js";
 import { getWorldPos, regenerateBoundaryMap } from "/levels/spatial.js";
-import { extantObjects, drawVisibleObjects, resetDrawLoop, objectConfigs, regenerateObjectConfigs, initializeMinimap, startMonsterLOSLoop } from "/levels/visibility.js";
+import { extantObjects, drawVisibleObjects, resetDrawLoop, objectConfigs, regenerateObjectConfigs, initializeMinimap, startMonsterLOSLoop, startMonsterDespawnLoop } from "/levels/visibility.js";
 import { createPlayer } from "/objects/player.js";
 import { getMapWidth } from "/levels/utils.js";
 import state from "/state.js";
@@ -38,6 +38,7 @@ const enableTriggers = (map) => {
 let cancelDrawLoop = null;
 let cancelMinimapLoop = null;
 let cancelMonsterLOSLoop = null;
+let cancelMonsterDespawnLoop = null;
 
 const resetLevel = () => {
   music.stop();
@@ -48,6 +49,7 @@ const resetLevel = () => {
   if (cancelDrawLoop) cancelDrawLoop();
   if (cancelMinimapLoop) cancelMinimapLoop();
   if (cancelMonsterLOSLoop) cancelMonsterLOSLoop();
+  if (cancelMonsterDespawnLoop) cancelMonsterDespawnLoop();
   resetDrawLoop();
 
   // destroy any existing game objects
@@ -92,6 +94,9 @@ export const generateLevel = () => {
 
     // calculate LOS for monsters
     cancelMonsterLOSLoop = startMonsterLOSLoop(player);
+
+    // handle despawning of distant monsters
+    cancelMonsterDespawnLoop = startMonsterDespawnLoop(player);
 
     // listen for any triggers on the map
     enableTriggers(map);

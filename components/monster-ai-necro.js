@@ -71,7 +71,7 @@ export default (options = {}) => {
     {
       dir: k.vec2(0, 0),
       speed: 88,
-      damage: 2,
+      damage: 1,
     }
   ]);
 

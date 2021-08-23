@@ -154,6 +154,9 @@ export const drawVisibleObjects = (pwx, pwy) => {
         obj._cachedId = obj._id;
         objConfig._cachedId = obj._cachedId;
 
+        // if this is a monster, store its config so it can be despawned/spawned later
+        if (obj.is("monster")) obj._cachedConfig = objConfig;
+
         // add the object to the map of existing objects
         extantObjects.add(x, y, obj);
       }
@@ -186,6 +189,7 @@ export const drawVisibleObjects = (pwx, pwy) => {
           if (obj.isDestroying || !obj.exists() || !obj.is("static")) {
             const confs = objectConfigs.get(x, y);
             for (let i = 0; i < (confs ?? []).length; i++) {
+              if (!confs[i]) continue;
               if (confs[i]._cachedId === obj._cachedId) {
                 confs[i] = undefined;
               }
@@ -273,3 +277,21 @@ export const startMonsterLOSLoop = (player) => {
     });
   });
 }
+
+// despawn monsters that are far away, saving their config in objectConfigs
+// so they can be respawned again with stats/hp/etc preserved when in view
+// this helps a lot with performance
+const maxSpawnDist = config.renderedWidth;
+export const startMonsterDespawnLoop = (player) => {
+  return k.loop(1, () => {
+    k.every("monster", (m) => {
+      if (m.dead || m.isDestroying || !m.pos || !m._cachedConfig) return;
+      if (m.pos.dist(player.pos) < maxSpawnDist) return;
+      const { x, y } = translateWorldToMapCoords(m.pos.x, m.pos.y);
+      // only save the array members, and not anything tagged onto it, like _cachedId
+      const savedConfig = [ ...m._cachedConfig ];
+      objectConfigs.add(x, y, savedConfig);
+      m.destroy();
+    });
+  });
+};

@@ -12,7 +12,8 @@ export default (options) => {
   // show healthbar by default, pass false to disable
   let healthBar = null;
   const fullHealthBarWidth = 8;
-  if (options.showHealthBar ?? true) {
+
+  const createHealthBar = () => {
     healthBar = k.add([
       k.rect(fullHealthBarWidth, fullHealthBarWidth * 0.33, { noArea: true }),
       k.color(1, 0, 0, 0.88),
@@ -21,6 +22,7 @@ export default (options) => {
       k.layer("fx"),
     ]);
     healthBar.hidden = true;
+    updateHealthBar();
   }
 
   const updateHealthBar = () => {
@@ -57,10 +59,21 @@ export default (options) => {
     dead: false,
     healing: false,
 
+    add() {
+      if (options.showHealthBar ?? true) createHealthBar();
+    },
+
     update() {
       if (healthBar) {
         healthBar.pos.x = this.pos.x;
         healthBar.pos.y = this.pos.y + this.height / 2;
+      }
+    },
+
+    destroy() {
+      if (healthBar) {
+        healthBar.destroy();
+        healthBar = null;
       }
     },
 
