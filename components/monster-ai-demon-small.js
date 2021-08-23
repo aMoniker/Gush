@@ -11,15 +11,14 @@ export default (options = {}) => {
   let spellTimer = timeBetweenSpells / 2;
 
   const projectileSpell = () => ([
-    k.sprite("vfx-vortex", { noArea: true, animSpeed: 0.01 }),
+    k.sprite("tank_explosion3", { noArea: true }),
     k.origin("center"),
-    k.area(k.vec2(-8, -8), k.vec2(8, 8)),
+    k.area(k.vec2(-10, -10), k.vec2(10, 10)),
     k.rotate(0),
-    k.scale(0.2),
+    k.scale(0.1),
     "monster_projectile",
     lifecycle({
       onAdd: (p) => {
-        p.play("main");
         k.play("fire-1", {
           volume: 0.666,
           speed: 0.8,
@@ -44,11 +43,12 @@ export default (options = {}) => {
       },
       onUpdate: (p) => {
         p.move(p.dir.scale(p.speed));
+        p.angle += 0.0666;
       }
     }),
     {
       dir: k.vec2(0, 0),
-      speed: 88,
+      speed: 66.6,
       damage: 2,
     }
   ]);
@@ -61,7 +61,6 @@ export default (options = {}) => {
     aiAttackDistLOS: config.tileWidth * 7.77,
     aiAttackDistForce: config.tileWidth * 5,
     update() { // called every frame
-      // if (!aiPlayerInRange(this)) return;
       if (this.dead) return;
 
       // cast spells at player
