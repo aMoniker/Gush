@@ -23,14 +23,14 @@ const randomTreasure = () => k.choose([
 ]);
 
 const mapOrders = {
-  // knight: [level_1_1, randomTreasure, level_1_2, randomTreasure, level_boss],
-  knight: [level_boss],
-  elf_f: [level_2_1, randomTreasure],
-  elf_m: [level_3_1, randomTreasure],
-  lizard_f: [level_4_1, randomTreasure],
-  lizard_m: [level_1_1],
-  wizard_f: [level_1_1],
-  wizard_m: [level_1_1],
+  knight: [level_1_1, randomTreasure, level_1_2, randomTreasure, level_boss],
+  // elf_f: [level_2_1, randomTreasure, level_boss],
+  elf_f: [level_boss],
+  elf_m: [level_3_1, randomTreasure, level_boss],
+  lizard_f: [level_4_1, randomTreasure, level_boss],
+  lizard_m: [level_1_1, randomTreasure, level_boss],
+  wizard_f: [level_1_1, randomTreasure, level_boss],
+  wizard_m: [level_1_1, randomTreasure, level_boss],
 };
 
 export const loadNextLevel = () => {

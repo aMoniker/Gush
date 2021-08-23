@@ -60,7 +60,10 @@ class Music {
   crossFade(trackName, audioConfig) {
     audioConfig = audioConfig ?? {};
     const prevTrack = this.currentTrack;
-    const curTrackVolume = (audioConfig.volume ?? 1) * this.globalVolume();
+    let curTrackVolume = audioConfig.volume
+      ?? (defaultTrackConfigs[trackName] ?? {}).volume
+      ?? 1;
+    curTrackVolume *= this.globalVolume();
     const prevTrackVolume = prevTrack ? prevTrack.volume() : 0;
     if (audioConfig.volume) delete audioConfig.volume;
 

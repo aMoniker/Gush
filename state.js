@@ -39,7 +39,7 @@ try {
 // basic state variables
 // - changing properties is ephemeral and only saved while the game is running
 // - using get/set saves data to localStorage & persists between games
-export default {
+const state = {
   level: 0, // current level index
   player: null, // reference to player object for quick lookup
   playerType: "knight",
@@ -67,3 +67,16 @@ export default {
     }
   }
 };
+
+export const hasUnlockedAllCharacters = () => {
+  if (!state.get("unlocked_knight")) return false;
+  if (!state.get("unlocked_elf_f")) return false;
+  if (!state.get("unlocked_elf_m")) return false;
+  if (!state.get("unlocked_lizard_f")) return false;
+  if (!state.get("unlocked_lizard_m")) return false;
+  if (!state.get("unlocked_wizard_f")) return false;
+  if (!state.get("unlocked_wizard_m")) return false;
+  return true;
+}
+
+export default state;

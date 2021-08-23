@@ -1,6 +1,6 @@
 import { k } from "/kaboom.js";
 import { announce, easing, fadeToScene } from "/utils.js";
-import state from "/state.js";
+import state, { hasUnlockedAllCharacters } from "/state.js";
 import * as powerups from "/objects/powerups.js";
 import * as monster from "/objects/monster.js";
 import { monsterWave, monsterWaveCircle, monsterWaveLineVertical, monsterWaveLineHorizontal, coinReward, coinRewardCircle, crateWall, crateWallHorizontal, crateWallVertical, spawnObject } from "/levels/maps/utils.js";
@@ -23,7 +23,7 @@ const map = [
   "        │·│        ",
   "        │·│        ",
   "        │2│        ",
-  "        │@│        ",
+  "        │·│        ",
   "┌─&──&──┘·└──&──&─┐",
   "│·················│",
   "│·················│",
@@ -56,7 +56,7 @@ const map = [
   "       │···│       ",
   "┌─(─(─(┘···└(─(─(─┐",
   "│·················│",
-  "│·············E···│",
+  "│···@·········E···│",
   "│·················│",
   "└──(─(─(─)─(─(─(──┘",
 ];
@@ -69,7 +69,7 @@ map.onStart = () => {
   music.crossFade(bgMusic);
 };
 
-const center = [9, 12];
+const center = [9, 22];
 
 const zombieWave = () => {
   return Promise.all([
@@ -122,8 +122,8 @@ map.triggers = {
   1: async () => {
     const boss = k.get("demon_boss")[0];
     const crates = [
-      ...crateWallHorizontal([8, 21], 3),
-      ...crateWallHorizontal([9, 4], 1),
+      ...crateWallHorizontal([8, 31], 3),
+      ...crateWallHorizontal([9, 14], 1),
     ];
 
     let canShowHint = true;
@@ -131,7 +131,8 @@ map.triggers = {
       if (amt < 666) {
         if (canShowHint) {
           announce("It's too strong!");
-          announce("Find FLASKS & use DEADLY BURP!");
+          announce("Only DEADLY BURP can KILL it!")
+          announce("WAVES of MONSTERS drop FLASKS!");
           canShowHint = false;
         }
       } else {
@@ -149,8 +150,8 @@ map.triggers = {
       k.every("monster", m => m.hurt(666, state.player));
     })
 
-    const burpPotionLocation = [9, 16];
-    const otherPotionLocation = () => k.choose([[2, 13], [14, 13], [9, 6], [9, 18]]);
+    const burpPotionLocation = [9, 26];
+    const otherPotionLocation = () => k.choose([[2, 23], [14, 23], [9, 16], [9, 28]]);
 
     // after some boss rotations, spawn a single burp potion
     let rotationCount = 0;
@@ -160,7 +161,8 @@ map.triggers = {
       if (rotationCount >= rotationsBeforeBurpPotion) {
         rotationCount = 0;
         setTimeout(() => {
-          spawnObject(powerups.flask("small", "green"), 9, 16);
+          announce("DEADLY BURP FLASK DROPPED");
+          spawnObject(powerups.flask("small", "green"), 9, 26);
         }, 3333);
       }
     });
@@ -194,7 +196,12 @@ map.triggers = {
       announce("The GOLDEN FLASK is YOURS")
         .then(() => announce("A WINNER is YOU!"))
         .then(() => announce("Thanks for playing!"))
-        .then(() => announce("Remember to UNLOCK more characters!"))
+        .then(() => {
+          const msg = hasUnlockedAllCharacters()
+                    ? "Did you WIN with EVERY character?!"
+                    : "Now, UNLOCK more characters!";
+          announce(msg);
+        })
         .then(() => {
           state.forcedCam = true;
           const startScale = k.width() / config.viewableWidth;

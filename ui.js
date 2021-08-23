@@ -157,8 +157,16 @@ const minimapCanvas = document.getElementById("minimap");
 // update the minimap height/width based on the map size
 export const autoResizeMinimap = () => {
   const rect = gameCanvas.getBoundingClientRect();
-  const minimapWidth = rect.width * config.minimapSize;
   const mapAspectRatio = state.mapWidth / state.mapHeight;
+  let minimapWidth = 0;
+  let minimapHeight = 0;
+  if (mapAspectRatio >= 1) { // map is wider than it is tall
+    minimapWidth = rect.width * config.minimapSize;
+    minimapHeight = minimapWidth / mapAspectRatio;
+  } else { // map is taller than it is wide
+    minimapHeight = rect.height * config.minimapSize;
+    minimapWidth = minimapHeight * mapAspectRatio;
+  }
   minimapCanvas.style.width = `${minimapWidth}px`;
   minimapCanvas.style.height = `${minimapWidth / mapAspectRatio}px`;
 };
@@ -197,7 +205,7 @@ export const watchWindowResizing = () => {
   // initial resize
   setTimeout(() => {
     handleResize(container, gameCanvas, minimapCanvas);
-  }, 100);
+  }, 10);
 };
 
 // allow going fullscreen with F key
