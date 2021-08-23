@@ -60,7 +60,7 @@ const types = [
     hearts: 2,
     difficulty: "medium rare",
     difficultyColor: [0.54, 0.285, 0.18],
-    cost: 333,
+    cost: 451,
   },
   {
     key: "wizard_m",
@@ -69,7 +69,7 @@ const types = [
     hearts: 1,
     difficulty: "is this a joke?",
     difficultyColor: [0.746, 0.25, 0.746],
-    cost: 1337,
+    cost: 555,
   },
 ];
 
