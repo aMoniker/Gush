@@ -23,20 +23,58 @@ const randomTreasure = () => k.choose([
   level_treasure_5,
 ]);
 
-const mapOrders = {
-  knight: [level_1_1, randomTreasure, level_1_2, randomTreasure, level_boss],
-  elf_f: [level_2_1, randomTreasure, level_boss],
-  elf_m: [level_3_1, randomTreasure, level_boss],
-  lizard_f: [level_4_1, randomTreasure, level_boss],
-  lizard_m: [level_5_1, randomTreasure, level_boss],
-  wizard_f: [level_1_1, randomTreasure, level_boss],
-  wizard_m: [level_1_1, randomTreasure, level_boss],
+const randomLevel = (doNotInclude = []) => {
+  const allChoices = [level_2_1, level_3_1, level_4_1, level_5_1]
+  const choices = allChoices.filter(l => !doNotInclude.includes(l));
+  return k.choose(choices);
 };
+
+let mapOrders = {};
+export const regenerateMapOrders = () => {
+  mapOrders = {};
+  mapOrders.knight = [
+    level_1_1, randomTreasure(), level_1_2, randomTreasure(), level_boss
+  ];
+  mapOrders.elf_f = [
+    level_2_1, randomTreasure(), randomLevel([level_2_1]), randomTreasure(), level_boss
+  ];
+  mapOrders.elf_m = [
+    level_3_1, randomTreasure(), randomLevel([level_3_1]), randomTreasure(), level_boss
+  ];
+  mapOrders.lizard_f = [
+    level_4_1, randomTreasure(), randomLevel([level_4_1]), randomTreasure(), level_boss
+  ];
+  mapOrders.lizard_m = [
+    level_5_1, randomTreasure(), randomLevel([level_5_1]), randomTreasure(), level_boss
+  ];
+  const wizMap1 = randomLevel();
+  const wizMap2 = randomLevel([wizMap1]);
+  mapOrders.wizard_f = [
+    wizMap1, randomTreasure(), wizMap2, randomTreasure(), level_boss
+  ];
+  mapOrders.wizard_m = [
+    wizMap1, randomTreasure(), wizMap2, randomTreasure(), level_boss
+  ];
+}
+
+// const getMapOrder = (type) => getMapsForType(type)
+//   .map(m => typeof m === "function" ? m() : m)
+//   .filter(m => !!m)
+//   ;
+
+// const mapOrders = {
+//   knight: [level_1_1, randomTreasure, level_1_2, randomTreasure, level_boss],
+//   elf_f: [level_2_1, randomTreasure, randomLevel, level_boss],
+//   elf_m: [level_3_1, randomTreasure, level_boss],
+//   lizard_f: [level_4_1, randomTreasure, level_boss],
+//   lizard_m: [level_5_1, randomTreasure, level_boss],
+//   wizard_f: [level_1_1, randomTreasure, level_boss],
+//   wizard_m: [level_1_1, randomTreasure, level_boss],
+// };
 
 export const loadNextLevel = () => {
   // make sure all existing scene objects are destroyed
   k.every((obj) => obj.destroy());
-
   state.level++;
   const maps = mapOrders[state.playerType];
   if (state.level < 0) state.level = 0; // should never happen™

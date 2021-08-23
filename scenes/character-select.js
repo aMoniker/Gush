@@ -5,6 +5,7 @@ import input, { enableInputListeners, vibrateGamepad } from "/input.js";
 import music from "/music.js";
 import { addLayers } from "/layers.js";
 import { fadeIn, fadeToScene } from "/utils.js";
+import { regenerateMapOrders } from "/levels/maps/index.js";
 
 const types = [
   {
@@ -83,6 +84,7 @@ const basicAttributes = () => ([
 k.scene("character-select", (args = {}) => {
   addLayers();
   fadeIn();
+  regenerateMapOrders();
 
   // prevent held input from entry screen immediately selecting character
   setTimeout(() => {

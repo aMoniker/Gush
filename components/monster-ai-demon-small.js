@@ -6,6 +6,7 @@ import lifecycle from "/components/lifecycle.js";
 
 export default (options = {}) => {
   const minSpellDist = config.tileWidth * 3; // can't cast spells if player too close
+  const maxSpellDist = config.tileWidth * 11; // or if too far away
   const timeBetweenSpells = 3;
   let spellTimer = timeBetweenSpells / 2;
 
@@ -65,18 +66,18 @@ export default (options = {}) => {
 
       // cast spells at player
       spellTimer += k.dt();
-      if (spellTimer >= timeBetweenSpells
-      && this.pos.dist(state.player.pos) >= minSpellDist
-      && this.playerLOS
-      ) {
-        this.aiEnabled = false;
-        k.wait(1, () => this.aiEnabled = true);
-        spellTimer = 0;
-        // spawn spell projectile
-        k.add([
-          ...projectileSpell(),
-          k.pos(this.pos),
-        ]);
+      if (this.playerLOS && spellTimer >= timeBetweenSpells) {
+        const dist = this.pos.dist(state.player.pos);
+        if (dist >= minSpellDist && dist <= maxSpellDist) {
+          this.aiEnabled = false;
+          k.wait(1, () => this.aiEnabled = true);
+          spellTimer = 0;
+          // spawn spell projectile
+          k.add([
+            ...projectileSpell(),
+            k.pos(this.pos),
+          ]);
+        }
       }
 
       aiBasicMoveAttack(this);

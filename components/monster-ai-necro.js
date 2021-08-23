@@ -9,6 +9,7 @@ import { aiPlayerInRange } from "/components/utils.js"
 
 export default (options = {}) => {
   const minSpellDist = config.tileWidth * 2.5; // can't cast spells if player too close
+  const maxSpellDist = config.tileWidth * 11; // or if too far away
   const timeBetweenSpells = 1.33;
   let spellTimer = timeBetweenSpells / 2;
 
@@ -112,18 +113,19 @@ export default (options = {}) => {
         }));
       }
 
+      maxSpellDist
+
       // otherwise... cast spells at player
       spellTimer += k.dt();
-      if (spellTimer >= timeBetweenSpells
-      && this.playerLOS
-      && this.pos.dist(state.player.pos) >= minSpellDist
-      ) {
-        spellTimer = 0;
-        // spawn spell projectile
-        k.add([
-          ...projectileSpell(),
-          k.pos(this.pos),
-        ]);
+      if (this.playerLOS && spellTimer >= timeBetweenSpells) {
+        const dist = this.pos.dist(state.player.pos);
+        if (dist >= minSpellDist && dist <= maxSpellDist) {
+          spellTimer = 0;
+          k.add([ // spawn spell projectile
+            ...projectileSpell(),
+            k.pos(this.pos),
+          ]);
+        }
       }
     },
     destroy() {
