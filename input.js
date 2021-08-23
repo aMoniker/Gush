@@ -110,8 +110,20 @@ const handleGamepad = () => {
   }
 };
 
-const handleMouseDown = () => input.attack = true;
-const handleMouseUp = () => input.attack = false;
+const handleMouseDown = (e) => {
+  if (e.button === 0) { // left click
+    input.attack = true;
+  } else if (e.button === 2) { // right click
+    input.burp = true;
+  }
+}
+const handleMouseUp = (e) => {
+  if (e.button === 0) {
+    input.attack = false;
+  } else if (e.button === 2) {
+    input.burp = false;
+  }
+}
 const handleMouseMove = (e) => {
   const center = k.vec2(document.body.offsetWidth / 2, document.body.offsetHeight / 2);
   const mouse = k.vec2(e.clientX, e.clientY);
@@ -119,7 +131,9 @@ const handleMouseMove = (e) => {
   input.x2 = aim.x;
   input.y2 = aim.y;
 };
-
+const handleContextMenu = (e) => {
+  e.preventDefault(); // prevent contextmenu so we can use right-click for burp
+}
 
 
 let cancelAll = null;
@@ -178,6 +192,7 @@ export const enableInputListeners = () => {
   window.addEventListener("mousedown", handleMouseDown);
   window.addEventListener("mouseup", handleMouseUp);
   window.addEventListener("mousemove", handleMouseMove);
+  window.addEventListener("contextmenu", handleContextMenu);
 
   // cancel function
   cancelAll = () => {
@@ -188,5 +203,6 @@ export const enableInputListeners = () => {
     window.removeEventListener("mousedown", handleMouseDown);
     window.removeEventListener("mouseup", handleMouseUp);
     window.removeEventListener("mousemove", handleMouseMove);
+    window.removeEventListener("contextmenu", handleContextMenu);
   };
 };
