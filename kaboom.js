@@ -9,7 +9,7 @@ export const kaboomOptions = {
   global: false,
   clearColor: [0, 0, 0, 1],
   crisp: true,
-  debug: true,
+  debug: false,
 };
 
 export const k = kaboom(kaboomOptions);
