@@ -12,6 +12,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
+  cursor: url(/assets/sprites/finger-pointer.png), pointer !important;
 }
 #container {
   width: 100%;
@@ -24,6 +25,7 @@ canvas#game {
   z-index: 100;
   width: 100%;
   height: 100%;
+  cursor: url(/assets/sprites/finger-pointer.png), pointer !important;
 }
 canvas#minimap {
   position: absolute;

@@ -126,6 +126,8 @@ const handleMouseUp = (e) => {
     input.burp = false;
   }
 }
+
+
 const handleMouseMove = (e) => {
   const center = k.vec2(document.body.offsetWidth / 2, document.body.offsetHeight / 2);
   const mouse = k.vec2(e.clientX, e.clientY);
