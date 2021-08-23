@@ -20,25 +20,18 @@ Gush is a dungeon brawler game built with [Kaboom.js](https://kaboomjs.com/) on 
 - [Kenney.nl Pixel UI Pack](https://kenney.nl/assets/pixel-ui-pack)
 - [Will's Pixel Explosions](https://untiedgames.itch.io/five-free-pixel-explosions)
 - [Free Pixel Effects Pack #12 - Mini Magick Shoots 3](https://xyezawr.itch.io/gif-free-pixel-effects-pack-12-mini-magick-shoots-3)
+- [Free Pixel Effects Pack #13 - Fireballs](https://xyezawr.itch.io/free-pixel-effects-pack-13-fireballs)
 
-## Sound
+## Sound & Music
 - [Shapeforms Audio Free Sounds](https://shapeforms.itch.io/shapeforms-audio-free-sfx)
 - [Hypercasual Music Pack 1](https://www.void1gaming.com/hypercasual-music-pack-1)
 - [Hypercasual Music Pack 4](https://www.void1gaming.com/hypercasual-music-pack-4)
 - [Action RPG Music Free](https://vgcomposer.itch.io/action-rpg-music-free)
 - [Sound Effect Starter Pack](https://simon13666.itch.io/sound-starter-pack)
 
-## Maybe will use (not implemented yet)
-- [Magical Animation Effects](https://pimen.itch.io/magical-animation-effects)
-- [GIF Free Pixel Effects Pack #6 - forks of flame](https://xyezawr.itch.io/gif-free-pixel-effects-pack-6-forks-of-flame)
-
-## Lots more cool assets (not implemented in this game)
-- [https://xyezawr.itch.io/](https://xyezawr.itch.io/)
-- [https://kvsr.itch.io/](https://kvsr.itch.io/)
-
 ## Feature Tracker
 
-### Basic game mechanics
+### Essential features
 - [x] Red flask restores hp of course
 - [x] HP is always in increments of 1, each 1 represents half a heart
 - [x] Blue flask gives a shield on top of HP
@@ -48,8 +41,6 @@ Gush is a dungeon brawler game built with [Kaboom.js](https://kaboomjs.com/) on 
 - [x] Multiple characters with different health & weapons
   - [x] Coins can be collected through multiple game runs to unlock more characters
 - [x] Current level can be reset when player dies.
-
-### Essential features
 - [x] Different levels
   - [x] Use more tiles: banners, fountains, slime, traps
   - [x] Load next level at ladder down

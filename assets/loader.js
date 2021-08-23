@@ -241,8 +241,11 @@ export const loadAssets = () => {
   promises.push(loadBasicSprite("vfx-thrust", 5, {
     main: [0, 4],
   }));
-  promises.push(loadBasicSprite("fireball", { x: 8, y: 8 }, {
-    main: [0, 60],
+  // promises.push(loadBasicSprite("fireball", { x: 8, y: 8 }, {
+  //   main: [0, 60],
+  // }));
+  promises.push(loadBasicSprite("fireball-magic", 60, {
+    main: [0, 59],
   }));
   promises.push(loadBasicSprite("necro-spell", 30, {
     main: [0, 29],

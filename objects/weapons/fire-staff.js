@@ -5,12 +5,12 @@ import { coordsInBbox, getRenderedWorldBbox } from "/levels/spatial.js";
 
 export const createFireStaff = (player) => {
   const fireballConfig = () => ([
-    k.sprite("fireball", { noArea: true, animSpeed: 0.01 }),
-    k.area(k.vec2(-8, -8), k.vec2(8, 8)),
+    k.sprite("fireball-magic", { noArea: true, animSpeed: 0.01 }),
+    k.area(k.vec2(-6, -6), k.vec2(6, 6)),
     k.rotate(0),
     k.origin("center"),
     k.layer("game"),
-    k.scale(0.33),
+    k.scale(0.5),
     lifecycle({
       onAdd: (a) => {
         a.play("main");
@@ -154,8 +154,7 @@ export const createFireStaff = (player) => {
           k.pos(spawnPos),
         ]);
         fireball.dir = player.dirAttack.clone();
-        fireball.angle = Math.atan2(fireball.dir.x, fireball.dir.y) + Math.PI;
-        fireball.flipX(player.xFlipped);
+        fireball.angle = Math.atan2(fireball.dir.x, fireball.dir.y) - Math.PI / 2;
 
         // allow next attack
         k.wait(delayBetweenShots, () => weapon.attacking = false);

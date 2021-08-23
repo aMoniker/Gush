@@ -17,7 +17,7 @@ export default (options) => {
   // allows us to stack lifecycle components when assembling configs
   if (options.onAdd) {
     // called when object added to scene.
-    const existingAdd = component.add;
+    const existingAdd = component.add; // this might not be necessary
     component.add = function() {
       setTimeout(() => {
         if (existingAdd) existingAdd.call(this);
