@@ -67,6 +67,7 @@ const bgMusic = "party-on-1";
 
 map.onStart = () => {
   music.crossFade(bgMusic);
+  announce("-- DEMON'S LAIR --", { silent: true });
 };
 
 map.clearBurps = true;

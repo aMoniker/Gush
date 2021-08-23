@@ -91,6 +91,7 @@ const bgMusic = "sunset-alleyway";
 
 map.onStart = () => {
   music.crossFade(bgMusic);
+  announce("-- RING OF DEATH --", { silent: true });
 }
 
 map.triggers = {

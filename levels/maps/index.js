@@ -24,7 +24,7 @@ const randomTreasure = () => k.choose([
 ]);
 
 const randomLevel = (doNotInclude = []) => {
-  const allChoices = [level_2_1, level_3_1, level_4_1, level_5_1]
+  const allChoices = [level_1_2, level_2_1, level_3_1, level_4_1, level_5_1]
   const choices = allChoices.filter(l => !doNotInclude.includes(l));
   return k.choose(choices);
 };

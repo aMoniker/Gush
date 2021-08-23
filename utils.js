@@ -98,7 +98,7 @@ export const clearAllAnnouncements = () => {
   cachedPromise = Promise.resolve();
 };
 
-export const announce = (announcement) => {
+export const announce = (announcement, options = {}) => {
   cachedPromise = cachedPromise.then(() => {
     const text = k.add([
       k.text(announcement, 23),
@@ -109,7 +109,9 @@ export const announce = (announcement) => {
     ]);
     text.pos.x = (k.width() / 2);
     text.pos.y = (k.height() / 2) - 77;
-    k.play("pop-1", { loop: false, volume: 0.37, speed: 1.33, detune: -300 });
+    if (!options.silent) {
+      k.play("pop-1", { loop: false, volume: 0.37, speed: 1.33, detune: -300 });
+    }
     return tween(text, 0.5, { "color.a": 1 })
       .then(() => k.wait(1.5))
       .then(() => tween(text, 0.5, { "color.a": 0 }))

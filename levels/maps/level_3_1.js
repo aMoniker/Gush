@@ -90,6 +90,7 @@ const bgMusic = "stark-nuances";
 
 map.onStart = () => {
   music.crossFade(bgMusic);
+  announce("-- ORC STRONGHOLD --", { silent: true });
 }
 
 map.triggers = {

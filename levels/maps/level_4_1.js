@@ -91,6 +91,7 @@ const bgMusic = "stark-nuances";
 
 map.onStart = () => {
   music.crossFade(bgMusic);
+  announce("-- ANCIENT ALTAR --", { silent: true });
 }
 
 map.triggers = {

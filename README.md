@@ -112,6 +112,7 @@ Some characters can shoot: aim with right analog stick or mouse.
 - [x] Controller support
 - [x] Minimap
 - [x] Interim treasure levels
+- [x] Add announce names to levels, some triggers
 - [x] Main menu screen
   - [x] Logo intro animation
   - [ ] sound/music adjust

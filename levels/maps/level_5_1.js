@@ -84,6 +84,7 @@ const bgMusic = "cave-3";
 
 map.onStart = () => {
   music.crossFade(bgMusic);
+  announce("-- FORGOTTEN RUINS --", { silent: true });
 };
 
 map.triggers = {
