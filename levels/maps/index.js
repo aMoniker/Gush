@@ -34,7 +34,6 @@ export const regenerateMapOrders = () => {
   mapOrders = {};
   mapOrders.knight = [
     level_1_1, randomTreasure(), level_1_2, randomTreasure(), level_boss
-    // randomTreasure(), randomTreasure(), randomTreasure(), level_boss
   ];
   mapOrders.elf_f = [
     level_2_1, randomTreasure(), randomLevel([level_2_1]), randomTreasure(), level_boss
@@ -72,6 +71,7 @@ export const loadNextLevel = () => {
 }
 
 export const generateMap = () => {
+  if (!mapOrders[state.playerType]) regenerateMapOrders();
   const level = mapOrders[state.playerType][state.level];
   if (typeof level === "function") return level();
   return level;

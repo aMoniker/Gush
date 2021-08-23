@@ -123,6 +123,19 @@ export const createSpear = (player) => {
         const canAttackAgainTimer = thrustTime * 2;
 
         k.wait(attackFinishTimer, () => {
+          for (const m of k.get("monster")) {
+            // if attack ends overlapping a live monster, bump player backwards
+            if (!m.hidden && !m.dead && hitBox.isOverlapped(m)) {
+              const oldSpeed = player.speed;
+              player.forcedMoving = true;
+              player.dir = player.pos.sub(m.pos).unit();
+              player.speed = 177;
+              k.wait(0.1, () => {
+                player.forcedMoving = false;
+                player.speed = oldSpeed;
+              });
+            }
+          }
           weapon.attacking = false;
           hitBox.hidden = true;
         });
