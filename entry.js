@@ -5,10 +5,7 @@ import "/scenes/index.js"; // initializes all scenes
 
 watchWindowResizing();
 loadAssets();
-
 k.go("intro");
-// k.go("main");
-// k.go("mainmenu");
 
 // pause the game (events are still being listened to)
 // k.debug.paused = true;

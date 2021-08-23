@@ -61,7 +61,7 @@ export default (options = {}) => {
     aiAttackDistLOS: config.tileWidth * 7.77,
     aiAttackDistForce: config.tileWidth * 5,
     update() { // called every frame
-      if (this.dead) return;
+      if (!this || this.dead || !state.player) return;
 
       // cast spells at player
       spellTimer += k.dt();

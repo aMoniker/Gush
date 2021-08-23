@@ -119,7 +119,8 @@ export default (options = {}) => {
       setTimeout(() => this.play("idle"), 0);
     },
     update() { // called every frame
-      if (!canAttack || !this.aiEnabled || this.dead) return;
+      if (!this || !this.dead || !state.player) return;
+      if (!canAttack || !this.aiEnabled) return;
 
       // cast boss attacks on rotation
       spellTimer += k.dt();

@@ -84,7 +84,7 @@ export default (options = {}) => {
     aiAttackDistForce: config.tileWidth * 5,
     update() { // called every frame
       if (!aiPlayerInRange(this)) return;
-      if (this.dead) return;
+      if (!this || this.dead || !state.player) return;
 
       // spawn skeletons and keep track
       // if all skeletons are dead, spawn more after timer is up

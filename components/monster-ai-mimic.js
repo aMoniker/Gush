@@ -21,6 +21,7 @@ export default (options = {}) => {
       this.invulnerable = true;
     },
     update() { // called every frame
+      if (!this || this.dead || !state.player) return;
       if (!this.playerLOS) return; // don't calculate distance until in LOS
 
       if (!isAwake && this.pos.dist(state.player.pos) <= awakeDistance) {

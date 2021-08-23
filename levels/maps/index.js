@@ -5,6 +5,7 @@ import level_2_1 from "/levels/maps/level_2_1.js";
 import level_3_1 from "/levels/maps/level_3_1.js";
 import level_4_1 from "/levels/maps/level_4_1.js";
 import level_5_1 from "/levels/maps/level_5_1.js";
+import level_6_1 from "/levels/maps/level_6_1.js";
 import level_boss from "/levels/maps/level_boss.js";
 import level_treasure_1 from "/levels/maps/level_treasure_1.js";
 import level_treasure_2 from "/levels/maps/level_treasure_2.js";
@@ -24,7 +25,7 @@ const randomTreasure = () => k.choose([
 ]);
 
 const randomLevel = (doNotInclude = []) => {
-  const allChoices = [level_1_2, level_2_1, level_3_1, level_4_1, level_5_1]
+  const allChoices = [level_1_2, level_2_1, level_3_1, level_4_1, level_5_1, level_6_1];
   const choices = allChoices.filter(l => !doNotInclude.includes(l));
   return k.choose(choices);
 };
@@ -47,11 +48,11 @@ export const regenerateMapOrders = () => {
   mapOrders.lizard_m = [
     level_5_1, randomTreasure(), randomLevel([level_5_1]), randomTreasure(), level_boss
   ];
+  mapOrders.wizard_f = [
+    level_6_1, randomTreasure(), randomLevel([level_6_1]), randomTreasure(), level_boss
+  ];
   const wizMap1 = randomLevel();
   const wizMap2 = randomLevel([wizMap1]);
-  mapOrders.wizard_f = [
-    wizMap1, randomTreasure(), wizMap2, randomTreasure(), level_boss
-  ];
   mapOrders.wizard_m = [
     wizMap1, randomTreasure(), wizMap2, randomTreasure(), level_boss
   ];

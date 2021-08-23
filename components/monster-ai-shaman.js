@@ -19,6 +19,7 @@ export default (options = {}) => {
     aiAttackDistForce: config.tileWidth * 5,
     update() { // called every frame
       if (!this.aiEnabled) return;
+      if (!this || this.dead) return;
 
       healTimer += k.dt();
       if (healTimer >= timeBetweenHeals) {
