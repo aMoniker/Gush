@@ -24,7 +24,7 @@ const types = [
     hearts: 3,
     difficulty: "sneaky peeky",
     difficultyColor: [0.87, 0.5, 0.83],
-    cost: 323,
+    cost: 255,
   },
   {
     key: "elf_m",
@@ -33,7 +33,7 @@ const types = [
     hearts: 3,
     difficulty: "yololo",
     difficultyColor: [1, 0.2, 0.2],
-    cost: 300,
+    cost: 321,
   },
   {
     key: "lizard_f",
@@ -42,7 +42,7 @@ const types = [
     hearts: 4,
     difficulty: "doubly deadly",
     difficultyColor: [1, 0.3, 0.3],
-    cost: 223,
+    cost: 144,
   },
   {
     key: "lizard_m",
