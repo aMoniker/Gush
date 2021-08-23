@@ -189,7 +189,7 @@ const startGame = () => {
   if (gameStarting) return;
   gameStarting = true;
   k.play("spell-14", { detune: -200 });
-  fadeToScene("character-select");
+  fadeToScene("character-select").then(() => gameStarting = false);
 }
 
 const enableStartGame = () => {
@@ -199,11 +199,11 @@ const enableStartGame = () => {
 };
 
 k.scene("title-screen", () => {
+  enableInputListeners();
   music.crossFade("neon-synth");
   k.wait(logoTimer, animateLogos);
   animateCharacters();
   setTimeout(() => {
-    enableInputListeners();
     enableStartGame();
     showInputText();
   }, inputTimer * 1000);

@@ -43,5 +43,4 @@ k.scene("intro", () => {
   k.action(() => {
     if (input.attack || input.burp) startGame();
   });
-  k.mouseClick(startGame);
 });

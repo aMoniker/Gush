@@ -120,13 +120,13 @@ const handleMouseMove = (e) => {
   input.y2 = aim.y;
 };
 
-window.addEventListener("mousedown", handleMouseDown);
-window.addEventListener("mouseup", handleMouseUp);
-window.addEventListener("mousemove", handleMouseMove);
 
+
+let cancelAll = null;
 let listenerCancelers = [];
 export const enableInputListeners = () => {
-  listenerCancelers.forEach(c => c());
+  // cancel all previous listeners before attaching new ones
+  if (cancelAll) cancelAll();
 
   const keys = {
     keyUse: null,
@@ -171,14 +171,22 @@ export const enableInputListeners = () => {
 
   // gamepad
   listenerCancelers.push(k.action(handleGamepad));
+  window.addEventListener("gamepadconnected", handleGamepadConnected);
+  window.addEventListener("gamepaddisconnected", handleGamepadDisconnected);
+
+  // mouse
+  window.addEventListener("mousedown", handleMouseDown);
+  window.addEventListener("mouseup", handleMouseUp);
+  window.addEventListener("mousemove", handleMouseMove);
 
   // cancel function
-  return () => {
+  cancelAll = () => {
     listenerCancelers.forEach(fn => fn());
+    listenerCancelers = [];
     window.removeEventListener("gamepadconnected", handleGamepadConnected);
     window.removeEventListener("gamepaddisconnected", handleGamepadDisconnected);
     window.removeEventListener("mousedown", handleMouseDown);
     window.removeEventListener("mouseup", handleMouseUp);
     window.removeEventListener("mousemove", handleMouseMove);
-  }
+  };
 };
