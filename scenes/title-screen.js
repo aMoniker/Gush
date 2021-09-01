@@ -63,16 +63,15 @@ const animateLogos = () => {
       t += k.dt();
       const pct = Math.min(1, t / timeToEndVal);
       logos.forEach((logo, i) => {
-        const limiter = 100;
         const sin = Math.sin(t + i / logos.length);
         logo.pos.y = logo.restingPosY - sin * pct * (endVal + i * 1);
         if (i !== 0) {
           const pi = i / logoTrails;
           const r = Math.sin(t + pi);
-          const g = Math.atan(t + pi);
+          const g = Math.cos(t + pi);
           const b = Math.tan(t + pi);
-          logo.color.r = k.map(Math.sin(t + pi) * pct, -1, 1, 0.334, 1);
-          logo.color.g = k.map(Math.cos(t + pi), -1, 1, 0, 0.69420) * pct;
+          logo.color.r = k.map(r * pct, -1, 1, 0.334, 1);
+          logo.color.g = k.map(g, -1, 1, 0, 0.69420) * pct;
           logo.color.b = k.map(b, -1, 1, 0, 0.7784) * pct;
         }
       });
