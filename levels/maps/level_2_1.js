@@ -121,7 +121,6 @@ map.triggers = {
     if (music.name() === bgMusic) seek = music.time();
     music.crossFade("battle-8");
     const crates = crateWall([10, 51], [11, 51]);
-    const center = [11, 57];
     await monsterWaveCircle(monster.imp, 6, [11, 60], 2);
     await monsterWaveCircle(monster.wogol, 9, [10, 63], 2);
     await monsterWaveCircle(monster.demonSmall, 4, [11, 66], 2);
