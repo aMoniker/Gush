@@ -165,7 +165,7 @@ map.triggers = {
         rotationCount = 0;
         setTimeout(() => {
           announce("DEADLY BURP FLASK DROPPED");
-          spawnObject(powerups.flask("small", "green"), 9, 26);
+          spawnObject(powerups.flask("small", "green"), ...burpPotionLocation);
         }, 3333);
       }
     });

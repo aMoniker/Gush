@@ -27,8 +27,8 @@ export const handleCoinPickup = (player, coin, coinCount = 1) => {
   // move the coin up and fade it out
   if (!coin.color) coin.use(k.color(1,1,1,1));
   Promise.all([
-    tween(coin, 1, { "pos.y": coin.pos.y - config.tileHeight }, easing.easeOutQuart),
-    tween(coin, 1.3, { "color.a": 0 }),
+    tween(coin, moveUpTime, { "pos.y": coin.pos.y - config.tileHeight }, easing.easeOutQuart),
+    tween(coin, fadeOutTime, { "color.a": 0 }),
   ]).then(() => {
     coin.destroy();
     coin.isDestroying = false;
