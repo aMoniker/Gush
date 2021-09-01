@@ -1,4 +1,3 @@
-import { k } from "/kaboom.js";
 import { announce } from "/utils.js";
 import state from "/state.js";
 import * as monster from "/objects/monster.js";

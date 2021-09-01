@@ -3,7 +3,8 @@ import { config } from "/config.js";
 import state from "/state.js";
 import { randInt } from "/utils.js";
 import { skeleton } from "/objects/monster.js";
-import { boundaryMap, getWorldPos, translateWorldToMapCoords } from "/levels/spatial.js";import lifecycle from "/components/lifecycle.js";
+import { boundaryMap, translateWorldToMapCoords } from "/levels/spatial.js";
+import lifecycle from "/components/lifecycle.js";
 import { monsterWave, spawnObject } from "/levels/maps/utils.js";
 import { aiPlayerInRange } from "/components/utils.js"
 

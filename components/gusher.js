@@ -1,5 +1,5 @@
 import { k } from "/kaboom.js";
-import { rng, tween, easing } from "/utils.js";
+import { rng } from "/utils.js";
 
 // TODO - some of these may need slight adjustments
 const bloodSpriteConfigs = {

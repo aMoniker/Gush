@@ -9,7 +9,6 @@ import { createHammer } from "/objects/weapons/hammer.js";
 import { createFireStaff } from "/objects/weapons/fire-staff.js";
 import { createLaserStaff } from "/objects/weapons/laser-staff.js";
 import { fadeToScene, flashColor, tween, easing, rng } from "/utils.js";
-import { coordsInBbox, getRenderedMapBbox } from "/levels/spatial.js";
 import state from "/state.js";
 import music from "/music.js";
 import input, { vibrateGamepad } from "/input.js";

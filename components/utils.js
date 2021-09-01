@@ -1,5 +1,4 @@
 import { k } from "/kaboom.js";
-import { config } from "/config.js";
 import state from "/state.js";
 
 export const aiPlayerInRange = (monster, options = {}) => {

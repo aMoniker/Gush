@@ -1,5 +1,4 @@
 import { k } from "/kaboom.js";
-import { tween, easing } from "/utils.js";
 import lifecycle from "/components/lifecycle.js";
 
 export const createBow = (player) => {

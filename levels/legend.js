@@ -3,10 +3,8 @@ import * as misc from "/objects/misc.js";
 import * as structure from "/objects/structure.js";
 import * as monster from "/objects/monster.js";
 import * as powerups from "/objects/powerups.js";
-import lifecycle from "/components/lifecycle.js";
-import { config } from "/config.js";
 import { isEmptySymbol, isWallSymbol } from "/levels/utils.js";
-import { boundaryMap, getWorldPos } from "/levels/spatial.js";
+import { getWorldPos } from "/levels/spatial.js";
 
 // helper for unrecognized tiles, useful for designing new ones
 const unimplemented = {};

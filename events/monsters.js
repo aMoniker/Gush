@@ -1,5 +1,5 @@
 import { k } from "/kaboom.js";
-import { flashColor, tween, easing, rng } from "/utils.js";
+import { flashColor, tween, easing } from "/utils.js";
 import { config } from "/config.js";
 import { boundaryMap, translateWorldToMapCoords } from "/levels/spatial.js";
 
