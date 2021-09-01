@@ -158,15 +158,7 @@ const minimapCanvas = document.getElementById("minimap");
 export const autoResizeMinimap = () => {
   const rect = gameCanvas.getBoundingClientRect();
   const mapAspectRatio = state.mapWidth / state.mapHeight;
-  let minimapWidth = 0;
-  let minimapHeight = 0;
-  if (mapAspectRatio >= 1) { // map is wider than it is tall
-    minimapWidth = rect.width * config.minimapSize;
-    minimapHeight = minimapWidth / mapAspectRatio;
-  } else { // map is taller than it is wide
-    minimapHeight = rect.height * config.minimapSize;
-    minimapWidth = minimapHeight * mapAspectRatio;
-  }
+  let minimapWidth = rect.width * config.minimapSize;
   minimapCanvas.style.width = `${minimapWidth}px`;
   minimapCanvas.style.height = `${minimapWidth / mapAspectRatio}px`;
 };
