@@ -113,8 +113,6 @@ export default (options = {}) => {
         }));
       }
 
-      maxSpellDist
-
       // otherwise... cast spells at player
       spellTimer += k.dt();
       if (this.playerLOS && spellTimer >= timeBetweenSpells) {
