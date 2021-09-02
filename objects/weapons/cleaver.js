@@ -1,5 +1,5 @@
 import { k } from "/kaboom.js";
-import { tween, easing } from "/utils.js";
+import { easing } from "/utils.js";
 import lifecycle from "/components/lifecycle.js";
 import { config } from "/config.js";
 

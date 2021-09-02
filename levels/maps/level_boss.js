@@ -3,9 +3,9 @@ import { announce, easing, fadeToScene } from "/utils.js";
 import state, { hasUnlockedAllCharacters } from "/state.js";
 import * as powerups from "/objects/powerups.js";
 import * as monster from "/objects/monster.js";
-import { monsterWave, monsterWaveCircle, monsterWaveLineVertical, monsterWaveLineHorizontal, coinReward, coinRewardCircle, crateWall, crateWallHorizontal, crateWallVertical, spawnObject } from "/levels/maps/utils.js";
+import { monsterWaveCircle, crateWallHorizontal, spawnObject } from "/levels/maps/utils.js";
 import music from "/music.js";
-import input, { vibrateGamepad } from "/input.js";
+import { vibrateGamepad } from "/input.js";
 import { config } from "/config.js";
 import { clearMinimap } from "/ui.js";
 
@@ -165,7 +165,7 @@ map.triggers = {
         rotationCount = 0;
         setTimeout(() => {
           announce("DEADLY BURP FLASK DROPPED");
-          spawnObject(powerups.flask("small", "green"), 9, 26);
+          spawnObject(powerups.flask("small", "green"), ...burpPotionLocation);
         }, 3333);
       }
     });

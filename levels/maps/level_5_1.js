@@ -1,11 +1,8 @@
-import { k } from "/kaboom.js";
 import { announce } from "/utils.js";
-import state from "/state.js";
 import * as powerups from "/objects/powerups.js";
 import * as monster from "/objects/monster.js";
-import { monsterWave, monsterWaveCircle, monsterWaveLineVertical, monsterWaveLineHorizontal, coinReward, coinRewardCircle, crateWall, crateWallHorizontal, crateWallVertical, spawnObject } from "/levels/maps/utils.js";
+import { monsterWaveCircle, coinRewardCircle, crateWallHorizontal, spawnObject } from "/levels/maps/utils.js";
 import music from "/music.js";
-import input from "/input.js";
 
 const map = [
   "┌────────────────────────────────────────────────────────────────────┐",

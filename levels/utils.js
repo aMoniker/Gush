@@ -1,5 +1,3 @@
-import { k } from "/kaboom.js";
-
 export const getTileContext = (map, x, y) => ({
   x,
   y,

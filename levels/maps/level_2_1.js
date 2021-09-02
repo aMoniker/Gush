@@ -1,11 +1,8 @@
-import { k } from "/kaboom.js";
 import { announce } from "/utils.js";
-import state from "/state.js";
 import * as powerups from "/objects/powerups.js";
 import * as monster from "/objects/monster.js";
-import { monsterWave, monsterWaveCircle, monsterWaveLineVertical, monsterWaveLineHorizontal, coinReward, coinRewardCircle, crateWall, crateWallHorizontal, crateWallVertical, spawnObject } from "/levels/maps/utils.js";
+import { monsterWave, monsterWaveCircle, monsterWaveLineVertical, monsterWaveLineHorizontal, coinRewardCircle, crateWall, crateWallHorizontal, crateWallVertical, spawnObject } from "/levels/maps/utils.js";
 import music from "/music.js";
-import input from "/input.js";
 
 const map = [
   "┌────┐ ┌────────┐ ┌──────────────(──(──────────────┐ ┌────────┐ ┌────┐",
@@ -124,7 +121,6 @@ map.triggers = {
     if (music.name() === bgMusic) seek = music.time();
     music.crossFade("battle-8");
     const crates = crateWall([10, 51], [11, 51]);
-    const center = [11, 57];
     await monsterWaveCircle(monster.imp, 6, [11, 60], 2);
     await monsterWaveCircle(monster.wogol, 9, [10, 63], 2);
     await monsterWaveCircle(monster.demonSmall, 4, [11, 66], 2);

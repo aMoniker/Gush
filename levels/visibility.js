@@ -1,7 +1,6 @@
 import { k } from "/kaboom.js";
 import { config } from "/config.js";
 import { getMapWidth, getTileContext } from "/levels/utils.js";
-import { generateMap } from "/levels/maps/index.js";
 import {
   GameObjectsMap,
   boundaryMap,
