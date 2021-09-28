@@ -3,9 +3,11 @@ import { loadAssets } from "/assets/loader.js"
 import { watchWindowResizing } from "/ui.js";
 import "/scenes/index.js"; // initializes all scenes
 
-watchWindowResizing();
-loadAssets();
-k.go("intro");
+(async function() {
+  watchWindowResizing();
+  await loadAssets();
+  k.go("intro");
+})();
 
 // pause the game (events are still being listened to)
 // k.debug.paused = true;
